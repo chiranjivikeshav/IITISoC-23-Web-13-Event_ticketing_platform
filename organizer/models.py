@@ -1,6 +1,6 @@
 from django.db import models
 
-class Eventdeatils(models.Model):
+class Eventdetails(models.Model):
     eventName = models.CharField(max_length=100)
     eventDisplay = models.CharField(max_length=100)
     eventStartDate = models.DateTimeField()
@@ -13,7 +13,7 @@ class Eventdeatils(models.Model):
     eventDescription = models.CharField(max_length=3000)
     
 class Ticket(models.Model):
-    event = models.ForeignKey(Eventdeatils, on_delete=models.CASCADE)
+    event = models.ForeignKey(Eventdetails, on_delete=models.CASCADE)
     ticketname = models.CharField(max_length=50)
     ticketprice = models.DecimalField(max_digits=8, decimal_places=2)
     ticketCount = models.PositiveIntegerField()
