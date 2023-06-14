@@ -1,0 +1,191 @@
+{% extends 'base.html' %}
+
+{% block title %}OrganizerDashboard/edit{% endblock title %}
+{% block link %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript">
+    </script>
+    <script src="https://cdn.tiny.cloud/1/YOUR_API_KEY/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+{% endblock link %}
+{%block css%}
+body {
+    margin: 0;
+    background-color: #efeddc;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color:white;
+}
+
+
+.btn {
+    height: 35px;
+    width: 120px;
+    border: 1px solid white;
+    background-color: transparent;
+    color: white;
+    float: right;
+    margin-right: 5%;
+    margin-top: 20px;
+}
+
+.btn:hover {
+    background-color: white;
+    color: #0D335D;
+    cursor: pointer;
+}
+
+
+.event-form-fillup {
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 20px;
+    height: auto;
+    background:#292739;
+    border:1px solid black;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+.event-detail-form-fillup {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+}
+.form-control{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.addanotherbutton {
+    height: 35px;
+    width: 180px;
+    
+    border: 1px solid white;
+    background-color: transparent;
+    color:white;
+    float: right;
+    margin-top: 20px;
+}
+
+.textarea-for-description {
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    height: auto;
+}
+
+{%endblock%}
+
+{% block body %}
+
+
+<div class="event-form-fillup" id="content">
+    <h3 class="my-4" style="font-weight:bold;border-bottom:2px solid rgb(61, 21, 101);">EDIT EVENT DETAILS</h3>
+    <form action="/organizerDashoard" method="post">
+        {% csrf_token %}
+        <div class="event-detail-form-fillup">
+            {% for event in currentEvent %}
+            <div class="mx-3 my-3" style="float: left;width: 320px;margin-right: 30px;">
+                <h4>BASIC DETAILS</h4>
+                <label for="event-name" class="form-label">EVENT NAME</label>
+                <input type="text" class="form-control" id="event-name" name="event_name" value="{{event.eventName}}">
+
+                <label for="event-display-name" class="form-label">EVENT DISPLAY NAME</label>
+                <input type="text" class="form-control" id="event-display-name" name="event_dispaly_name"  value="{{event.eventDisplay}}">
+
+                <label for="event-start-date" class="form-label">EVENT START FROM</label>
+                <input  class="form-control" id="event-start-date" name="event_start_date" value="{{event.eventStartDate}}">
+
+                <label for="event-end-date" class="form-label">EVENT ENDS AT</label>
+                <input  class="form-control" id="event-end-date" name="event_end_date" value="{{event.eventEndDate}}">
+                <h4 class="my-3">EVENT VENUE</h4>
+                <label for="event-address" class="form-label">ADDRESS</label>
+                <input type="text" class="form-control" id="event-address" name="event_address" value="{{event.eventAddress}}">
+
+                <label for="event-city" class="form-label">CITY</label>
+                <input type="text" class="form-control" id="event-city" name="event_city" value="{{event.eventCity}}">
+
+                <label for="event-state" class="form-label">STATE</label>
+                <input type="text" class="form-control"  id="event-state" name="event_state" value="{{event.eventState}}">
+                
+
+                <label for="event-country" class="form-label">COUNTRY</label>
+                <input type="text" class="form-control"  id="event-country" name="event_country" value="{{event.eventCountry}}">
+                
+        
+                </select>
+                <label for="event-zipcode" class="form-label">ZIP</label>
+                <input type="number" class="form-control" id="event-zipcode" name="event_zipcode" value="{{event.eventZip}}">
+            </div>
+            
+            <div class="mx-3 my-3" style="width: 320px;margin-left: 30px;">
+                <div id="tickets-container">
+                    <h4>Ticket </h4>
+                    {% for ticket in currentEventTicket %}
+                    <div class="ticket-form">
+                        <div class="form-group">
+                            <label for="name">TICKET NAME</label>
+                            <input type="text" class="form-control" id="name" name="name"
+                                placeholder="Enter ticket name" value="{{ticket.ticketname}}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="price">TICKET PRICE</label>
+                            <input type="number" class="form-control" id="price" name="price"
+                                placeholder="Enter ticket price"value="{{ticket.ticketprice}}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="quantity">NUMBER OF TICKETS</label>
+                            <input type="number" class="form-control" id="quantity" name="quantity"
+                                placeholder="Enter quantity"value="{{ticket.ticketCount}}">
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+
+
+        </div>
+        <div class="textarea-for-description my-3">
+            <h4 class="my-3">DESCRIPTION</h4>
+            <textarea id="myTextarea" name="event-description" >{{event.eventDescription}}</textarea>
+        </div>
+
+        {%endfor%}
+   <button type="submit" class="addanotherbutton" >submit</button>
+    </form>
+</div>
+
+
+</div>
+
+
+ {% endblock %}
+ {% block js %}
+ <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+ <script>
+     tinymce.init({
+         selector: '#myTextarea',
+         plugins: [
+             'advlist autolink lists link image charmap print preview anchor',
+             'searchreplace visualblocks code fullscreen',
+             'insertdatetime media table paste code help wordcount'
+         ],
+         toolbar: 'undo redo | formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | code',
+         height: 400,
+         content_style: 'body { font-family: Arial, sans-serif; font-size: 14px; }'
+     });
+ 
+ 
+     
+ 
+ </script>
+ 
+
+  {% endblock js %}

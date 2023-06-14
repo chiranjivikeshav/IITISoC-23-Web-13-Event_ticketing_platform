@@ -25,15 +25,13 @@ body {
     margin-top: 20px;
     height: 150px;
     background-color: #292739;
-    border-radius: 10px;
     padding-top: 30px;
     padding-left: 30px;
 }
 
-.btn {
+.btn1 {
     height: 35px;
     width: 120px;
-    border-radius: 17px;
     border: 1px solid white;
     background-color: transparent;
     color: white;
@@ -42,26 +40,53 @@ body {
     margin-top: 20px;
 }
 
-.btn:hover {
+.btn1:hover {
     background-color: white;
     color: #0D335D;
     cursor: pointer;
-}
+} 
 
 .dont-have-event {
-
     margin-left: 5%;
     margin-right: 5%;
     margin-top: 20px;
-    height: 350px;
+    height: auto;
     background-color: white;
     box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
+    
     align-items: center;
     display: flex;
     flex-flow: column;
     justify-content: center;
 }
+
+.event-item {
+    color:black;
+    background-color: #efeddc;
+    padding: 20px;
+    margin-bottom: 20px;
+    margin-left:5%;
+    list-style:none;
+    width:90%;
+    box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.3);
+    font-family: sans-serif;
+    font-weight:bold;
+    align-item:center;
+    height:auto;
+}
+.event-list{
+    width:80%;
+    
+}
+.event-item h3 {
+    margin-top: 0;
+}
+
+.event-item p {
+    margin: 5px 0;
+}
+
+
 
 .event-form-fillup {
     width: 90%;
@@ -90,7 +115,7 @@ body {
 .addanotherbutton {
     height: 35px;
     width: 180px;
-    border-radius: 17px;
+    
     border: 1px solid white;
     background-color: transparent;
     color:white;
@@ -104,19 +129,46 @@ body {
     margin-right: 5%;
     height: auto;
 }
-
+hr {
+        position:relative;
+        height: 2px;
+        background:#292739;}
 {%endblock%}
 
 {% block body %}
 <div class="create-event">
     <h3>CREATE A EVENT </h3>
-    <button onclick="scrollToTop()" type="button" class="btn">Add Event</button>
+    <button onclick="scrollToTop()" type="button" class="btn1">Add Event</button>
 </div>
+{% if allEvents|length < 1 %}
 <div class="dont-have-event">
-    <img src="https://s3.ap-south-1.amazonaws.com/townscript-common-resources/images/Dashboard/emptystate-dashboard.png"
+    <img class="my-3" src="https://s3.ap-south-1.amazonaws.com/townscript-common-resources/images/Dashboard/emptystate-dashboard.png"
         width="270px">
     <h5 class="my-4" style="font-weight:bold;color:purple">You don't have any active events!</h5>
 </div>
+{% else %}
+<div class="event-list-page dont-have-event">
+<h4 class="my-3"style="color:purple;font-weight:bold;">YOUR EVENTs</h4>
+    <ul class="event-list">
+      {% for event in allEvents%}
+        <li class="event-item">
+            <h3>{{event.eventName}}</h3>
+            <hr>
+            <p>Start Date:&nbsp &nbsp&nbsp &nbsp&nbsp &nbsp{{event.eventStartDate}}</p>
+            <p>End Date:&nbsp &nbsp&nbsp &nbsp&nbsp &nbsp{{event.eventEndDate}}</p>
+            <p>Location:&nbsp &nbsp&nbsp&nbsp&nbsp &nbsp&nbsp &nbsp{{event.eventCity}},{{event.eventCountry}}</p>
+            <p>Description:&nbsp &nbsp&nbsp &nbsp&nbsp &nbsp&nbsp &nbsp{{event.eventDescription|slice:"0:50"|safe}}</p>
+            <hr>
+            <a href="/organizerDashoard/{{event.eventName}}{{event.id}}" role="button" class="btn btn-warning mx-3 my-3">Edit Event</a>
+            <button type="button"  class="btn btn-danger mx-3 my-3">Delete</button>
+        </li>
+        
+        {% endfor %}
+          
+    </ul>
+</div>
+
+{% endif %}
 <div class="event-form-fillup" id="content">
     <h3 class="my-4" style="font-weight:bold;border-bottom:2px solid rgb(61, 21, 101);">ADD EVENT DETAILS</h3>
     <form action="/organizerDashoard" method="post">

@@ -4,6 +4,10 @@ from organizer.models import Eventdetails, Ticket
 def home(request):
     return render(request,"base.html")
 def dashboard(request):
+    allEvents =Eventdetails.objects.all()
+    allTickets =Ticket.objects.all()
+    eventSet={'allTickets':allTickets,'allEvents':allEvents}
+
     if request.method == 'POST':
         event_name = request.POST['event_name']
         event_display = request.POST['event_dispaly_name']
@@ -15,8 +19,6 @@ def dashboard(request):
         event_country = request.POST['event_country']
         event_zipcode = request.POST['event_zipcode']
         event_description = request.POST['event-description']
-        
-        
         
         event = Eventdetails.objects.create(
             eventName = event_name,
@@ -41,8 +43,9 @@ def dashboard(request):
                     'price': request.POST.get(f'price{ticket_id}'),
                     'quantity': request.POST.get(f'quantity{ticket_id}'),
                 }
-        
+        print(ticket_id)
         for ticket_id, data in ticket_data.items():
+            # print(ticket_id)
             ticket = Ticket.objects.create(
                 event=event,
                 ticketname=data['name'],
@@ -50,6 +53,18 @@ def dashboard(request):
                 ticketCount=data['quantity'],
             )
         
-        
+    return render(request,"organizer.html",eventSet)
+def update(request,slug):
+    string = slug
+    filter_id =""
+    for char in string :
+        if char.isdigit():
+            filter_id+=char
+    currentEvent = Eventdetails.objects.filter(id=int(filter_id))
+    currentEventTicket =Ticket.objects.filter(event=currentEvent[0] )
+    currentEventSet={'currentEvent':currentEvent,'currentEventTicket':currentEventTicket}
     
-    return render(request,"organizer.html")
+    # for ticket in currentEventTicket:
+    #     print(ticket)
+            
+    return render(request,"update.html",currentEventSet)
