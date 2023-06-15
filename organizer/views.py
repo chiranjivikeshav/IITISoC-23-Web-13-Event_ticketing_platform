@@ -71,7 +71,7 @@ def Update(request):
         
         event_object = get_object_or_404(Eventdetails, id=eventid)
 
-        event_object.eventName = request.POST['event_dispaly_name']
+        event_object.eventName = request.POST['event_name']
         event_object.eventDisplay = request.POST['event_dispaly_name']
         event_object.eventStartDate = request.POST['event_start_date']
         event_object.eventEndDate = request.POST['event_end_date']
