@@ -14,7 +14,7 @@
 body {
     margin: 0;
     background-color: #efeddc;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     color:white;
 }
 
@@ -215,8 +215,8 @@ hr{
     display: inline-block;
     margin: 100px auto;
 }
-
 {%endblock%}
+
 
 {% block body %}
 <div class="create-event">
@@ -391,13 +391,10 @@ hr{
    <button type="submit" class="addanotherbutton" >submit</button>
     </form>
 </div>
-
-
 </div>
-
  {% endblock %}
  {% block js %}
- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+ 
  <script>
      tinymce.init({
          selector: '#myTextarea',
