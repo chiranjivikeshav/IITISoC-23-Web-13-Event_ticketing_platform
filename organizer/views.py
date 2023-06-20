@@ -3,7 +3,7 @@ from organizer.models import Eventdetails, Ticket
 from django.shortcuts import get_object_or_404
 # Create your views here.
 def home(request):
-    return render(request,"base.html")
+    return render(request,"auth.html")
 def dashboard(request):
     allEvents =Eventdetails.objects.all()
     allTickets =Ticket.objects.all()

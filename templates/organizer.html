@@ -11,12 +11,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 {% endblock %}
 {%block css%}
-body {
-    margin: 0;
-    background-color: #efeddc;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    color:white;
-}
+
 
 .create-event {
     color: white;
@@ -287,25 +282,25 @@ hr{
             <div class="mx-3 my-3" style="float: left;width: 320px;margin-right: 30px;">
                 <h4>BASIC DETAILS</h4>
                 <label for="event-name" class="form-label">EVENT NAME</label>
-                <input type="text" class="form-control" id="event-name" name="event_name">
+                <input type="text" class="form-control" id="event-name" name="event_name" required>
 
                 <label for="event-display-name" class="form-label">EVENT DISPLAY NAME</label>
-                <input type="text" class="form-control" id="event-display-name" name="event_dispaly_name">
+                <input type="text" class="form-control" id="event-display-name" name="event_dispaly_name" required>
 
                 <label for="event-start-date" class="form-label">EVENT START FROM</label>
-                <input type="datetime-local" class="form-control" id="event-start-date" name="event_start_date">
+                <input type="datetime-local" class="form-control" id="event-start-date" name="event_start_date"required>
 
                 <label for="event-end-date" class="form-label">EVENT ENDS AT</label>
-                <input type="datetime-local" class="form-control" id="event-end-date" name="event_end_date">
+                <input type="datetime-local" class="form-control" id="event-end-date" name="event_end_date"required>
                 <h4 class="my-3">EVENT VENUE</h4>
                 <label for="event-address" class="form-label">ADDRESS</label>
-                <input type="text" class="form-control" id="event-address" name="event_address">
+                <input type="text" class="form-control" id="event-address" name="event_address">required
 
                 <label for="event-city" class="form-label">CITY</label>
-                <input type="text" class="form-control" id="event-city" name="event_city">
+                <input type="text" class="form-control" id="event-city" name="event_city"required>
 
                 <label for="event-state" class="form-label">STATE</label>
-                <select name="event_state" id="event-state" class="form-control">
+                <select name="event_state" id="event-state" class="form-control"required>
                     <option value="None">---Select---</option>
                     <option value="Andhra Pradesh">Andhra Pradesh</option>
                     <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
@@ -346,12 +341,12 @@ hr{
                 </select>
 
                 <label for="event-country" class="form-label">COUNTRY</label>
-                <select name="event_country" id="event-country" class="form-control">
+                <select name="event_country" id="event-country" class="form-control"required>
                     <option value="None">---Select---</option>
                     <option value="India">India</option>
                 </select>
                 <label for="event-zipcode" class="form-label">ZIP</label>
-                <input type="number" class="form-control" id="event-zipcode" name="event_zipcode">
+                <input type="number" class="form-control" id="event-zipcode" name="event_zipcode"required>
             </div>
             <div class="mx-3 my-3" style="width: 320px;margin-left: 30px;">
                 <div id="tickets-container">
@@ -359,20 +354,17 @@ hr{
                         <h4>Ticket 1</h4>
                         <div class="form-group">
                             <label for="name1">TICKET NAME</label>
-                            <input type="text" class="form-control" id="name1" name="name1"
-                                placeholder="Enter ticket name">
+                            <input type="text" class="form-control" id="name1" name="name1"placeholder="Enter ticket name"required>
                         </div>
 
                         <div class="form-group">
                             <label for="price1">TICKET PRICE</label>
-                            <input type="number" class="form-control" id="price1" name="price1"
-                                placeholder="Enter ticket price">
+                            <input type="number" class="form-control" id="price1" name="price1"placeholder="Enter ticket price"required>
                         </div>
 
                         <div class="form-group">
                             <label for="quantity1">NUMBER OF TICKETS</label>
-                            <input type="number" class="form-control" id="quantity1" name="quantity1"
-                                placeholder="Enter quantity">
+                            <input type="number" class="form-control" id="quantity1" name="quantity1"placeholder="Enter quantity"required>
                         </div>
                     </div>
                 </div>
@@ -384,7 +376,7 @@ hr{
         </div>
         <div class="textarea-for-description my-3">
             <h4 class="my-3">WRITE DESCRIPTION</h4>
-            <textarea id="myTextarea" name="event-description"></textarea>
+            <textarea id="myTextarea" name="event-description" required></textarea>
         </div>
 
    
