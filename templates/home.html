@@ -1,16 +1,166 @@
 {% extends 'base.html' %}
 
-{% block title %}Home{% endblock title %}
+{% comment %} {% block title %}Home page{% endblock title %}
 {% block link %}
     
 {% endblock link %}
 {%block css%}
 
 
+  
+
+  .logo {
+    width: 65px;
+
+  }
+
+  .navbar {
+    padding: 85%;
+    margin: auto;
+    padding: 35px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    width: 120px;
+    cursor: pointer;
+    color: white;
+    background-color: white;
+    filter: invert(100%);
+  }
+
+  .navbar ul li {
+    list-style: none;
+    display: inline-block;
+    margin: 0 73px;
+    position: relative;
+    font-size: 18px;
+  }
+
+  .navbar ul li a {
+    text-decoration: none;
+    color: white;
+    text-transform: uppercase;
+  }
+
+  .navbar ul li::after {
+    content: '';
+    height: 3px;
+    background: #232ba8;
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    animation-delay: 2s;
+  }
+
+  .navbar ul li:hover::after {
+    width: 100%;
+  }
+  .content{
+    width: 100%;
+    color: white;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+  
+  }
+  .content h1{
+    font-size: 70px;
+    margin-top: 80px;
+  
+
+  }
+  .content p{
+    margin: 20px auto;
+    font-weight: 100;
+    line-height: 25px;
+
+  }
+  button{
+    width: 200px;
+    padding: 15px 0;
+    text-align: center;
+    margin: 20px 10px;
+    border-radius: 25px;
+    font-weight: bold;
+    border: 2px solid ;
+    background: transparent;
+    color: #fff;
+    cursor: pointer;
+    position: relative;
+    overflow:hidden;
+
+  }
+  span{
+    background: #382fb5;
+    height: 100%;
+    width: 100%;
+    border-radius: 25px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+    
+
+
+
+  }
+  button:hover span{
+    width: 100%;
+    
+
+
+  }
+button:hover{
+border: none;
+
+}
+.corousal{
+width: 100px;
+position: relative;
+
+
+}
+.after{
+font-weight: bold;
+margin-top: 60px;
+font-size: 31px;
+
+}
+.after::after{
+font-size: 20px;
+}
 {%endblock%}
 
 {% block body %}
+  
 
+<div class="banner">
+    
+    <div class="content">
+      <h1>
+      EVENTS
+      </h1>
+      
+      
+      
+      
+      <div>
+        <button type="button"><span></span>Book An Event</button>
+        <button type="button"><span></span>Know more</button>
+      </div>
+      <hr>
+
+      <h2 class="after">Create immersive event experiences with ease
+        <br>
+       <div class="any"> Anyone, Anywhere, Anytime</div>
+      </h2>
+      </div>
+    </div>
+  </div>
 
 
  {% endblock %}
@@ -21,4 +171,4 @@
  </script>
  
 
-  {% endblock js %}
+  {% endblock js %} {% endcomment %}

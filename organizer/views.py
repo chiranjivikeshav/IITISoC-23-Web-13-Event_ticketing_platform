@@ -3,7 +3,7 @@ from organizer.models import Eventdetails, Ticket
 from django.shortcuts import get_object_or_404
 # Create your views here.
 def home(request):
-    return render(request,"auth.html")
+    return render(request,"home.html")
 def dashboard(request):
     allEvents =Eventdetails.objects.all()
     allTickets =Ticket.objects.all()
@@ -36,16 +36,16 @@ def dashboard(request):
         
         # Process ticket sets
         ticket_data = {}
-        for key, value in request.POST.items():
+        for key, value in request.POST.items():   
             if key.startswith('name') and value:
-                ticket_id = key.replace('name', '')
+                ticket_id = key.replace('name', '')     
                 ticket_data[ticket_id] = {
                     'name': value,
                     'price': request.POST.get(f'price{ticket_id}'),
                     'quantity':int(request.POST.get(f'quantity{ticket_id}')),
                 }
-        print(ticket_id)
-        for ticket_id, data in ticket_data.items():
+        
+        for ticket_id, data in ticket_data.items(): 
             ticket = Ticket.objects.create(
                 event=event,
                 ticketname=data['name'],
