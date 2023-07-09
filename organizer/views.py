@@ -19,7 +19,7 @@ def dashboard(request):
         event_state = request.POST['event_state']
         event_country = request.POST['event_country']
         event_zipcode = int(request.POST['event_zipcode'])
-        event_description = request.POST['event-description']
+        event_description = request.POST['event_description']
         
         event = Eventdetails.objects.create(
             eventName = event_name,

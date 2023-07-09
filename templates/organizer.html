@@ -25,9 +25,9 @@
     padding-left: 30px;
 }
 
-.btn1 {
+.btn1{
     height: 35px;
-    width: 120px;
+    width: 90px;
     border: 1px solid white;
     background-color: transparent;
     color: white;
@@ -36,12 +36,27 @@
     margin-top: 20px;
 }
 
+
+.btn2{
+    height: 35px;
+    width: 205px;
+    border: 1px solid white;
+    background-color: transparent;
+    color: white;
+    float: right;
+    margin-right: 5%;
+    margin-top: 20px;
+}
 .btn1:hover {
     background-color: white;
     color: #0D335D;
     cursor: pointer;
+}
+.btn2:hover {
+    background-color: white;
+    color: #0D335D;
+    cursor: pointer;
 } 
-
 .dont-have-event {
     margin-left: 5%;
     margin-right: 5%;
@@ -50,20 +65,19 @@
     background-color: white;
     box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.3);
     
-    align-items: center;
     display: flex;
     flex-flow: column;
     justify-content: center;
+    align-items: center;
 }
 
 .event-item {
-    color:black;
-    background-color: #efeddc;
+    color:white;
+    background-color:#292739;
     padding: 20px;
     margin-bottom: 20px;
-    margin-left:5%;
     list-style:none;
-    width:90%;
+    width:93%;
     box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.3);
     font-family: sans-serif;
     font-weight:bold;
@@ -71,7 +85,7 @@
     height:auto;
 }
 .event-list{
-    width:80%;
+    width:90%;
     
 }
 .event-item h3 {
@@ -217,7 +231,68 @@ hr{
 <div class="create-event">
     <h3>CREATE A EVENT </h3>
     <button onclick="scrollToTop()" type="button" class="btn1">Add Event</button>
+    <button type="button" class="btn2" data-toggle="modal" data-target="#loginModal">Add / Edit organizer details</button>
 </div>
+<!-- modal for organizer details-->
+
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModal" aria-hidden="true">
+    <div class="modal-dialog" >
+      <div class="modal-content" style="background:#292739;">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="loginModallabal">Organizer Details</h1>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+        <form action="/login" method ="post">{% csrf_token %}
+          <div class="form-group">
+            <label for="organizername">Name</label>
+            <input type="text" class="form-control" id="organizername" name="organizername" placeholder="Enter Organizer Name" required>
+          </div>
+          <div class="form-group">
+            <label for="organizercontact">Contact Number</label>
+            <input type="number" class="form-control" id="organizercontact" name="organizercontact" placeholder="Enter Contact No" required>
+          </div>
+          <div class="form-group">
+            <label for="organizeremail">Email Address</label>
+            <input type="email" class="form-control" id="organizeremail" name="organizeremail" placeholder="Enter Email Address" required>
+          </div>
+          <div class="form-group">
+            <label for="organizeraddress">Address</label>
+            <input type="text" class="form-control" id="organizeraddress" name="organizeraddress" placeholder="Enter Address" required>
+          </div>
+          <div class="form-group">
+            <label for="organizerbankname">Bank Name</label>
+            <input type="text" class="form-control" id="organizerbankname" name="organizerbankname" placeholder="Enter Bank Name" required>
+          </div>
+          <div class="form-group">
+            <label for="organizerbankbranch">Bank Branch Name</label>
+            <input type="text" class="form-control" id="organizerbankbranch" name="organizerbankbranch" placeholder="Enter Bank Branch" required>
+          </div>
+          <div class="form-group">
+            <label for="organizerbankIFSC">IFSC Code</label>
+            <input type="number" class="form-control" id="organizerbankIFSC" name="organizerbankIFSC" placeholder="Enter IFSC Code" required>
+          </div>
+          <div class="form-group">
+            <label for="organizerbankaccount">Account Number</label>
+            <input type="number" class="form-control" id="organizerbankaccount" name="organizerbankaccount" placeholder="Enter Account Number" required>
+          </div>
+          <div class="form-group">
+            <label for="organizerabout">About Organizer</label>
+            <input type="text" class="form-control" id="organizerabout" name="organizerabout" placeholder="write">
+          </div>
+          <button type="submit" class="btn1">SAVE</button>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
 {% if allEvents|length < 1 %}
 <div class="dont-have-event">
     <img class="my-3" src="https://s3.ap-south-1.amazonaws.com/townscript-common-resources/images/Dashboard/emptystate-dashboard.png"
@@ -240,7 +315,7 @@ hr{
             <a href="/organizerDashoard/{{event.eventName}}{{event.id}}" role="button" class="btn btn-warning mx-3 my-3">Edit Event</a>
             <button type="button" class="btn btn-danger mx-3 my-3" data-toggle="modal" data-target="#eventdeleteModalCenter">Delete </button>
             
-      <!-- Modal -->
+      <!-- Modal for delete event -->
             <div class="modal fade" id="eventdeleteModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                <div class="modal-dialog modal-dialog-centered modal-confirm" role="document">
                 <div class="modal-content">
@@ -294,7 +369,7 @@ hr{
                 <input type="datetime-local" class="form-control" id="event-end-date" name="event_end_date"required>
                 <h4 class="my-3">EVENT VENUE</h4>
                 <label for="event-address" class="form-label">ADDRESS</label>
-                <input type="text" class="form-control" id="event-address" name="event_address">required
+                <input type="text" class="form-control" id="event-address" name="event_address"required>
 
                 <label for="event-city" class="form-label">CITY</label>
                 <input type="text" class="form-control" id="event-city" name="event_city"required>
@@ -376,11 +451,11 @@ hr{
         </div>
         <div class="textarea-for-description my-3">
             <h4 class="my-3">WRITE DESCRIPTION</h4>
-            <textarea id="myTextarea" name="event-description" required></textarea>
+            <textarea type ="text" id="myTextarea" name="event_description"></textarea>
         </div>
 
    
-   <button type="submit" class="addanotherbutton" >submit</button>
+        <button type="submit" class="btn1" >Submit</button>
     </form>
 </div>
 </div>

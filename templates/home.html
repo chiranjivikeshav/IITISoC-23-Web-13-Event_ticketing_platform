@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
-
-{% comment %} {% block title %}Home page{% endblock title %}
+{% block title %}Home page{% endblock title %}
 {% block link %}
     
 {% endblock link %}
@@ -9,56 +8,7 @@
 
   
 
-  .logo {
-    width: 65px;
-
-  }
-
-  .navbar {
-    padding: 85%;
-    margin: auto;
-    padding: 35px 0px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .logo {
-    width: 120px;
-    cursor: pointer;
-    color: white;
-    background-color: white;
-    filter: invert(100%);
-  }
-
-  .navbar ul li {
-    list-style: none;
-    display: inline-block;
-    margin: 0 73px;
-    position: relative;
-    font-size: 18px;
-  }
-
-  .navbar ul li a {
-    text-decoration: none;
-    color: white;
-    text-transform: uppercase;
-  }
-
-  .navbar ul li::after {
-    content: '';
-    height: 3px;
-    background: #232ba8;
-    position: absolute;
-    left: 0;
-    bottom: -10px;
-    animation-delay: 2s;
-  }
-
-  .navbar ul li:hover::after {
-    width: 100%;
-  }
-  .content{
+.banner.content{
     width: 100%;
     color: white;
     position: absolute;
@@ -67,19 +17,19 @@
     text-align: center;
   
   }
-  .content h1{
+  .banner.content h1{
     font-size: 70px;
     margin-top: 80px;
   
 
   }
-  .content p{
+  .banner.content p{
     margin: 20px auto;
     font-weight: 100;
     line-height: 25px;
 
   }
-  button{
+  .banner button{
     width: 200px;
     padding: 15px 0;
     text-align: center;
@@ -94,7 +44,7 @@
     overflow:hidden;
 
   }
-  span{
+  .banner span{
     background: #382fb5;
     height: 100%;
     width: 100%;
@@ -108,13 +58,13 @@
 
 
   }
-  button:hover span{
+  .banner button:hover span{
     width: 100%;
     
 
 
   }
-button:hover{
+.banner button:hover{
 border: none;
 
 }
@@ -171,4 +121,4 @@ font-size: 20px;
  </script>
  
 
-  {% endblock js %} {% endcomment %}
+  {% endblock js %} 
