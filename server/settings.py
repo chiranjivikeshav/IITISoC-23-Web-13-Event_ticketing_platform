@@ -84,8 +84,13 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
 # DATABASES = {
 #     "default": dj_database_url.config(default='postgres://chiranjivikeshav:5UTPr5CaDxScsLQJg54SOy7boWQmq9Rw@dpg-ci7vhd18g3nfucaujnog-a.singapore-postgres.render.com/etplatform', ssl_require=True)
+# }
+
+# DATABASES = {
+#     "default": dj_database_url.config(default='postgres://chiranjivikeshav:y6UYxe8whcY7ByH6e5veQVLuvmRgXTOU@dpg-chtg0cd269vccp594icg-a.singapore-postgres.render.com/bloghere',ssl_require=True)
 # }
 
 # Password validation
