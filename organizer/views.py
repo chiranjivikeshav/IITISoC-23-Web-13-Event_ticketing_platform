@@ -236,7 +236,7 @@ def Update(request):
 def deletevent(request,id):
     event = Eventdetails.objects.get(id=id)
     event.delete()
-    slug = (user.username)
+    slug = request.user.username
     return redirect("dashboard", slug)
 
 
