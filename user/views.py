@@ -1,6 +1,13 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
-from user.models import Userprofile
+from user.models import Userprofile,CartItem
+from organizer.models import Eventdetails,Ticket
+from django.utils import timezone
+from django.contrib import messages
+from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required
+
+
 
 def profile(request,username):
     user= User.objects.get(username = username)
@@ -30,6 +37,7 @@ def profileupdate(request,id):
         profile.user_ldurl = user_ldurl
         profile.user_about = user_about
         profile.save()
+        messages.success(request, 'Your profile  has been updated successfully!')
     except Userprofile.DoesNotExist:
         profile=Userprofile(
         user=user,
@@ -47,7 +55,73 @@ def profileupdate(request,id):
     slug = user.username
     return redirect('profile',username=slug)
 
+def eventviews(request):
+    current_datetime = timezone.now()
+
+    upcoming_events = Eventdetails.objects.filter(eventStartDate__gt=current_datetime)
+    ongoing_events = Eventdetails.objects.filter(eventStartDate__lte=current_datetime, eventEndDate__gte=current_datetime)
+    past_events = Eventdetails.objects.filter(eventEndDate__lt=current_datetime)
+
+    context = {
+        'upcoming_events': upcoming_events,
+        'ongoing_events': ongoing_events,
+        'past_events': past_events
+    }
+    return render(request,'events.html',context)
+
+@login_required
+def addtocart(request, event_id):
+    user = request.user
+    userid = user.id
+    event = Eventdetails.objects.get(pk=event_id)
+    cartItem1 = CartItem.objects.filter(event=event,user=user).first()
+    if cartItem1:
+        return redirect('cart',userid)
+    ticketTypes = Ticket.objects.filter(event=event)
+    for ticketType in ticketTypes:
+        cartItem = CartItem(event=event, user=user ,ticket_type=ticketType)
+        cartItem.save()
+    userid = user.id
+    return redirect('cart',userid)
 
 
-# Create your views here.
-# Create your views here.
+def cart(request,userid):
+    uuSer=User.objects.get(id=userid)
+    cartItems = CartItem.objects.filter(user=uuSer)
+    events = {}
+    for cartItem in cartItems:
+        event = cartItem.event
+        ticketType = cartItem.ticket_type
+        quantity = cartItem.quantity
+        if event.id not in events:
+            events[event.id] = {
+                'event': event,
+                'ticketTypes': []
+            }
+        events[event.id]['ticketTypes'].append({
+            'ticketType': ticketType,
+            'quantity': quantity,
+            'cartitemid': cartItem.id
+        })
+    total_cost = sum(item.ticket_type. ticketprice * item.quantity for item in cartItems)
+    return render(request, 'cart.html', {'events': events.values(), 'total_cost': total_cost})
+
+def updatequantity(request, cart_item_id):
+    cart_item = CartItem.objects.get(pk=cart_item_id)
+    new_quantity = int(request.POST['quantity'])
+    if new_quantity < 0:
+        new_quantity = 0
+    cart_item.quantity = new_quantity
+    cart_item.save()
+    user = request.user
+    userid = user.id
+    return redirect('cart',userid)
+
+def removefromcart(request, eventid):
+    user = request.user
+    userid = user.id
+    Event = Eventdetails.objects.get(id=eventid)
+    for item in CartItem.objects.filter(user=user):
+        if item.event == Event:
+            item.delete()
+    return redirect('cart',userid)

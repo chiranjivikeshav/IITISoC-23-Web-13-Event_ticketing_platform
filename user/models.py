@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from organizer.models import Eventdetails,Ticket
 # Create your models here.
 
 class Userprofile(models.Model):
@@ -15,4 +15,8 @@ class Userprofile(models.Model):
     user_ldurl = models.CharField(max_length=100)
     def __str__(self):
         return self.user_name
-
+class CartItem(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE,default=True)
+    event = models.ForeignKey(Eventdetails, on_delete=models.CASCADE)
+    ticket_type = models.ForeignKey(Ticket, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)

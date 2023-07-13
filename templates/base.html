@@ -125,7 +125,7 @@
   position: absolute;
   left: -150px;
   transform: translate(0, 10px);
-  background-color: #bfbfbf;
+  background-color: lightgrey;
   padding:10px;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
   width: auto;
@@ -156,18 +156,64 @@
   text-align: center;
 }
 
-   
-   <!--FOOTER CSS START HERE -->
+
+/************MESSAGE CSS CODE **************/
+.message-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 5px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  display: none;
+  color:black;
+  z-index:10000;
+  transition:1s;
+  background-color:black;
+}
+.success{
+  background-color: #a8f0c6;
+}
+.message-content {
+  text-align: center;
+}
+
+.message-title {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.message-text {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.close-button {
+  background-color: transparent;
+  border: none;
+  color: #999999;
+  font-size: 20px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+
+
+/************ FOOTER CODE START HERE *********/
 footer{
     width: 100%;
-    position: absolute;
+    position:relative;
     bottom: 0;
-    background-color: linear-gradient(to right, #00093c, #2d0b00);
+    background: linear-gradient(to right,#00093c,#2d0b00);
     color: #fff;
     padding: 100px 0 30px;
     border-top-left-radius: 125px;
     font-size: 13px;
     line-height: 20px;
+    margin-top:15px;
 }
 
 .footerlogo {
@@ -245,7 +291,7 @@ footer.tag{
             <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Event</a>
+            <a class="nav-link" href="/user/events">Event</a>
           </li>
         </ul>
         <div class="preview-zone ">
@@ -257,7 +303,10 @@ footer.tag{
           </section>
         </div>
         {% if user.is_authenticated %}
-            <div class="popover__wrapper">
+           <a class="my-3 mx-3" href="/user/cart/{{request.user.id}}">
+            <i style="font-size:30px;color:yellow" class="fa fa-shopping-cart"></i>
+            </a>
+            <div class="popover__wrapper my-3 ">
               <a class="profilebutton" href="#">
               <i style="font-size:30px;" class="fas fa-user"></i>
               </a>
@@ -283,6 +332,26 @@ footer.tag{
 
       {% endblock body %}
       
+     
+
+      {% if messages %}
+      <div id="message-popup" style=" display:block;"class="message-popup">
+          <div class="message-content">
+              {% for message in messages %}
+                <div class="alert {{ message.tags }}">
+                  <h3 class="message-title">{{ message.tags }}</h3>
+                  <p class="message-text">{{ message }}</p>
+                  <button id="close-button" class="close-button">&times;</button>
+  
+                </div>
+              {% endfor %}
+          </div>
+      </div>
+      {% endif %}
+
+
+
+
 
 
       <footer>
@@ -333,7 +402,23 @@ footer.tag{
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-  {% block js %}  
- 
-  {% endblock js %}
+  <script>
+    // Open the message popup
+    function openMessagePopup() {
+  var popup = document.getElementById("message-popup");
+  popup.style.display = "block";
+  s}
+  
+  // Close the message popup
+  function closeMessagePopup() {
+    var popup = document.getElementById("message-popup");
+    popup.style.display = "none";
+  }
+  
+  // Close the message popup when the close button is clicked
+  document.getElementById("close-button").addEventListener("click", closeMessagePopup);
+  
+</script>
+{% block js %}  
+{% endblock js %}
 </html>

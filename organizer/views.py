@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib import messages
 from . import urls
 # Create your views here.
 def home(request):
@@ -20,7 +21,7 @@ def user_registration(request):
         password = request.POST['password']
         conform_Password = request.POST['conform_Password']
         user = User.objects.create_user(username=username,email=useremail, password=password)
-
+        messages.success(request, 'Your account has been created successfully!')
         Userprofile.objects.create(
             user=user,
             user_email= user.email,
@@ -63,6 +64,7 @@ def user_login(request):
 
 def user_logout(request):
     logout(request)
+    messages.success(request, 'Loged out successfully!')
     return redirect('home')
 
 def organizer(request):
@@ -91,6 +93,7 @@ def organizer(request):
             organizerAbout = organizer_about,
              )
         organizer.save()
+        messages.success(request, 'Organizer profile  has been created successfully!')
     slug =request.user.username
     return redirect("dashboard",slug)
 
@@ -121,6 +124,7 @@ def organizer_update(request):
             organizer.organizerBankIFSC = organizer_bank_ifsc
             organizer.organizerAbout = organizer_about
             organizer.save()
+            messages.success(request, 'Organizer details  has been updated successfully!')
         except Organizer.DoesNotExist:
             organizer=Organizer(
             user=user,
@@ -158,9 +162,10 @@ def dashboard(request,slug):
         event_country = request.POST['event_country']
         event_zipcode = int(request.POST['event_zipcode'])
         event_description = request.POST['event_description']
-        
+        event_image = request.FILES['event_image']
         event = Eventdetails.objects.create(
             eventOrganizer=organizer,
+            eventImage = event_image,
             eventName = event_name,
             eventDisplay = event_display,
             eventStartDate = event_start_date,
@@ -172,7 +177,7 @@ def dashboard(request,slug):
             eventZip = event_zipcode,
             eventDescription = event_description
         )
-        
+        messages.success(request, 'Event created  successfully!')
         # Process ticket sets
         ticket_data = {}
         for key, value in request.POST.items():   
@@ -210,6 +215,8 @@ def Update(request):
         eventid = request.POST['eventid']
         
         event_object= get_object_or_404(Eventdetails, id=eventid)
+        
+        event_object.eventImage = request.FILES['event_image']
         event_object.eventName = request.POST['event_name']
         event_object.eventDisplay = request.POST['event_dispaly_name']
         event_object.eventStartDate = request.POST['event_start_date']
@@ -221,7 +228,7 @@ def Update(request):
         event_object.eventZip = int(request.POST['event_zipcode'])
         event_object.eventDescription = request.POST['event-description']
         event_object.save()
-        
+        messages.success(request, 'Your Event has been updated successfully!')
         
         for ticketkey,value in request.POST.items():
             if ticketkey.isdigit() and value:
@@ -236,6 +243,7 @@ def Update(request):
 def deletevent(request,id):
     event = Eventdetails.objects.get(id=id)
     event.delete()
+    messages.success(request, 'Your Event has been deleted successfully!')
     slug = request.user.username
     return redirect("dashboard", slug)
 

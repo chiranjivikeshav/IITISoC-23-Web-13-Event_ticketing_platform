@@ -82,7 +82,7 @@ body {
 <div class="event-form-fillup-edit" id="content">
     <h3 class="my-4" style="font-weight:bold;border-bottom:2px solid rgb(61, 21, 101);">EDIT EVENT DETAILS</h3>
     {% for event in currentEvent %}
-    <form action="/update" method="post">
+    <form action="/update" method="post" enctype="multipart/form-data">
         <input type="hidden" name="eventid" id="eventid" value="{{event.id}}"/>
         {% csrf_token %}
         <div class="event-detail-form-fillup-edit">
@@ -122,6 +122,8 @@ body {
             
             <div class="mx-3 my-3" style="width: 320px;margin-left: 30px;">
                 <div id="tickets-container">
+                    <label for="image">UPLOAD IMAGE</label>
+                    <input type="file" id="image" name="event_image" value="{{event.enevtImage}}" required>
                     {% for ticket in currentEventTicket %}
                     <h4>Ticket{{forloop.counter}} </h4>
                     <div class="ticket-form">
@@ -156,7 +158,7 @@ body {
             <textarea id="myTextarea" name="event-description" >{{event.eventDescription}}</textarea>
         </div>
 
-        <button type="submit" class="submit-form" >Save</button>
+        <button type="submit" style="margin:15px;"class="submit-form" >Save</button>
     </form>
     {%endfor%}
 </div>

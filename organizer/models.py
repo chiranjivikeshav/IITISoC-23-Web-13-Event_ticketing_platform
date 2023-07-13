@@ -21,7 +21,7 @@ class Organizer(models.Model):
 
 
 class Eventdetails(models.Model):
-    eventOrganizer = models.OneToOneField(Organizer,on_delete=models.CASCADE,default=True)
+    eventOrganizer = models.ForeignKey(Organizer,on_delete=models.CASCADE,default=True)
     eventName = models.CharField(max_length=100)
     eventDisplay = models.CharField(max_length=100)
     eventStartDate = models.DateTimeField()
@@ -32,6 +32,7 @@ class Eventdetails(models.Model):
     eventCountry = models.CharField( max_length=50)
     eventZip = models.IntegerField()
     eventDescription = models.CharField(max_length=3000)
+    eventImage = models.ImageField(upload_to='images/')
     def __str__(self):
         return self.eventName
 
