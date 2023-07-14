@@ -19,4 +19,17 @@ class CartItem(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE,default=True)
     event = models.ForeignKey(Eventdetails, on_delete=models.CASCADE)
     ticket_type = models.ForeignKey(Ticket, on_delete=models.CASCADE)
-    quantity = models.PositiveIntegerField(default=1)
+    quantity = models.PositiveIntegerField(default=0)
+
+# class Attendee(models.Model):
+#     event = models.ForeignKey(Eventdetails, on_delete=models.CASCADE,default=True)
+#     cartitem = models.ForeignKey(CartItem, on_delete=models.CASCADE,default=True)
+#     attendeName =
+#     attendeEmail =
+#     attendeGender =
+#     attendeAddress =
+#     attendeCity =
+#     attendeState =
+#     attendeCountry =
+#     attendeContact =
+    

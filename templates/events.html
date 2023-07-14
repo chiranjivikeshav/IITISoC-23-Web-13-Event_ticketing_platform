@@ -130,12 +130,12 @@
     border-color:LightGray;
     float:left;
 }
-.event-item .time a .book{
+.event-item .time  .book{
 	color:LightGray;
     width:auto;
     height:40px;
     background:transparent;
-    border-color: white;
+    border-color:LightGray;
     float:right
 }
 @media screen and (min-width: 999px) {
@@ -187,7 +187,10 @@
 										{% csrf_token%}
 										<button class="cart" >Add to Cart</button>
 									    </form>
-										<a href="#"><button  class="book">Book Now</button></a>
+										<form method="post" action="{% url 'booknow' event.id %}">
+										<button  class="book">Book Now</button></a>
+										{% csrf_token%}
+									   </form>
 									</div>																				
 								</div>
 							</div>

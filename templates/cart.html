@@ -85,7 +85,7 @@
   
           <div class="card" style="background-color: #292739;">
             <div class="card-body">
-              <button type="button" class="btn btn-warning btn-block btn-lg">Proceed to Pay</button>
+              <a href="/user/checkout/{{request.user.id}}"><button type="button" class="btn btn-warning btn-block btn-lg"><i style="font-size:22px" class="fa fa-shopping-cart"></i> Checkout</button></a>
             </div>
           </div>
         {%endif%}

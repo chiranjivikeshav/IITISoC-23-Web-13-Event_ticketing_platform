@@ -76,13 +76,14 @@ def addtocart(request, event_id):
     event = Eventdetails.objects.get(pk=event_id)
     cartItem1 = CartItem.objects.filter(event=event,user=user).first()
     if cartItem1:
-        return redirect('cart',userid)
+        messages.success(request,"Event Already in The Cart")
+        return redirect('events')
     ticketTypes = Ticket.objects.filter(event=event)
     for ticketType in ticketTypes:
         cartItem = CartItem(event=event, user=user ,ticket_type=ticketType)
         cartItem.save()
-    userid = user.id
-    return redirect('cart',userid)
+    messages.success(request,"Event Added to The Cart")
+    return redirect('events')
 
 
 def cart(request,userid):
@@ -125,3 +126,37 @@ def removefromcart(request, eventid):
         if item.event == Event:
             item.delete()
     return redirect('cart',userid)
+
+
+@login_required
+def booknow(request, event_id):
+    user = request.user
+    userid = user.id
+    event = Eventdetails.objects.get(pk=event_id)
+    cartItem1 = CartItem.objects.filter(event=event,user=user).first()
+    if cartItem1:
+        return redirect('cart',userid)
+    ticketTypes = Ticket.objects.filter(event=event)
+    for ticketType in ticketTypes:
+        cartItem = CartItem(event=event, user=user ,ticket_type=ticketType)
+        cartItem.save()
+    userid = user.id
+    return redirect('cart',userid)
+@login_required
+def checkout(request,userid):
+    user=request.user
+    cartitem=CartItem.objects.filter(user=user)
+    items = []
+
+    for cart_item in cartitem:
+        event = cart_item.event
+        ticket_type = cart_item.ticket_type
+        quantity = cart_item.quantity
+
+        for _ in range(quantity):
+            items.append({
+                'event': event,
+                'ticket_type': ticket_type,
+            })
+
+    return render(request, 'checkout.html', {'items': items})
