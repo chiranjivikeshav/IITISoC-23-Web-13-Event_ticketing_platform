@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block title %}payment page{% endblock title %}
+{% block link %}
+    
+{% endblock link %}
+{%block css%}
+
+
+  
+
+{%endblock%}
+
+{% block body %}
+  
+<div class="btn_container">
+    <!-- Payment Button -->
+    <button class="btn" id="pay-btn">Donate</button>
+  </div> 
+
+
+
+
+ {% endblock %}
+ {% block js %}
+ <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+ <script>
+   var options = {
+     // Enter the Key ID generated from the Dashboard
+     "key": "{{ razorpay_merchant_key }}",
+     "amount": "{{ razorpay_amount }}",
+     "currency" : "{{ currency }}",
+     "name": "ET platform",
+     "order_id": "{{ razorpay_order_id }}",
+     "callback_url": "{{ callback_url }}",
+    
+     handler: function (response) {
+       // Perform necessary actions on payment success
+       console.log(response);
+       // Redirect or show success message to the user
+       // For example, you can redirect to a success page
+       window.location.href = "{% url 'home' %}";
+     },
+     
+     "prefill": {
+       "name": "{{ request.user.username}}",
+       "email": "{{ request.user.email}}",
+     },
+     "theme": {
+       "color": "#F37254"
+     }
+   };
+   var rzp1 = new Razorpay(options);
+   document.getElementById("pay-btn").onclick = function (e) {
+     // Open the Razorpay payment popup
+     rzp1.open();
+     e.preventDefault();
+   };
+ </script>
+
+  {% endblock js %} 

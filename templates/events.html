@@ -10,7 +10,11 @@
 /* Tr Job Post */
 
 .event-item {
-    background-color: #292739;
+	border:1px solid #c3bcbc;
+    border-radius:8px;
+    background:white;
+    box-shadow: 0px 0px 20px #00000020;
+	color:black;
 }
 
 .event-tab .nav-tabs {
@@ -47,8 +51,8 @@
 	padding: 5px 8px;
     border: 2px solid #0D335D;
     background-color: transparent;
-    color: #0D335D;
     margin-top:10px;
+	text-decoration:none
 }
 
 .event-tab .nav-tabs>li>a.active, 
@@ -56,7 +60,6 @@
 .event-tab .nav-tabs>li>a.active:hover,
 .event-tab .nav-tabs>li>a:hover {
 	background-color:#0D335D;
-    color: white;
     cursor: pointer;
     text-decoration:none
 }
@@ -76,7 +79,7 @@
 	font-size: 14px;
 	color:LightGray;
 	overflow: hidden;
-	padding:20px;
+	padding:12px;
 }
 
 .event-info .company-logo {
@@ -92,14 +95,13 @@
 	font-size: 22px;
 	display:flex;
     justify-content:center;
-    color:LightGray;
-
+    color:black;
 }
 .event-info .tr-title h6{
 	font-size: 16px;
     margin-left:10px;
-    color:LightGray;
     margin-bottom:9px;
+	color:grey;
 }
 
 .event-item .time {
@@ -114,43 +116,33 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.event-item .time span {
-	font-size: 12px;
-	color: white;
-	line-height: 25px;
-}
 
-
-
-.event-item .time  .cart{
-	color:LightGray;
-    width:auto;
-    height:40px;
-    background:transparent;
-    border-color:LightGray;
-    float:left;
-}
-.event-item .time  .book{
-	color:LightGray;
-    width:auto;
-    height:40px;
-    background:transparent;
-    border-color:LightGray;
-    float:right
-}
 @media screen and (min-width: 999px) {
 .img-fluid{
     height:150px;
 }
 
 }
-
-
+.ADDtoCart-and-BuyNow {
+    grid-gap: 8px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 0 5px 5px;
+    padding: 4px;
+}
+.ADDtoCart-and-BuyNow button {
+    background-color: #e6d416;
+    border-style: none;
+    font-size: 13px;
+    height: 50px;
+    letter-spacing: 1px;
+    width: 100%;
+}
 
 {%endblock%}
 
 {% block body %}
-
+    
 <div class="tr-event-posted section-padding">
     <div class="container">
 		<div class="event-tab text-center">
@@ -182,16 +174,18 @@
 									<div style="display:flex;justify-content:center;margin-bottom:8px;"class="time">
                                         <a href="">view details <span style="font-size:16px;" class="fa fa-angle-double-right"></span></a>
                                     </div>
-                                    <div class="time">
-										<form method="post" action="{% url 'addtocart' event.id %}">
+
+									
+								</div>
+								<div class="ADDtoCart-and-BuyNow">
+									<form method="post" action="{% url 'addtocart' event.id %}">
 										{% csrf_token%}
-										<button class="cart" >Add to Cart</button>
-									    </form>
-										<form method="post" action="{% url 'booknow' event.id %}">
-										<button  class="book">Book Now</button></a>
-										{% csrf_token%}
-									   </form>
-									</div>																				
+									<button type="submit"><i class="fa fa-shopping-cart"></i>ADD TO CART</button>
+									</form>
+									<form method="post" action="{% url 'booknow' event.id %}">
+									<button  type="submit"><i class="fa fa-shopping-bag"></i>BUY NOW</button>
+									{% csrf_token%}
+								   </form>
 								</div>
 							</div>
 						</div>

@@ -10,7 +10,11 @@
     
 }
 .background{
-    background:#292739;
+    border:1px solid #c3bcbc;
+    border-radius:8px;
+    background:white;
+    margin-bottom:15px;
+    box-shadow: 0px 0px 20px #00000020;
 }
 .account-settings .user-profile {
     margin: 0 0 1rem 0;
@@ -74,9 +78,9 @@
     <form action="/user/profile/update/{{user.id}}" method="post" id="myForm">
         {%csrf_token%}
      <div class="row gutters">
-    <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
-    <div class="card h-100">
-        <div class="card-body background">
+    <div class="my-3 col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+    <div class="card h-100 background">
+        <div class="card-body">
             <div class="account-settings">
                 <div class="user-profile">
                     <div class="user-avatar">
@@ -93,9 +97,9 @@
         </div>
     </div>
     </div>
-    <div class=" col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
-    <div class="card h-100">
-        <div class="card-body background ">
+    <div class="my-3 col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+    <div class="card h-100 background">
+        <div class="card-body">
             <div class="row gutters">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <h4 class="mb-2 text-primary">Personal Details</h4>

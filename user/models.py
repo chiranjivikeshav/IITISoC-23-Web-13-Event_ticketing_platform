@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from organizer.models import Eventdetails,Ticket
-# Create your models here.
+import datetime
 
 class Userprofile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -20,16 +20,22 @@ class CartItem(models.Model):
     event = models.ForeignKey(Eventdetails, on_delete=models.CASCADE)
     ticket_type = models.ForeignKey(Ticket, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=0)
+    paymentStatus  =  models.BooleanField(default=False)
+    
 
-# class Attendee(models.Model):
-#     event = models.ForeignKey(Eventdetails, on_delete=models.CASCADE,default=True)
-#     cartitem = models.ForeignKey(CartItem, on_delete=models.CASCADE,default=True)
-#     attendeName =
-#     attendeEmail =
-#     attendeGender =
-#     attendeAddress =
-#     attendeCity =
-#     attendeState =
-#     attendeCountry =
-#     attendeContact =
+
+
+class Attendee(models.Model):
+    event = models.ForeignKey(Eventdetails, on_delete=models.CASCADE,default=True)
+    cartitem = models.ForeignKey(CartItem, on_delete=models.CASCADE,default=True)
+    attendeName = models.CharField( max_length=50)
+    attendeEmail = models.EmailField(max_length=30)
+    attendeGender = models.CharField(max_length=10)
+    attendeAddress = models.CharField(max_length=50)
+    attendeContact = models.PositiveIntegerField()
+    attendeCountry = models.CharField(max_length=20)
+    attendeState = models.CharField(max_length=20)
+    attendeZIP = models.PositiveIntegerField()
+    timeStamp=models.DateTimeField(blank=True,null=True,default=datetime.datetime.now())
+    payment_id = models.CharField(max_length=100,default=True)
     

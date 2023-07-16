@@ -7,50 +7,350 @@
 {%block css%}
 
 
+.attendee{
+    min-height: 90vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding:20px;
+    flex-flow:column;
+}
+.container {
+    padding: 20px;
+    box-shadow: 0px 0px 20px #00000020;
+    background-color: white;
+    border-radius: 8px;
+    margin-bottom:20px;
+}
+.step {
+    display: none;
+}
+.active {
+    display: block;
+}
+ .form-group {
+    width: 100%;
+    margin-top: 20px;
+}
+.form-group input {
+    width: 100%;
+    border: 1.5px solid rgba(128, 128, 128, 0.418);
+    padding: 5px;
+    font-size: 18px;
+    margin-top: 5px;
+    border-radius: 4px;
+}
+
+ button.next-btn,
+button.previous-btn,
+ button.submit-btn {
+    float: right;
+    margin-top: 20px;
+    margin-left: 3px;
+    padding: 10px;
+    border: none;
+    outline: none;
+    color:white;
+    border-radius:5px;
+    border: 1px solid #683594;
+    background-color: #683594;
+    font-family: "Montserrat";
+    font-size: 18px;
+    cursor: pointer; 
+}
+button.previous-btn {
+    float: left;
+}
+button.submit-btn {
+    background-color: aquamarine;
+}
+.list-group-horizontal>.list-group-item{
+    width:33%
+}
+
 {%endblock%}
 
 {% block body %}
-        
-<div class="accordion container my-3" id="accordionPanelsStayOpenExample">
-    <div class="accordion-item">
-      <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-          Accordion Item #1
-        </button>
-      </h2>
-      <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
-        <div class="accordion-body">
-          <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-        </div>
-      </div>
+
+
+<section class="attendee">
+    <div class="container">
+        <p style="color:black;font-size:16px;margin-left:10px;margin-top:10px"><strong style="font-size:22px;">SUMMERY</strong></p>
+    <ul class="list-group list-group-horizontal" >
+        <li class="list-group-item" style="font-weight:bold;color:purple" >Ticket Type</li>
+        <li class="list-group-item" style="font-weight:bold;color:purple">Quintity</li>
+        <li class="list-group-item" style="font-weight:bold;color:purple">Price(Rs)</li>
+      </ul>
+      {% for item in cartitem%}
+      <ul class="list-group list-group-horizontal">
+        <li class="list-group-item">{{item.event.eventName}}<br>({{item.ticket_type.ticketname}})</li>
+        <li class="list-group-item">{{item.quantity}}</li>
+        <li class="list-group-item">{{item.ticket_type.ticketprice}}</li>
+      </ul>
+      {% endfor %}
+      <ul class="list-group list-group-horizontal-md">
+        <li class="list-group-item" style="font-weight:bold;color:purple;width:99%">Total Price<p style="float:right">{{total_cost}} Rs.</p></li>
+      </ul>
     </div>
-    <div class="accordion-item">
-      <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
-          Accordion Item #2
-        </button>
-      </h2>
-      <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
-        <div class="accordion-body">
-          <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-        </div>
-      </div>
+    <div class="container">
+        <form method="post" action="{% url 'payment'%}">
+            {% csrf_token %}
+            {% for item in items %}
+
+            {% if forloop.counter == 1 %}
+            <input type="hidden" name="attendeeEventId{{forloop.counter}}" value="{{ item.event.id}}">
+            <input type="hidden" name="attendeecartItemId{{forloop.counter}}" value="{{ item.cartitem_id}}">
+            <div class="step step-{{forloop.counter}} active">
+                <p style="color:black;font-size:16px;margin-left:10px;margin-top:10px"><i data-toggle="modal" data-target="#eventdeleteModalCenter" class="fa fa-arrow-circle-o-left" style="font-size:22px;"></i><strong style="font-size:22px;"> {{item.event.eventName}}</strong>  {{item.ticket_type.ticketname}}</p>
+                <hr>
+                <p style="margin-left:15px"><i class="fas fa-user-edit" style="font-size:14px;color:purple"></i> ATTENDEE {{forloop.counter}} DETAILS</p>
+                <div style="display:flex;flex-flow:row;flex-wrap:wrap;justify-content:center;align-item:center;">
+                   <div class="mb-3 mx-3 my-3" >
+                    <label style="margin:5px;" for="exampleFormControlInput1" class="form-label">Full Name</label>
+                    <input style="margin:5px;" type="text" class="form-control" id="exampleFormControlInput1" name="attendeename{{forloop.counter}}" required>
+                   
+                    <label style="margin:5px;" for="exampleFormControlInput1" class="form-label">Email</label>
+                    <input style="margin:5px;" type="email" class="form-control" id="exampleFormControlInput1" placeholder="abc@example.com" name="attendeeemail{{forloop.counter}}" required>
+                   </div>
+                   <div class="mb-3 mx-3 my-3 ">
+                    <label style="margin:5px;" for="gender" class="form-label">Gender</label>
+                    <select style="margin:5px;" class="form-select" id="gender" aria-label="Default select example" name="attendeegender{{forloop.counter}}" required>
+                        <option selected>--select--</option>
+                        <option value="1">Male</option>
+                        <option value="2">Female</option>
+                        <option value="3">Others</option>
+                    </select>
+                    <label style="margin:5px;" for="exampleFormControlInput1" class="form-label">Address</label>
+                    <input style="margin:5px;" type="text" class="form-control" id="exampleFormControlInput1" name="attendeeaddress{{forloop.counter}}" required>
+                   </div>
+                   <div class="mb-3 mx-3 my-3">
+                    <label style="margin:5px;" for="exampleFormControlInput1" class="form-label">Contact Number</label>
+                    <input style="margin:5px;" type="phone" class="form-control" id="exampleFormControlInput1"  name="attendeecontact{{forloop.counter}}" required>             
+                    <label style="margin:5px;" for="exampleFormControlInput1" class="form-label">Country</label>
+                    <input style="margin:5px;" type="text" class="form-control" id="exampleFormControlInput1" name="attendeecountry{{forloop.counter}}" required>
+                   </div>
+                   <div class="mb-3 mx-3 my-3">
+                    <label style="margin:5px;" for="exampleFormControlInput1" class="form-label">State</label>
+                    <input style="margin:5px;" type="text" class="form-control" id="exampleFormControlInput1"name="attendeestate{{forloop.counter}}" required>
+                    <label style="margin:5px;" for="exampleFormControlInput1" class="form-label">Pincode/Zipcode</label>
+                    <input style="margin:5px;" type="number" class="form-control" id="exampleFormControlInput1" name="attendeeZIP{{forloop.counter}}" required>
+                    {% if forloop.counter == items|length %}
+                    <button type="submit" class="next-btn">Save and Next</button>
+                    {% else %}
+                    <button type="button" class="next-btn">Save and Next</button>
+                    {% endif%}
+                   </div>
+                </div>
+            </div>
+
+            {% elif forloop.counter == items|length %}
+            <input type="hidden" name="attendeeEventId{{forloop.counter}}" value="{{ item.event.id}}">
+            <input type="hidden" name="attendeecartItemId{{forloop.counter}}" value="{{ item.cartitem_id}}">
+            <div class="step step-{{forloop.counter}}" >
+                <p style="color:black;font-size:16px;margin-left:10px;margin-top:10px"><i data-toggle="modal" data-target="#eventdeleteModalCenter"class="fa fa-arrow-circle-o-left"style="font-size:22px;" ></i><strong style="font-size:22px;"> {{item.event.eventName}}</strong>  {{item.ticket_type.ticketname}}</p>
+                <hr>
+                <p style="margin-left:15px"><i class="fas fa-user-edit" style="font-size:14px;color:purple"></i> ATTENDEE {{forloop.counter}} DETAILS</p>
+                <div style="display:flex;flex-flow:row;flex-wrap:wrap;justify-content:center;align-item:center;">
+                    <div class="mb-3 mx-3 my-3" >
+                        <label style="margin:5px;" for="exampleFormControlInput1" class="form-label">Full Name</label>
+                        <input style="margin:5px;" type="text" class="form-control" id="exampleFormControlInput1" name="attendeename{{forloop.counter}}" required>
+                       
+                        <label style="margin:5px;" for="exampleFormControlInput1" class="form-label">Email</label>
+                        <input style="margin:5px;" type="email" class="form-control" id="exampleFormControlInput1" placeholder="abc@example.com" name="attendeeemail{{forloop.counter}}" required>
+                       </div>
+                       <div class="mb-3 mx-3 my-3 ">
+                        <label style="margin:5px;" for="gender" class="form-label">Gender</label>
+                        <select style="margin:5px;" class="form-select" id="gender" aria-label="Default select example" name="attendeegender{{forloop.counter}}" required>
+                            <option selected>--select--</option>
+                            <option value="1">Male</option>
+                            <option value="2">Female</option>
+                            <option value="3">Others</option>
+                        </select>
+                        <label style="margin:5px;" for="exampleFormControlInput1" class="form-label">Address</label>
+                        <input style="margin:5px;" type="text" class="form-control" id="exampleFormControlInput1" name="attendeeaddress{{forloop.counter}}" required>
+                       </div>
+                       <div class="mb-3 mx-3 my-3">
+                        <label style="margin:5px;" for="exampleFormControlInput1" class="form-label">Contact Number</label>
+                        <input style="margin:5px;" type="phone" class="form-control" id="exampleFormControlInput1"  name="attendeecontact{{forloop.counter}}" required>             
+                        <label style="margin:5px;" for="exampleFormControlInput1" class="form-label">Country</label>
+                        <input style="margin:5px;" type="text" class="form-control" id="exampleFormControlInput1" name="attendeecountry{{forloop.counter}}" required>
+                       </div>
+                       <div class="mb-3 mx-3 my-3">
+                        <label style="margin:5px;" for="exampleFormControlInput1" class="form-label">State</label>
+                        <input style="margin:5px;" type="text" class="form-control" id="exampleFormControlInput1"name="attendeestate{{forloop.counter}}" required>
+                        <label style="margin:5px;" for="exampleFormControlInput1" class="form-label">Pincode/Zipcode</label>
+                        <input style="margin:5px;" type="number" class="form-control" id="exampleFormControlInput1" name="attendeeZIP{{forloop.counter}}" required>
+                        
+                        <button type="button" class="previous-btn">Previous</button>
+                    </div> 
+                    <button type="submit" class="submit-btn">Submit And Proceed</button>
+               </div> 
+            </div>
+
+            {% else %}
+            <input type="hidden" name="attendeeEventId{{forloop.counter}}" value="{{ item.event.id}}">
+            <input type="hidden" name="attendeecartItemId{{forloop.counter}}" value="{{ item.cartitem_id}}">
+            <div class="step step-{{forloop.counter}} " >
+                <p style="color:black;font-size:16px;margin-left:10px;margin-top:10px"><i data-toggle="modal" data-target="#eventdeleteModalCenter" class="fa fa-arrow-circle-o-left" style="font-size:22px;"></i><strong style="font-size:22px;"> {{item.event.eventName}}</strong>  {{item.ticket_type.ticketname}}</p>
+                <hr>
+                <p style="margin-left:15px"><i class="fas fa-user-edit" style="font-size:14px;color:purple"></i> ATTENDEE {{forloop.counter}} DETAILS</p>
+                <div style="display:flex;flex-flow:row;flex-wrap:wrap;justify-content:center;align-item:center;">
+                   <div class="mb-3 mx-3 my-3" >
+                    <label style="margin:5px;" for="exampleFormControlInput1" class="form-label">Full Name</label>
+                    <input style="margin:5px;" type="text" class="form-control" id="exampleFormControlInput1" name="attendeename{{forloop.counter}}" required>
+                   
+                    <label style="margin:5px;" for="exampleFormControlInput1" class="form-label">Email</label>
+                    <input style="margin:5px;" type="email" class="form-control" id="exampleFormControlInput1" placeholder="abc@example.com" name="attendeeemail{{forloop.counter}}" required>
+                   </div>
+                   <div class="mb-3 mx-3 my-3 ">
+                    <label style="margin:5px;" for="gender" class="form-label">Gender</label>
+                    <select style="margin:5px;" class="form-select" id="gender" aria-label="Default select example" name="attendeegender{{forloop.counter}}" required>
+                        <option selected>--select--</option>
+                        <option value="1">Male</option>
+                        <option value="2">Female</option>
+                        <option value="3">Others</option>
+                    </select>
+                    <label style="margin:5px;" for="exampleFormControlInput1" class="form-label">Address</label>
+                    <input style="margin:5px;" type="text" class="form-control" id="exampleFormControlInput1" name="attendeeaddress{{forloop.counter}}" required>
+                   </div>
+                   <div class="mb-3 mx-3 my-3">
+                    <label style="margin:5px;" for="exampleFormControlInput1" class="form-label">Contact Number</label>
+                    <input style="margin:5px;" type="tel" class="form-control" id="exampleFormControlInput1"  name="attendeecontact{{forloop.counter}}" required>             
+                    <label style="margin:5px;" for="exampleFormControlInput1" class="form-label">Country</label>
+                    <input style="margin:5px;" type="text" class="form-control" id="exampleFormControlInput1" name="attendeecountry{{forloop.counter}}" required>
+                   </div>
+                   <div class="mb-3 mx-3 my-3">
+                    <label style="margin:5px;" for="exampleFormControlInput1" class="form-label">State</label>
+                    <input style="margin:5px;" type="text" class="form-control" id="exampleFormControlInput1"name="attendeestate{{forloop.counter}}" required>
+                    <label style="margin:5px;" for="exampleFormControlInput1" class="form-label">Pincode/Zipcode</label>
+                    <input style="margin:5px;" type="number" class="form-control" id="exampleFormControlInput1" name="attendeeZIP{{forloop.counter}}" required>
+                    
+                    <button type="button" class="previous-btn">Previous</button>
+                    <button type="button"  class="next-btn">Save and Next</button>
+                   </div>
+                </div>
+            </div>
+             {% endif %}
+            {% endfor%}
+        </form>
     </div>
-    <div class="accordion-item">
-      <h2 class="accordion-header" id="panelsStayOpen-headingThree">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-          Accordion Item #3
-        </button>
-      </h2>
-      <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
-        <div class="accordion-body">
-          <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+</section>
+ 
+
+
+  <div class="modal fade" id="eventdeleteModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-confirm" role="document">
+     <div class="modal-content d-flex " >
+         <div class="modal-header flex-column justify-content-center">						
+             <h4 class="modal-title w-100">Do you want to leave this page?</h4>	
+         </div>
+         <div class="modal-body justify-content-center">
+             <p>You will lose your information if you go back.</p>
+         </div>
+         <div class="modal-footer justify-content-center">
+             <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+          <a href="/user/cart" role="button" class="btn btn-danger">LEAVE</a>
         </div>
-      </div>
-    </div>
-  </div>
+     </div> 
+   </div>
+ </div>
+
 
 {%endblock body%}
  {% block js%}
+ 
+ 
 
+
+   <script>
+    const steps = Array.from(document.querySelectorAll("form .step"));  
+    const nextBtn = document.querySelectorAll("form .next-btn");  
+    const prevBtn = document.querySelectorAll("form .previous-btn");  
+    const form = document.querySelector("form");  
+    nextBtn.forEach((button) => {  
+     button.addEventListener("click", () => {  
+      changeStep("next");  
+     });  
+    });  
+    prevBtn.forEach((button) => {  
+     button.addEventListener("click", () => {  
+      changeStep("prev");  
+     });  
+    });  
+    function changeStep(btn) {  
+     let index = 0;  
+     const active = document.querySelector(".active");  
+     index = steps.indexOf(active);  
+     steps[index].classList.remove("active");  
+     if (btn === "next") {  
+      index++;  
+     } else if (btn === "prev") {  
+      index--;  
+     }  
+     steps[index].classList.add("active");  
+    }  
+ 
+   </script>
 {% endblock js %}
+
+
+{% comment %} 
+
+<form action="" method="post">
+    {%csrf_token%}    
+<div class="accordion container my-3" id="accordionPanelsStayOpenExample">
+    {% for item in items %}
+    
+    <p style="color:black;font-size:16px;margin-left:10px;margin-top:10px"><strong style="font-size:22px;">{{forloop.counter}} {{item.event.eventName}}</strong>  {{item.ticket_type.ticketname}}</p>
+   
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="panelsStayOpen-heading{{forloop.counter}}">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse{{forloop.counter}}" aria-expanded="true" aria-controls="panelsStayOpen-collapse{{forloop.counter}}">
+            ATTENDEE {{forloop.counter}} DETAILS
+        </button>
+      </h2>
+      {% if forloop.counter == 1%}
+      <div id="panelsStayOpen-collapse{{forloop.counter}}" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-heading{{forloop.counter}}">
+        {%else%}
+      <div id="panelsStayOpen-collapse{{forloop.counter}}" class="accordion-collapse collapse " aria-labelledby="panelsStayOpen-heading{{forloop.counter}}">
+        {% endif %}
+        <div class="accordion-body d-flex" style="background:#292739;color:white;flex-flow:row;flex-wrap:wrap;justify-content:center">
+           <div class="mb-3 mx-3 my-3" >
+            <label style="margin:5px;" for="exampleFormControlInput1" class="form-label">Full Name</label>
+            <input style="margin:5px;" type="text" class="form-control" id="exampleFormControlInput1" name="attendeename{{forloop.counter}}" required>
+           
+            <label style="margin:5px;" for="exampleFormControlInput1" class="form-label">Email</label>
+            <input style="margin:5px;" type="email" class="form-control" id="exampleFormControlInput1" placeholder="abc@example.com" name="attendeeemail{{forloop.counter}}" required>
+           </div>
+           <div class="mb-3 mx-3 my-3 ">
+            <label style="margin:5px;" for="gender" class="form-label">Gender</label>
+            <select style="margin:5px;" class="form-select" id="gender" aria-label="Default select example" name="attendeegender{{forloop.counter}}" required>
+                <option selected>--select--</option>
+                <option value="1">Male</option>
+                <option value="2">Female</option>
+                <option value="3">Others</option>
+            </select>
+            <label style="margin:5px;" for="exampleFormControlInput1" class="form-label">Address</label>
+            <input style="margin:5px;" type="text" class="form-control" id="exampleFormControlInput1" name="attendeeaddress{{forloop.counter}}" required>
+           </div>
+           <div class="mb-3 mx-3 my-3">
+            <label style="margin:5px;" for="exampleFormControlInput1" class="form-label">Contact Number</label>
+            <input style="margin:5px;" type="phone" class="form-control" id="exampleFormControlInput1"  name="attendeecontact{{forloop.counter}}" required>             
+            <label style="margin:5px;" for="exampleFormControlInput1" class="form-label">Country</label>
+            <input style="margin:5px;" type="text" class="form-control" id="exampleFormControlInput1" name="attendeecountry{{forloop.counter}}" required>
+           </div>
+           <div class="mb-3 mx-3 my-3">
+            <label style="margin:5px;" for="exampleFormControlInput1" class="form-label">State</label>
+            <input style="margin:5px;" type="text" class="form-control" id="exampleFormControlInput1"name="attendeestate{{forloop.counter}}" required>
+            <label style="margin:5px;" for="exampleFormControlInput1" class="form-label">Pincode/Zipcode</label>
+            <input style="margin:5px;" type="number" class="form-control" id="exampleFormControlInput1" name="attendeeZIP{{forloop.counter}}" required>
+           </div>
+        </div>
+      </div>
+    </div>
+    {% endfor%}
+    <button type="submit" ></button>
+  </div>
+
+</form>  {% endcomment %}

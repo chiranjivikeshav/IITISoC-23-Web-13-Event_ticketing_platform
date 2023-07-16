@@ -7,6 +7,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
 from . import urls
+
+
 # Create your views here.
 def home(request):
     return render(request,"home.html")
@@ -33,19 +35,6 @@ def user_registration(request):
             user_twurl = "",
             user_ldurl = "",
             )
-        # Organizer.objects.create(
-        #     user=user,
-        #     organizerName='',
-        #     organizerContact ='',
-        #     organizerEmail='',
-        #     organizerBankName='',
-        #     organizerBankBranch='',
-        #     organizerAbout='',
-        #     organizerBankIFSC='',
-        #     organizerBankAccount='',
-        #     organizerAddress=''
-        #     )
-    
         return redirect('login')
     return render(request,'home.html')
 
@@ -142,9 +131,10 @@ def organizer_update(request):
         
         slug = (user.username)
         return redirect("dashboard", slug)
+    return render(request,'pagenotfound.html')
 
-def dashboard(request,slug):
-    user = User.objects.get(username= slug)
+def dashboard(request):
+    user = request.user
     organizer = Organizer.objects.filter(user=user).first()
     allEvents =Eventdetails.objects.filter(eventOrganizer=organizer)
     eventSet={
@@ -202,10 +192,13 @@ def dashboard(request,slug):
 def Retrieve(request,slug):
     string = slug
     filter_id =""
+    filter_name=""
     for char in string :
         if char.isdigit():
             filter_id+=char
-    currentEvent = Eventdetails.objects.filter(id=int(filter_id))
+        else:
+            filter_name+=char
+    currentEvent = Eventdetails.objects.filter(id=int(filter_id),eventName=filter_name)
     currentEventTicket =Ticket.objects.filter(event=currentEvent[0] )
     currentEventSet={'currentEvent':currentEvent,'currentEventTicket':currentEventTicket}    
     return render(request,"update.html",currentEventSet)
@@ -240,13 +233,13 @@ def Update(request):
                 ticket_object.save() 
         slug= str(request.POST['event_name'])+str(eventid )
         return redirect('Retrieve',slug)
+    return render(request,'pagenotfound.html')
 def deletevent(request,id):
     event = Eventdetails.objects.get(id=id)
     event.delete()
     messages.success(request, 'Your Event has been deleted successfully!')
     slug = request.user.username
     return redirect("dashboard", slug)
-
 
 
 

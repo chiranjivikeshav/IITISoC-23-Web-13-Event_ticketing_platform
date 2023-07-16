@@ -15,9 +15,9 @@
 
       body {
         margin: 0;
-        background-color: #efeddc;
+        background-color: aliceblue;
         font-family: "Rubik", sans-serif;
-        color:white;
+        font-family: "Montserrat";
     }
     hr{
       position:relative;
@@ -181,6 +181,12 @@
 .success{
   background-color: #a8f0c6;
 }
+.danger{
+  background-color:red;
+}
+.warning{
+  background-color:yellow;
+}
 .message-content {
   text-align: center;
 }
@@ -309,7 +315,7 @@ footer.tag{
           </section>
         </div>
         {% if user.is_authenticated %}
-           <a class="my-3 mx-3" href="/user/cart/{{request.user.id}}">
+           <a class="my-3 mx-3" href="/user/cart">
             <i style="font-size:30px;color:yellow" class="fa fa-shopping-cart"></i>
             </a>
             <div class="popover__wrapper my-3 ">
@@ -317,9 +323,9 @@ footer.tag{
               <i style="font-size:30px;" class="fas fa-user"></i>
               </a>
               <div class="popover__content">
-                <a class="nav-link" href="/user/profile/{{request.user}}">Profile</a>
+                <a class="nav-link" href="/user/profile">Profile</a>
                 <hr>
-                <a class="nav-link" href="/organizerDashboard/{{request.user}}">Organizing Events</a>
+                <a class="nav-link" href="/organizerDashboard">Organizing Events</a>
                 <hr>
                 <a class="nav-link" href="">Attending Events</a>
                 <hr>
