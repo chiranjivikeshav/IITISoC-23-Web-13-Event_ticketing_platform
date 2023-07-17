@@ -40,6 +40,7 @@
 	position: relative;
 	z-index: 1;
 	display: inline-block;
+	border:none;
 }
 
 
@@ -52,7 +53,8 @@
     border: 2px solid #0D335D;
     background-color: transparent;
     margin-top:10px;
-	text-decoration:none
+	text-decoration:none;
+	color:white;
 }
 
 .event-tab .nav-tabs>li>a.active, 
@@ -157,6 +159,9 @@
 			<div class="tab-content text-left">
 				<div role="tabpanel" class="tab-pane fade active show" id="upcoming_events">
 					<div class="row">
+						{% if upcoming_events|length < 1 %}
+						<h2> Not Have Any Events</h2>
+						{% else%}
                         {%for event in upcoming_events %}
                         
 						<div class="col-md-6 col-lg-3">
@@ -172,7 +177,7 @@
 									</span>
 							
 									<div style="display:flex;justify-content:center;margin-bottom:8px;"class="time">
-                                        <a href="">view details <span style="font-size:16px;" class="fa fa-angle-double-right"></span></a>
+                                        <a href="/user/event/{{event.eventName}}{{event.id}}">view details <span style="font-size:16px;" class="fa fa-angle-double-right"></span></a>
                                     </div>
 
 									
@@ -191,10 +196,14 @@
 						</div>
                         
                         {% endfor%}
+						{% endif%}
 					</div><!-- /.row -->
 				</div><!-- /.tab-pane -->
 				<div role="tabpanel" class="tab-pane fade in" id="ongoing_events">
 					<div class="row">	
+						{% if ongoing_events|length < 1 %}
+						<h2> Not Have Any Events</h2>
+						{% else%}
                         {%for event in ongoing_events %}								
 						<div class="col-md-6 col-lg-3">
 							<div class="event-item">
@@ -208,16 +217,20 @@
                                         <h6><i class="fas fa-calendar"></i> &nbsp &nbsp &nbsp{{event.eventStartDate|date:"Y-m-d"}}<br>&nbsp &nbsp &nbsp &nbsp - {{event.eventEndDate|date:"Y-m-d"}}<h6>
 									</span>
 									<div style="display:flex;justify-content:center;margin-bottom:8px;"class="time">
-                                        <a href="">view details <span style="font-size:16px;" class="fa fa-angle-double-right"></span></a>
+                                        <a href="/user/event/{{event.eventName}}{{event.id}}">view details <span style="font-size:16px;" class="fa fa-angle-double-right"></span></a>
                                     </div>																				
 								</div>
 							</div>
 						</div>
-                        {% endfor%}						
+                        {% endfor%}	
+						{% endif %}					
 					</div><!-- /.row -->	
 				</div><!-- /.tab-pane -->
 				<div role="tabpanel" class="tab-pane fade in" id="past_events">
-					<div class="row">				
+					<div class="row">	
+						{% if past_events|length < 1 %}
+						<h2> Not Have Any Events</h2>
+						{% else%}			
 						{%for event in past_events %}
 						<div class="col-md-6 col-lg-3">
 							<div class="event-item">
@@ -231,12 +244,13 @@
                                         <h6><i class="fas fa-calendar"></i> &nbsp &nbsp &nbsp{{event.eventStartDate|date:"Y-m-d"}}<br>&nbsp &nbsp &nbsp &nbsp - {{event.eventEndDate|date:"Y-m-d"}}<h6>
 									</span>
 									<div style="display:flex;justify-content:center;margin-bottom:8px;"class="time">
-                                        <a href="">view details <span style="font-size:16px;" class="fa fa-angle-double-right"></span></a>
+                                        <a href="/user/event/{{event.eventName}}{{event.id}}">view details <span style="font-size:16px;" class="fa fa-angle-double-right"></span></a>
                                     </div>																			
 								</div>
 							</div>
 						</div>
                         {% endfor%}
+						{% endif %}
 					</div><!-- /.row -->	
 				</div><!-- /.tab-pane -->
 			</div>				

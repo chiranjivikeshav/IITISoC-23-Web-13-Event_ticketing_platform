@@ -6,6 +6,7 @@ urlpatterns = [
     path('profile',views.profile,name="profile"),
     path('profile/update/<int:id>',views.profileupdate,name="profileupdate"),
     path('events',views.eventviews,name="events"),
+    path('event/<str:slug>/',views.eventdetailes,name="event"),
     path('addtocart/<int:event_id>/', views.addtocart, name='addtocart'),
     path('booknow/<int:event_id>/', views.booknow, name='booknow'),
     path('cart', views.cart, name='cart'),
@@ -14,4 +15,5 @@ urlpatterns = [
     path('checkout/<int:userid>/', views.checkout, name='checkout'),
     path('payment/', views.payment, name='payment'),
     path('paymenthandler/<int:userid>/', views.paymenthandler, name='paymenthandler'),
+    path('yourticket/',views.yourTicket,name = 'yourticket' )
 ]

@@ -11,6 +11,17 @@ from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponseBadRequest
 from django.urls import reverse
+import datetime
+
+import qrcode
+import hashlib
+from django.core.mail import send_mail
+from django.core.files.base import ContentFile
+
+
+
+
+
 
 def profile(request):
     user= request.user
@@ -54,9 +65,7 @@ def profileupdate(request,id):
         user_about = user_about,
         )
         profile.save()
-    user=User.objects.get(id=id)
-    slug = user.username
-    return redirect('profile',username=slug)
+    return redirect('profile')
 
 def eventviews(request):
     current_datetime = timezone.now()
@@ -71,6 +80,19 @@ def eventviews(request):
         'past_events': past_events
     }
     return render(request,'events.html',context)
+
+def eventdetailes(request,slug):
+    string = slug
+    filter_id =""
+    filter_name=""
+    for char in string :
+        if char.isdigit():
+            filter_id+=char
+        else:
+            filter_name+=char
+    event =Eventdetails.objects.get(eventName=filter_name,id= int(filter_id))
+    tickets =Ticket.objects.filter(event =event)
+    return render( request,'particularevent.html',{'event':event,'tickets':tickets})
 
 @login_required
 def addtocart(request, event_id):
@@ -179,22 +201,43 @@ def payment( request):
         user=request.user
         userid  = user.id
         cartitem=CartItem.objects.filter(user=user ,quantity__gt=0,paymentStatus=False)
+        for items in cartitem:
+            attendee = Attendee.objects.filter(paymentStatus=False, cartitem=items)
+            for attende in attendee:
+                attende.delete()
         total_cost = sum(item.ticket_type. ticketprice * item.quantity for item in cartitem)
         total_quintity = 0
         for cart_item in cartitem:
             total_quintity+=cart_item.quantity
         for num in range(total_quintity):
-            request.session['attendeename'+str(num+1)] = request.POST['attendeename'+str(num+1)]
-            request.session['attendeeemail'+str(num+1)] = request.POST['attendeeemail'+str(num+1)]
-            request.session['attendeegender'+str(num+1)] = request.POST['attendeegender'+str(num+1)]
-            request.session['attendeeaddress'+str(num+1)] = request.POST['attendeeaddress'+str(num+1)]
-            request.session['attendeecontact'+str(num+1)] = request.POST['attendeecontact'+str(num+1)]
-            request.session['attendeecountry'+str(num+1)] = request.POST['attendeecountry'+str(num+1)]
-            request.session['attendeestate'+str(num+1)] = request.POST['attendeestate'+str(num+1)]
-            request.session['attendeeZIP'+str(num+1)] = request.POST['attendeeZIP'+str(num+1)]
-            request.session['attendeeEventId'+str(num+1)] = request.POST['attendeeEventId'+str(num+1)]
-            request.session['attendeecartItemId'+str(num+1)] = request.POST['attendeecartItemId'+str(num+1)]
-            
+            event__id = request.POST['attendeeEventId'+str(num+1)]
+            cartitem__id = request.POST['attendeecartItemId'+str(num+1)]
+            name = request.POST['attendeename'+str(num+1)]
+            email = request.POST['attendeeemail'+str(num+1)]
+            gender = request.POST['attendeegender'+str(num+1)]
+            address = request.POST['attendeeaddress'+str(num+1)]
+            contact = request.POST['attendeecontact'+str(num+1)]
+            country = request.POST['attendeecountry'+str(num+1)]
+            state = request.POST['attendeestate'+str(num+1)]
+            zipcode = request.POST['attendeeZIP'+str(num+1)]
+            event = Eventdetails.objects.get(id=event__id)
+            cartite = CartItem.objects.get(id=cartitem__id)
+            attendeeprofile=Attendee(
+            user= user,
+            event = event,
+            cartitem = cartite,
+            attendeName = name,
+            attendeEmail = email,
+            attendeGender = gender,
+            attendeAddress = address,
+            attendeContact = contact,
+            attendeCountry = country,
+            attendeState = state,
+            attendeZIP = zipcode,
+             
+            )
+            attendeeprofile.save()
+        
         currency = 'INR'
         amount = int(total_cost*100)
    
@@ -229,42 +272,73 @@ def paymenthandler(request, userid):
             # verify the payment signature.
             result = razorpay_client.utility.verify_payment_signature(
                 params_dict)
-           
             if result is not None:
+                
                 user = User.objects.get(id=userid)
                 cart_items = CartItem.objects.filter(user=user, quantity__gt=0, paymentStatus=False)
-                total_quintity = 0
-                for cart_item in cart_items:
-                    total_quintity+=cart_item.quantity
-                for num in range(total_quintity):
-                    event__id = request.session.get('attendeeEventId'+str(num+1))
-                    cartitem__id = request.session.get('attendeecartItemId'+str(num+1))
-                    attendeeprofile=Attendee(
-                        event = Eventdetails.objects.get(id=event__id),
-                        cartitem = CartItem.objects.get(id=cartitem__id),
-                        attendeName = request.session.get('attendeename'+str(num+1)),
-                        attendeEmail = request.session.get('attendeeemail'+str(num+1)),
-                        attendeGender = request.session.get('attendeegender'+str(num+1)),
-                        attendeAddress = request.session.get('attendeeaddress'+str(num+1)),
-                        attendeContact = request.session.get('attendeecontact'+str(num+1)),
-                        attendeCountry = request.session.get('attendeecountry'+str(num+1)),
-                        attendeState = request.session.get('attendeestate'+str(num+1)),
-                        attendeZIP = request.session.get('attendeeZIP'+str(num+1)),
-                        payment_id =  payment_id,  
-                    )
-                    attendeeprofile.save()
+                for items in cart_items:
+                    attendee = Attendee.objects.filter(paymentStatus=False, cartitem=items)
+                    attendee.update(paymentStatus=True)
+                    attendee.update(timeStamp=datetime.datetime.now())
+
+
+
                 cart_items.update(paymentStatus=True)
-                return redirect('cart')
-               
+                messages.success(request,'Your Booking are Done ')
+                return redirect('yourticket')
             else:
- 
-                # if signature verification fails.
-                # return render(request, 'paymentfail.html')
-                return HttpResponse("none! 2")
+                messages.error(request,'Your Transaction Failed ')
+                return redirect('cart')
         except:
- 
-            # if we don't find the required parameters in POST data
-            return HttpResponseBadRequest()
+              messages.error(request,'Your Transaction Failed ')
+              return redirect('cart')
     else:
-       # if other than POST request is made.
-        return HttpResponseBadRequest()
+        messages.error(request,'Your Transaction Failed ')
+        return redirect('cart')
+def yourTicket(request):
+    current_datetime = timezone.now()
+    upcoming_events = Eventdetails.objects.filter(eventEndDate__gte=current_datetime)
+    past_events = Eventdetails.objects.filter(eventEndDate__lt=current_datetime)
+    user = request.user
+    attenddees1 = Attendee.objects.filter(event__in=upcoming_events,paymentStatus=True,user =user)
+    attenddees2 = Attendee.objects.filter(event__in=past_events,paymentStatus=True,user =user)
+    return render(request,'tickets.html',{'attenddees1':attenddees1,'attenddees2':attenddees2})
+
+
+
+def generate_qr_and_send_email(request, attendee_id):
+    # attendee = Attendee.objects.get(id = attendee_id)
+
+    # # Generate QR code
+    # qr = qrcode.QRCode(version=1, box_size=10, border=5)
+    # qr.add_data(attendee.email)  # Or any other data you want to encode
+    # qr.make(fit=True)
+    # qr_img = qr.make_image(fill="black", back_color="white")
+
+    # # Save the QR code image to a file
+    # qr_filename = f"qr_{attendee_id}.png"
+    # qr_img_path = f"{settings.MEDIA_ROOT}/{qr_filename}"
+    # qr_img.save(qr_img_path)
+
+    # # Send email with QR code attached
+    # subject = "Your QR Code"
+    # message = "Please find your QR code attached."
+    # from_email = settings.DEFAULT_FROM_EMAIL
+    # recipient_list = [attendee.email]
+    # attachment = (qr_filename, open(qr_img_path, "rb").read(), "image/png")
+
+    # send_mail(subject, message, from_email, recipient_list, fail_silently=False, attachment=attachment)
+
+    # # Calculate hash value of QR code
+    # qr_content = open(qr_img_path, "rb").read()
+    # qr_hash = hashlib.sha256(qr_content).hexdigest()
+
+    # # Update attendee object with QR code hash value
+    # attendee.qr_code_hash = qr_hash
+    # attendee.save()
+
+    # # Delete the QR code image file
+    # qr_img.close()
+    # qr_img_path.unlink()
+
+    return HttpResponse("QR code generated and email sent successfully.")

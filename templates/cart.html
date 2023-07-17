@@ -24,7 +24,7 @@
 {% if events|length < 1 %}
 <div class="dont-have-cart">
    <img class="my-3" src="https://img.freepik.com/premium-vector/shopping-cart-with-cross-mark-wireless-paymant-icon-shopping-bag-failure-paymant-sign-online-shopping-vector_662353-912.jpg?size=626&ext=jpg&ga=GA1.2.935454358.1689259321&semt=ais"width="270px">
-   <h4 class="my-4" style="font-weight:bold;color:purple">Your cart is empty!</h4>
+   <h4 class="my-4 mx-3" style="font-weight:bold;color:purple">Your cart is empty!</h4>
 </div>
 {% else %}
 <section class="h-100">
@@ -82,7 +82,7 @@
             </div>
           </div>
   
-          <div class="card" style="background:grey;">
+          <div class="card" >
             <div class="card-body">
               <a style="text-decoration:none"href="/user/checkout/{{request.user.id}}"><button type="button" class="btn btn-warning btn-block btn-lg"><i style="font-size:22px" class="fa fa-shopping-cart"></i> Checkout</button></a>
             </div>

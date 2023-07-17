@@ -15,8 +15,11 @@
 
       body {
         margin: 0;
-        background-color: aliceblue;
-        font-family: "Rubik", sans-serif;
+        padding:0;
+        background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTt8R38aliCDYwYeAHhD3jL5t8PP_v8pRPejw&usqp=CAU');
+         background-repeat: no-repeat;
+         background-size: cover;
+        background-position: center;
         font-family: "Montserrat";
     }
     hr{
@@ -25,12 +28,16 @@
       background:#292739;
     }
     .navbar {
-        background: linear-gradient(to right,#00093c,#2d0b00);
+      background-color: #111e2d!important;
         height: 86px;
         margin: 0px;
-        
     }
-
+    .nav-item :hover{
+      color:yellow;
+    }
+    .navbar-toggler-icon{
+      background-color:white;
+    }
     .navbar-light .navbar-brand {
         color: white;
         margin-left:20px;
@@ -46,31 +53,13 @@
     }
 
     .navbar-collapse {
-        width: 70px;
-        background:linear-gradient(to right,#00093c,#2d0b00);
+        width: auto;
+        background-color: #111e2d!important;
         z-index: 100;
     }
 
-    .preview-zone {
-        display: inline-block;
-        margin: 10px;
-        height: 50px;
-    }
 
-    .preview-zone section input {
-        height: 50px;
-        outline: none;
-    }
-    .preview-zone section input:focus{
-      border-color: #1a75ff;
-    }
-    .preview-zone section input::placeholder{
-      color: #999;
-      transition: all 0.3s ease;
-    }
-    .preview-zone section button {
-        height: 50px;
-    }
+
 
 
     .navbarbutton
@@ -93,8 +82,7 @@
 
 #navbarbutton1:hover
 {
-    background: white;
-    color: black;
+   
     cursor: pointer;
 
 }
@@ -125,13 +113,20 @@
   position: absolute;
   left: -150px;
   transform: translate(0, 10px);
-  background-color: lightgrey;
+  background-color: #598BE2;
   padding:10px;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
   width: auto;
 }
+@media (max-width:768px){
+  .popover__content {
+    left:10px;
+    width:200px;
+  }
+}
 .popover__content a{
-  color:blue;
+  color:white;
+  text-decoration:none;
 }
 .popover__content:before {
   position: absolute;
@@ -175,7 +170,7 @@
   display: none;
   color:black;
   z-index:10000;
-  animation: fadeInOut 2s ease-out forwards;
+  animation: fadeInOut 3s ease-out forwards;
   background-color:black;
 }
 .success{
@@ -214,77 +209,147 @@
 
 
 
-/************ FOOTER CODE START HERE *********/
-footer{
-    width: 100%;
-    position:relative;
-    bottom: 0;
-    background: linear-gradient(to right,#00093c,#2d0b00);
-    color: #fff;
-    padding: 100px 0 30px;
-    border-top-left-radius: 125px;
-    font-size: 13px;
-    line-height: 20px;
-    margin-top:15px;
-}
+/************ FOOTER CSS CODE START HERE *********/
 
-.footerlogo {
-    width: 120px;
-    filter: invert(100%);
-}
 
-footer .row {
-    width: 85%;
-    margin: auto;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    justify-content: space-between;
-}
-
-footer .col {
-    flex-basis: 25%;
-    padding: 10px;
+.footer-section {
+background: #111e2d!important;
+position: relative;
+margin-top:20px;
 
 }
-
-foooter .logo {
-    width: 80px;
-    margin-bottom: 30px;
+.footer-cta {
+border-bottom: 1px solid #373636;
+}
+.cta-text {
+padding-left: 15px;
+display: inline-block;
+}
+.cta-text h4 {
+color: #fff;
+font-size: 20px;
+font-weight: 600;
+margin-bottom: 2px;
+}
+.cta-text span {
+color: #757575;
+font-size: 15px;
+}
+.footer-content {
+position: relative;
+z-index: 2;
+}
+.footer-pattern img {
+position: absolute;
+top: 0;
+left: 0;
+height: 330px;
+background-size: cover;
+background-position: 100% 100%;
+}
+.footer-logo {
+margin-bottom: 30px;
+color:white:
+font-weight:bold;
 }
 
-footer .col h3 {
-    width: fit-content;
-    margin-bottom: 40px;
-    position: relative;
+.footer-text p {
+margin-bottom: 14px;
+font-size: 14px;
+    color: #7e7e7e;
+line-height: 28px;
+}
+
+.social-buttons {
+  text-align: end;
+  padding-right: 30px;
+}
+
+.social-buttons a {
+  margin: 5px;
+  padding: 7px;
+  border: 1px solid white;
+  border-radius: 18px;
+  transition: all 0.5s ease;
 
 }
 
-footer .email-id {
-    width: fit-content;
-    border-bottom: 1px solid #ccc;
-    margin: 20px 0;
-
-}
-footer ul li{
-    list-style: none;
-    margin-bottom: 12px;
-}
-footer ul li a{
-    text-decoration: none;
-    color: #fff;
-
+.social-buttons a .fa {
+  color: white;
+  font-size: 16px;
+  width: 18px;
+  text-align: center;
+  text-decoration: none;
 }
 
-
-footer.tag{
-    
-    justify-content: center;
-    padding: -6px;
-    width: 100%;
-  margin-left: 42%;
-
+.social-buttons a:hover {
+  background-color: white;
+  color: #702963;
 }
+
+.social-buttons a:hover .fa {
+  color: #702963;
+}
+.footer-widget-heading h3 {
+color: #fff;
+font-size: 20px;
+font-weight: 600;
+margin-bottom: 40px;
+position: relative;
+}
+
+
+.footer-widget ul li {
+display: inline-block;
+float: left;
+width: 50%;
+margin-bottom: 12px;
+}
+.footer-widget ul li a:hover{
+color: #ff5e14;
+}
+.footer-widget ul li a {
+color: #878787;
+text-decoration:none;
+text-transform: capitalize;
+}
+.subscribe-form {
+position: relative;
+overflow: hidden;
+}
+.subscribe-form input {
+width: 100%;
+padding: 14px 28px;
+background: #2E2E2E;
+border: 1px solid #2E2E2E;
+color: #fff;
+}
+.subscribe-form button {
+  position: absolute;
+  right: 0;
+  background: #ff5e14;
+  padding: 13px 20px;
+  border: 1px solid #ff5e14;
+  top: 0;
+}
+.subscribe-form button i {
+color: #fff;
+font-size: 22px;
+transform: rotate(-6deg);
+}
+.copyright-area{
+background: #202020;
+padding: 25px 0;
+}
+.copyright-text p {
+margin: 0;
+font-size: 14px;
+color: #878787;
+margin-left:20px;
+}
+
+
+
     {% block css %}
     {% endblock%}
 </style>
@@ -292,7 +357,7 @@ footer.tag{
   
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="/">ETplatform</a>
+      <a class="navbar-brand" href="/">ETPlatform</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -300,20 +365,12 @@ footer.tag{
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item ">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/user/events">Event</a>
           </li>
         </ul>
-        <div class="preview-zone ">
-          <section class="search" role="search">
-            <form action="#" method="get" class="search__form">
-              <input id="basic-search" class="search__input" type="search" name="search" maxlength="100" placeholder="I am looking for..." required />
-              <button class="search__btn-submit" type="submit">Search</button>
-            </form>
-          </section>
-        </div>
         {% if user.is_authenticated %}
            <a class="my-3 mx-3" href="/user/cart">
             <i style="font-size:30px;color:yellow" class="fa fa-shopping-cart"></i>
@@ -327,7 +384,7 @@ footer.tag{
                 <hr>
                 <a class="nav-link" href="/organizerDashboard">Organizing Events</a>
                 <hr>
-                <a class="nav-link" href="">Attending Events</a>
+                <a class="nav-link" href="/user/yourticket">Attending Events</a>
                 <hr>
                 <a class="nav-link" href="/logout"><i class="fa fa-sign-out"></i>Logout</a>
               </div>
@@ -363,47 +420,100 @@ footer.tag{
 
 
 
-
-
-
-      <footer>
-        <div class="row">
-            <div class="col">
-                <img src="foot.jpg" class="footerlogo">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, maiores. Quibusdam, sed?</p>
+      <!--=========FOOTER HTML START HERE ========-->
+      <footer class="footer-section">
+        <div class="container">
+            <div class="footer-cta pt-5 pb-5">
+                <div class="row">
+                    <div class="col-xl-4 col-md-4 mb-30 my-3">
+                        <div class="single-cta">
+                            <div class="cta-text">
+                                <h4><i style="color:orange"class="fas fa-map-marker-alt"></i> Find us</h4>
+                                <span>Indian Institute of Technology <br>Indore, Simrol, Indore, Madhya Pradhesh,<br> India - 453552</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-md-4 mb-30 my-3">
+                        <div class="single-cta">
+                            <div class="cta-text">
+                                <h4><i style="color:orange"class="fas fa-phone"></i> Cantact us </h4>
+                                <span>+91 7856810837</span><br>
+                                <span>etplatform@gmail.com</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-md-4 mb-30 my-3">
+                        <div class="single-cta">
+                            <div class="cta-text">
+                                <h4><i style="color:orange"class="far fa-envelope-open"></i> Follow us</h4>
+                                <div class="social-buttons my-3 mx-3">
+                                  <a href=""><i class="fa fa-facebook"></i></a>
+                                  <a href=""><i class="fa fa-instagram"></i></a>
+                                  <a href=""><i class="fa fa-youtube-play"></i></a>
+                                  <a href=""><i class="fa fa-linkedin"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="col">
-                <h3>
-                    Office
-                </h3>
-                <p>IIT Indore</p>
-                <p>Simrol Indore(M.P)</p>
-                <p>PIN: 324005 , INDIA</p>
-                <p class="email-id">Events@gmail.com</p>
-                <h4>+91-0123456789</h4>
+            <div class="footer-content pt-5 pb-5">
+                <div class="row">
+                    <div class="col-xl-4 col-lg-4 mb-50">
+                        <div class="footer-widget">
+                            <div class="footer-logo">
+                               <h1 style="color:white">ETPlatform</h1>
+                            </div>                           
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-6 mb-30">
+                        <div class="footer-widget">
+                            <div class="footer-widget-heading">
+                                <h3>Useful Links</h3>
+                            </div>
+                            <ul>
+                                <li><a href="/">Home</a></li>
+                                <li><a href="/user/events">event</a></li>
+                                <li><a href="#">Contact</a></li>
+                                <li><a href="#">About us</a></li>
+                                <li><a href="#">Our Services</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-6 mb-50">
+                        <div class="footer-widget">
+                            <div class="footer-widget-heading">
+                                <h3>Subscribe</h3>
+                            </div>
+                            <div class="footer-text mb-25">
+                                <p>Don’t miss to subscribe to our new feeds, kindly fill the form below.</p>
+                            </div>
+                            <div class="subscribe-form">
+                                <form action="#">
+                                    <input type="text" placeholder="Email Address">
+                                    <button><i class="fab fa-telegram-plane"></i></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="col">
-                <h3>
-                    Links
-                </h3>
-                <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">Services</a></li>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Features</a></li>
-                    <li><a href="#">Contact Us</a></li>
-                </ul>
-                
-            </div>
-            
         </div>
-        <hr>
-        <h4 class="tag">
-            Events management @2023 - All Rights Reserved
-        </h4>
-        
+        <div class="copyright-area">
+            <div class="container">
+                <div class="row">
+                    <div class=" text-center text-lg-left">
+                        <div class="copyright-text">
+                            <p>Events management @2023 - All Rights Reserved</p>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
         </div>
     </footer>
+
+
       
 
 
@@ -437,7 +547,7 @@ footer.tag{
     if (messagePopup) {
       messagePopup.style.display = 'none';
     }
-  }, 3000);
+  }, 6000);
 
 </script>
 {% block js %}  

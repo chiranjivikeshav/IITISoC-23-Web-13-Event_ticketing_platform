@@ -16,12 +16,13 @@
     padding:20px;
     flex-flow:column;
 }
-.container {
+.container1 {
     padding: 20px;
     box-shadow: 0px 0px 20px #00000020;
     background-color: white;
     border-radius: 8px;
     margin-bottom:20px;
+    width:95%;
 }
 .step {
     display: none;
@@ -63,7 +64,7 @@ button.previous-btn {
     float: left;
 }
 button.submit-btn {
-    background-color: aquamarine;
+    background-color:#683594;
 }
 .list-group-horizontal>.list-group-item{
     width:33%
@@ -75,7 +76,7 @@ button.submit-btn {
 
 
 <section class="attendee">
-    <div class="container">
+    <div class="container1">
         <p style="color:black;font-size:16px;margin-left:10px;margin-top:10px"><strong style="font-size:22px;">SUMMERY</strong></p>
     <ul class="list-group list-group-horizontal" >
         <li class="list-group-item" style="font-weight:bold;color:purple" >Ticket Type</li>
@@ -93,7 +94,7 @@ button.submit-btn {
         <li class="list-group-item" style="font-weight:bold;color:purple;width:99%">Total Price<p style="float:right">{{total_cost}} Rs.</p></li>
       </ul>
     </div>
-    <div class="container">
+    <div class="container1">
         <form method="post" action="{% url 'payment'%}">
             {% csrf_token %}
             {% for item in items %}
@@ -117,9 +118,9 @@ button.submit-btn {
                     <label style="margin:5px;" for="gender" class="form-label">Gender</label>
                     <select style="margin:5px;" class="form-select" id="gender" aria-label="Default select example" name="attendeegender{{forloop.counter}}" required>
                         <option selected>--select--</option>
-                        <option value="1">Male</option>
-                        <option value="2">Female</option>
-                        <option value="3">Others</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Others">Others</option>
                     </select>
                     <label style="margin:5px;" for="exampleFormControlInput1" class="form-label">Address</label>
                     <input style="margin:5px;" type="text" class="form-control" id="exampleFormControlInput1" name="attendeeaddress{{forloop.counter}}" required>
@@ -163,9 +164,9 @@ button.submit-btn {
                         <label style="margin:5px;" for="gender" class="form-label">Gender</label>
                         <select style="margin:5px;" class="form-select" id="gender" aria-label="Default select example" name="attendeegender{{forloop.counter}}" required>
                             <option selected>--select--</option>
-                            <option value="1">Male</option>
-                            <option value="2">Female</option>
-                            <option value="3">Others</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Others">Others</option>
                         </select>
                         <label style="margin:5px;" for="exampleFormControlInput1" class="form-label">Address</label>
                         <input style="margin:5px;" type="text" class="form-control" id="exampleFormControlInput1" name="attendeeaddress{{forloop.counter}}" required>
@@ -183,8 +184,8 @@ button.submit-btn {
                         <input style="margin:5px;" type="number" class="form-control" id="exampleFormControlInput1" name="attendeeZIP{{forloop.counter}}" required>
                         
                         <button type="button" class="previous-btn">Previous</button>
+                        <button type="submit" class="submit-btn">Submit</button>
                     </div> 
-                    <button type="submit" class="submit-btn">Submit And Proceed</button>
                </div> 
             </div>
 
@@ -207,9 +208,9 @@ button.submit-btn {
                     <label style="margin:5px;" for="gender" class="form-label">Gender</label>
                     <select style="margin:5px;" class="form-select" id="gender" aria-label="Default select example" name="attendeegender{{forloop.counter}}" required>
                         <option selected>--select--</option>
-                        <option value="1">Male</option>
-                        <option value="2">Female</option>
-                        <option value="3">Others</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Others">Others</option>
                     </select>
                     <label style="margin:5px;" for="exampleFormControlInput1" class="form-label">Address</label>
                     <input style="margin:5px;" type="text" class="form-control" id="exampleFormControlInput1" name="attendeeaddress{{forloop.counter}}" required>

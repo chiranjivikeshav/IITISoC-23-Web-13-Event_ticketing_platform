@@ -26,6 +26,7 @@ class CartItem(models.Model):
 
 
 class Attendee(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE,default=True)
     event = models.ForeignKey(Eventdetails, on_delete=models.CASCADE,default=True)
     cartitem = models.ForeignKey(CartItem, on_delete=models.CASCADE,default=True)
     attendeName = models.CharField( max_length=50)
@@ -37,5 +38,5 @@ class Attendee(models.Model):
     attendeState = models.CharField(max_length=20)
     attendeZIP = models.PositiveIntegerField()
     timeStamp=models.DateTimeField(blank=True,null=True,default=datetime.datetime.now())
-    payment_id = models.CharField(max_length=100,default=True)
+    paymentStatus = models.BooleanField(default=False)
     

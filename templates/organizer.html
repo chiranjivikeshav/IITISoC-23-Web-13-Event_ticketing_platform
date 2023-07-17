@@ -19,60 +19,46 @@
     margin-right: 5%;
     margin-top: 20px;
     height: 170px;
-    background-color: #292739;
+    background-color: #111e2d;
     padding-top: 30px;
     padding-left: 30px;
 }
 
 .btn1{
     height: 35px;
-    width: 90px;
-    border: 1px solid white;
-    background-color: transparent;
-    color: white;
+    width: auto;
+    background-color:blue;
+    color: #fff;
     float: right;
     margin-right:20px;
     margin-top:10px;
-
+    border:none;
 }
 
 
 .btn2{
+    border:none;
     height: 35px;
-    width: 200px;
-    border: 1px solid white;
-    background-color: transparent;
-    color: white;
+    width: auto;
+    background-color:blue;
+    color: #fff;
     margin-right: 20px;
     float: right;
     margin-top:10px;
 }
 .btn3{
     height: 35px;
-    width: 180px;
-    border: 2px solid purple;
-    background-color: transparent;
-    color: purple;
+    width: auto;
+    border:none;
+    background-color:blue;
+    color: #fff;
     margin-right: 20px;
     float: right;
     margin-top:10px;
     margin-bottom:20px;
 }
-.btn1:hover {
-    background-color: white;
-    color: #0D335D;
-    cursor: pointer;
-}
-.btn2:hover {
-    background-color: white;
-    color: #0D335D;
-    cursor: pointer;
-} 
-.btn3:hover {
-    background-color: purple;
-    color:white;
-    cursor: pointer;
-} 
+
+
 .dont-have-event {
     margin-left: 5%;
     margin-right: 5%;
@@ -89,7 +75,7 @@
 
 .event-item {
     color:white;
-    background-color:#292739;
+    background-color: #111e2d;
     padding: 20px;
     margin-bottom: 20px;
     list-style:none;
@@ -120,11 +106,11 @@
     margin-right: 5%;
     margin-top: 20px;
     height: auto;
-    background:#292739;
-    border:1px solid black;
+    background:white;
     display: flex;
     flex-flow: column;
     align-items: center;
+    box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.3);
 }
 
 .event-detail-form-fillup {
@@ -247,14 +233,14 @@
 {% if not organizer %}
 <div class="dont-have-event" id="content">
     <img class="my-3" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3rREqunymuc0MZDYADcpLKXFG13WevB9G-LA8VefYOkJX3uyTE8zgfTFOxWaxhA37ByM&usqp=CAU" width="300px">
-    <h5 class="my-4" style="font-weight:bold;color:purple">Add organizer details for create events!</h5>
+    <h5 class="my-4 mx-3" style="font-weight:bold;color:purple">Add organizer details for create events!</h5>
     <button type="button" class="btn3" data-toggle="modal" data-target="#organizerModal">Add organizer details</button>
 </div>
 
 <!-- modal for completing organizer details-->
 <div class="modal fade" id="organizerModal" tabindex="-1" aria-labelledby="loginModal" aria-hidden="true">
     <div class="modal-dialog" >
-      <div class="modal-content" style="background:#292739;">
+      <div class="modal-content" >
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="loginModallabal">Organizer Details</h1>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -313,7 +299,7 @@
   <!-- modal for editing organizer details-->
 <div class="modal fade" id="editorganizer" tabindex="-1" aria-labelledby="loginModal" aria-hidden="true">
     <div class="modal-dialog" >
-      <div class="modal-content" style="background:#292739;">
+      <div class="modal-content" >
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="loginModallabal">Organizer Details</h1>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -392,7 +378,7 @@
             <p>Location:&nbsp &nbsp&nbsp&nbsp&nbsp &nbsp&nbsp &nbsp{{event.eventCity}},{{event.eventCountry}}</p>
             <p>Description:&nbsp &nbsp&nbsp &nbsp&nbsp &nbsp&nbsp &nbsp{{event.eventDescription|slice:"0:50"|safe}}</p>
             <hr>
-            <a href="/organizerDashboard/edit/{{event.eventName}}{{event.id}}" role="button" class="btn btn-warning mx-3 my-3">Edit Event</a>
+            <a href="/organizerDashboard/edit/{{event.eventName}}{{event.id}}" role="button" class="btn btn-warning mx-3 my-3" style="background-color:blue;color:white;border:none">Edit Event</a>
             <button type="button" class="btn btn-danger mx-3 my-3" data-toggle="modal" data-target="#eventdeleteModalCenter">Delete </button>
       <!-- Modal for delete event -->
             <div class="modal fade" id="eventdeleteModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -426,7 +412,7 @@
 
 <div class="event-form-fillup" id="content">
     <h3 class="my-4" style="font-weight:bold;border-bottom:2px solid rgb(61, 21, 101);">ADD EVENT DETAILS</h3>
-    <form action="/organizerDashboard/{{user.username}}" method="post" enctype="multipart/form-data">
+    <form action="/organizerDashboard" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="event-detail-form-fillup">
             <div class="mx-3 my-3" style="float: left;width: 320px;margin-right: 30px;">

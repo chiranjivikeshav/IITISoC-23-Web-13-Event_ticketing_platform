@@ -207,7 +207,7 @@ form .btn input[type="submit"]{
 <div class="auth-box">
   <div class="form-image-box">
     <p> create <br> memories,<br> friends<br> and fun<br> with us</p>
-    <img style="width: 360px;height:500px;filter: brightness(83%);" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjqLXUQdc4qkufNG4uEjlC4OHvVxTMeERTgA&usqp=CAU"></img>
+    <img style="width: 360px;height:533px;filter: brightness(83%);" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjqLXUQdc4qkufNG4uEjlC4OHvVxTMeERTgA&usqp=CAU"></img>
   </div>
   <div class="wrapper">
     <div class="title-text">
@@ -246,11 +246,12 @@ form .btn input[type="submit"]{
           <div class="field">
             <input type="email" placeholder="Email Address" name="useremail" required>
           </div>
-          <div class="field">
-            <input type="password" placeholder="Password" name="password" required>
+          <div class="field" style="font-size:12px;">
+            must have 1 uppercase and a number
+            <input type="password" placeholder="Password" name="password" pattern="(?=.*\d)(?=.*[A-Z]).*" required>
           </div>
           <div class="field">
-            <input type="password" placeholder="Confirm password" name="conform_Password" required>
+            <input type="password" placeholder="Confirm password" name="conform_Password" pattern="(?=.*\d)(?=.*[A-Z]).*" required>
           </div>
           <div class="field btn">
             <div class="btn-layer"></div>

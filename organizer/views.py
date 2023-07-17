@@ -21,6 +21,18 @@ def user_registration(request):
         username = request.POST['username']
         useremail = request.POST['useremail']
         password = request.POST['password']
+        conform_password = request.POST['conform_Password']
+        existing_user = User.objects.filter(username=username).exists()
+        if existing_user:
+            messages.warning(request,'Username already exists')
+            return redirect('loginpage')
+        existing_EMAIL = User.objects.filter(email=useremail).exists()
+        if existing_EMAIL:
+            messages.warning(request,'Email Address already exists')
+            return redirect('loginpage')
+        if password != conform_password :
+            messages.warning(request,"Passwords didn't match")
+            return redirect('loginpage')
         conform_Password = request.POST['conform_Password']
         user = User.objects.create_user(username=username,email=useremail, password=password)
         messages.success(request, 'Your account has been created successfully!')
@@ -48,6 +60,7 @@ def user_login(request):
             login(request, user)
             return redirect('home')
         else:
+            messages.warning(request,'Wrong credentials')
             return redirect('loginpage')
     return render(request, 'auth.html')
 
@@ -84,7 +97,7 @@ def organizer(request):
         organizer.save()
         messages.success(request, 'Organizer profile  has been created successfully!')
     slug =request.user.username
-    return redirect("dashboard",slug)
+    return redirect("dashboard")
 
 
 def organizer_update(request):
@@ -130,7 +143,7 @@ def organizer_update(request):
             organizer.save()
         
         slug = (user.username)
-        return redirect("dashboard", slug)
+        return redirect("dashboard")
     return render(request,'pagenotfound.html')
 
 def dashboard(request):
@@ -186,8 +199,7 @@ def dashboard(request):
                 ticketprice=data['price'],
                 ticketCount=data['quantity'],
             )
-        slug =request.user.username
-        return redirect("dashboard", slug)
+        return redirect("dashboard")
     return render(request,"organizer.html",eventSet)
 def Retrieve(request,slug):
     string = slug
@@ -238,8 +250,7 @@ def deletevent(request,id):
     event = Eventdetails.objects.get(id=id)
     event.delete()
     messages.success(request, 'Your Event has been deleted successfully!')
-    slug = request.user.username
-    return redirect("dashboard", slug)
+    return redirect("dashboard")
 
 
 

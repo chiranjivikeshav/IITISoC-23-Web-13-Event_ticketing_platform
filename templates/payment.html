@@ -5,8 +5,21 @@
 {% endblock link %}
 {%block css%}
 
+.btn_container{
+    
+    display:flex;
+    justify-content:center;
+    align-item:center;
+    width:100%;
+    height:100vh;
 
-  
+}
+.btn{
+    width:150px;
+    height:40px;
+    background-color:yellow;
+    margin-top:200px;
+} 
 
 {%endblock%}
 
@@ -14,7 +27,7 @@
   
 <div class="btn_container">
     <!-- Payment Button -->
-    <button class="btn" id="pay-btn">Donate</button>
+    <button class="btn" id="pay-btn">Pay {{total_cost}} Rs</button>
   </div> 
 
 
