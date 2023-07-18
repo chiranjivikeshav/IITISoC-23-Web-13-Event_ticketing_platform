@@ -144,3 +144,13 @@ MESSAGE_TAGS = {
 
 RAZOR_KEY_ID =  'rzp_test_ygsSaKB5arhRUI'
 RAZOR_KEY_SECRET = 'OeOUBIRunoKlWHguytdHA0hN'
+
+
+EMAIL_BACKEND="django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST="smtp.gmail.com"
+EMAIL_USE_TLS =True
+EMAIL_PORT=587
+EMAIL_HOST_USER="chiranjivikeshav1@gmail.com"
+EMAIL_HOST_PASSWORD="vtjhryupjxzwnpqh"
+EMAIL_USE_SSL = False
+ALLOWED_HOSTS = []

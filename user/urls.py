@@ -15,5 +15,6 @@ urlpatterns = [
     path('checkout/<int:userid>/', views.checkout, name='checkout'),
     path('payment/', views.payment, name='payment'),
     path('paymenthandler/<int:userid>/', views.paymenthandler, name='paymenthandler'),
-    path('yourticket/',views.yourTicket,name = 'yourticket' )
+    path('yourticket/',views.yourTicket,name = 'yourticket' ),
+    path('generate_qr_and_send_email/<int:userid>',views.generate_qr_and_send_email,name = 'generate_qr_and_send_email' )
 ]

@@ -15,10 +15,8 @@ import datetime
 
 import qrcode
 import hashlib
-from django.core.mail import send_mail
+from django.core.mail import send_mail,EmailMessage
 from django.core.files.base import ContentFile
-
-
 
 
 
@@ -278,14 +276,11 @@ def paymenthandler(request, userid):
                 cart_items = CartItem.objects.filter(user=user, quantity__gt=0, paymentStatus=False)
                 for items in cart_items:
                     attendee = Attendee.objects.filter(paymentStatus=False, cartitem=items)
-                    attendee.update(paymentStatus=True)
                     attendee.update(timeStamp=datetime.datetime.now())
-
-
-
                 cart_items.update(paymentStatus=True)
                 messages.success(request,'Your Booking are Done ')
-                return redirect('yourticket')
+                userid = user.id
+                return redirect ('generate_qr_and_send_email',userid)
             else:
                 messages.error(request,'Your Transaction Failed ')
                 return redirect('cart')
@@ -306,7 +301,15 @@ def yourTicket(request):
 
 
 
-def generate_qr_and_send_email(request, attendee_id):
+def generate_qr_and_send_email(request,userid):
+    user = User.objects.get(id=userid)
+    attendees = Attendee.objects.filter(user=user,paymentStatus=False)
+    email_from = 'settings.EMAIL_HOST_USER'
+    message = "Hi, Your Booking is conform"
+    for attende in attendees:
+        recipient_list = [attende.attendeEmail]
+        send_mail( 'welcome to Etplatform',message, email_from, recipient_list,fail_silently=False)
+    attendees.update(paymentStatus=True)
     # attendee = Attendee.objects.get(id = attendee_id)
 
     # # Generate QR code
@@ -341,4 +344,4 @@ def generate_qr_and_send_email(request, attendee_id):
     # qr_img.close()
     # qr_img_path.unlink()
 
-    return HttpResponse("QR code generated and email sent successfully.")
+    return redirect('yourticket')

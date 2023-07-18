@@ -43,7 +43,7 @@
     border-radius: 4px;
 }
 
- button.next-btn,
+ button.next-btn,.btn-for-save,
 button.previous-btn,
  button.submit-btn {
     float: right;
@@ -137,7 +137,7 @@ button.submit-btn {
                     <label style="margin:5px;" for="exampleFormControlInput1" class="form-label">Pincode/Zipcode</label>
                     <input style="margin:5px;" type="number" class="form-control" id="exampleFormControlInput1" name="attendeeZIP{{forloop.counter}}" required>
                     {% if forloop.counter == items|length %}
-                    <button type="submit" class="next-btn">Save and Next</button>
+                    <button type="submit" class="btn-for-save">Save and Next</button>
                     {% else %}
                     <button type="button" class="next-btn">Save and Next</button>
                     {% endif%}
