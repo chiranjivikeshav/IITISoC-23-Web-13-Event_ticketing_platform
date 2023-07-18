@@ -183,6 +183,7 @@
 									
 								</div>
 								<div class="ADDtoCart-and-BuyNow">
+									{% if user.is_authenticated%}
 									<form method="post" action="{% url 'addtocart' event.id %}">
 										{% csrf_token%}
 									<button type="submit"><i class="fa fa-shopping-cart"></i>ADD TO CART</button>
@@ -191,6 +192,10 @@
 									<button  type="submit"><i class="fa fa-shopping-bag"></i>BUY NOW</button>
 									{% csrf_token%}
 								   </form>
+								   {% else %}
+								   <a href="/loginpage"><button type="button"><i class="fa fa-shopping-cart"></i>ADD TO CART</button></a>
+									<a href="/loginpage"><button  type="button"><i class="fa fa-shopping-bag"></i>BUY NOW</button></a>
+								   {% endif %}
 								</div>
 							</div>
 						</div>
