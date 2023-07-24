@@ -378,7 +378,7 @@
             <p>Location:&nbsp &nbsp&nbsp&nbsp&nbsp &nbsp&nbsp &nbsp{{event.eventCity}},{{event.eventCountry}}</p>
             <p>Description:&nbsp &nbsp&nbsp &nbsp&nbsp &nbsp&nbsp &nbsp{{event.eventDescription|slice:"0:50"|safe}}</p>
             <hr>
-            <a href="/organizerDashboard/edit/{{event.eventName}}{{event.id}}" role="button" class="btn btn-warning mx-3 my-3" style="background-color:blue;color:white;border:none">Edit Event</a>
+            <a href="/eventDashboard/{{event.eventName}}{{event.id}}" role="button" class="btn btn-warning mx-3 my-3" style="background-color:blue;color:white;border:none">Dashboard</a>
             <button type="button" class="btn btn-danger mx-3 my-3" data-toggle="modal" data-target="#eventdeleteModalCenter">Delete </button>
       <!-- Modal for delete event -->
             <div class="modal fade" id="eventdeleteModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

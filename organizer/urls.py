@@ -9,6 +9,7 @@ urlpatterns = [
     path('login', views.user_login, name='login'),
     path('logout', views.user_logout, name='logout'),
     path('organizerDashboard',views.dashboard,name='dashboard'),
+    path('eventDashboard/<str:slug>',views.eventdashboard,name='eventdashboard'),
     path('organizerDetails',views.organizer,name='organizerDetails'),
     path('organizerDetails/update',views.organizer_update,name='organizerDetailsupdate'),
     path('organizerDashboard/edit/<str:slug>',views.Retrieve,name='Retrieve'),

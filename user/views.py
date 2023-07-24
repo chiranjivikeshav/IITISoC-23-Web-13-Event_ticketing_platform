@@ -14,9 +14,8 @@ from django.urls import reverse
 import datetime
 
 import qrcode
-import hashlib
-from django.core.mail import send_mail,EmailMessage
-from django.core.files.base import ContentFile
+from io import BytesIO
+from django.core.mail import EmailMessage
 
 
 
@@ -220,6 +219,7 @@ def payment( request):
             zipcode = request.POST['attendeeZIP'+str(num+1)]
             event = Eventdetails.objects.get(id=event__id)
             cartite = CartItem.objects.get(id=cartitem__id)
+            secrete_code = Eventdetails.objects.get(id =event__id).eventsecreteCode
             attendeeprofile=Attendee(
             user= user,
             event = event,
@@ -232,7 +232,7 @@ def payment( request):
             attendeCountry = country,
             attendeState = state,
             attendeZIP = zipcode,
-             
+            secreateCode = secrete_code,
             )
             attendeeprofile.save()
         
@@ -275,6 +275,10 @@ def paymenthandler(request, userid):
                 user = User.objects.get(id=userid)
                 cart_items = CartItem.objects.filter(user=user, quantity__gt=0, paymentStatus=False)
                 for items in cart_items:
+                    ticket  = items.ticket_type
+                    a = ticket.bookedTicket
+                    ticket.bookedTicket = a + items.quantity
+                    ticket.save()
                     attendee = Attendee.objects.filter(paymentStatus=False, cartitem=items)
                     attendee.update(timeStamp=datetime.datetime.now())
                 cart_items.update(paymentStatus=True)
@@ -301,47 +305,64 @@ def yourTicket(request):
 
 
 
-def generate_qr_and_send_email(request,userid):
+        
+
+
+def generate_qr_and_send_email(request, userid):
     user = User.objects.get(id=userid)
-    attendees = Attendee.objects.filter(user=user,paymentStatus=False)
+    attendees = Attendee.objects.filter(user=user, paymentStatus=False)
     email_from = 'settings.EMAIL_HOST_USER'
-    message = "Hi, Your Booking is conform"
-    for attende in attendees:
-        recipient_list = [attende.attendeEmail]
-        send_mail( 'welcome to Etplatform',message, email_from, recipient_list,fail_silently=False)
+    subject = 'Welcome to EventWave '
+
+    for attendee in attendees:
+        event_name = attendee.event.eventName
+        ticket_name = attendee.cartitem.ticket_type
+        secret_code = attendee.secreateCode
+        qr_data = f"Event: {event_name}\nTicket: {ticket_name}\nSecret Code: {secret_code}"
+        qr_code_img = generate_qr_code(qr_data)
+        message = f"<b>Hi</b>, Your Booking is confirmed. Here are your event details:\n\n<b>Event Name:</b> {event_name}\n<b>Ticket Name:</b>{ticket_type}\n<b>Attendee Name:</b>{attendee.attendeName}"
+        email = EmailMessage(
+            subject=subject,
+            body=message,
+            from_email=email_from,
+            to=[attendee.attendeEmail],
+        )
+        email.attach(f"qr_code_{event_name}.png", qr_code_img.read(), "image/png")
+        email.send()
     attendees.update(paymentStatus=True)
-    # attendee = Attendee.objects.get(id = attendee_id)
-
-    # # Generate QR code
-    # qr = qrcode.QRCode(version=1, box_size=10, border=5)
-    # qr.add_data(attendee.email)  # Or any other data you want to encode
-    # qr.make(fit=True)
-    # qr_img = qr.make_image(fill="black", back_color="white")
-
-    # # Save the QR code image to a file
-    # qr_filename = f"qr_{attendee_id}.png"
-    # qr_img_path = f"{settings.MEDIA_ROOT}/{qr_filename}"
-    # qr_img.save(qr_img_path)
-
-    # # Send email with QR code attached
-    # subject = "Your QR Code"
-    # message = "Please find your QR code attached."
-    # from_email = settings.DEFAULT_FROM_EMAIL
-    # recipient_list = [attendee.email]
-    # attachment = (qr_filename, open(qr_img_path, "rb").read(), "image/png")
-
-    # send_mail(subject, message, from_email, recipient_list, fail_silently=False, attachment=attachment)
-
-    # # Calculate hash value of QR code
-    # qr_content = open(qr_img_path, "rb").read()
-    # qr_hash = hashlib.sha256(qr_content).hexdigest()
-
-    # # Update attendee object with QR code hash value
-    # attendee.qr_code_hash = qr_hash
-    # attendee.save()
-
-    # # Delete the QR code image file
-    # qr_img.close()
-    # qr_img_path.unlink()
-
     return redirect('yourticket')
+
+def generate_qr_code(data):
+    qr = qrcode.QRCode(
+        version=1,
+        error_correction=qrcode.constants.ERROR_CORRECT_L,
+        box_size=10,
+        border=4,
+    )
+    qr.add_data(data)
+    qr.make(fit=True)
+    img = qr.make_image(fill_color="black", back_color="white")
+    # Save the image to a BytesIO object
+    img_buffer = BytesIO()
+    img.save(img_buffer, format="PNG")
+    img_buffer.seek(0)
+    return img_buffer
+
+def scanner(request):
+    return render(request,'secretecode.html')
+
+
+
+
+
+# def generate_qr_and_send_email(request,userid):
+#     user = User.objects.get(id=userid)
+#     attendees = Attendee.objects.filter(user=user,paymentStatus=False)
+#     email_from = 'settings.EMAIL_HOST_USER'
+#     message = "Hi, Your Booking is conform"
+#     for attende in attendees:
+#         recipient_list = [attende.attendeEmail]
+#         send_mail( 'welcome to Etplatform',message, email_from, recipient_list,fail_silently=False)
+#     attendees.update(paymentStatus=True)
+
+#     return redirect('yourticket')

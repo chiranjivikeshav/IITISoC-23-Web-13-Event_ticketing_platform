@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
 from . import urls
-
+import secrets
 
 # Create your views here.
 def home(request):
@@ -141,8 +141,6 @@ def organizer_update(request):
             organizerAbout = organizer_about,
              )
             organizer.save()
-        
-        slug = (user.username)
         return redirect("dashboard")
     return render(request,'pagenotfound.html')
 
@@ -166,6 +164,7 @@ def dashboard(request):
         event_zipcode = int(request.POST['event_zipcode'])
         event_description = request.POST['event_description']
         event_image = request.FILES['event_image']
+        secret_code = secrets.token_urlsafe(10)
         event = Eventdetails.objects.create(
             eventOrganizer=organizer,
             eventImage = event_image,
@@ -178,7 +177,8 @@ def dashboard(request):
             eventState = event_state,
             eventCountry = event_country,
             eventZip = event_zipcode,
-            eventDescription = event_description
+            eventDescription = event_description,
+            eventsecreteCode = secret_code,
         )
         messages.success(request, 'Event created  successfully!')
         # Process ticket sets
@@ -213,7 +213,24 @@ def Retrieve(request,slug):
     currentEvent = Eventdetails.objects.filter(id=int(filter_id),eventName=filter_name)
     currentEventTicket =Ticket.objects.filter(event=currentEvent[0] )
     currentEventSet={'currentEvent':currentEvent,'currentEventTicket':currentEventTicket}    
-    return render(request,"update.html",currentEventSet)
+    if currentEvent :
+        return render(request,"update.html",currentEventSet)
+    else:
+        return render(request,'pagenotfound.html')
+
+def eventdashboard(request,slug):
+    string = slug
+    filter_id =""
+    filter_name=""
+    for char in string :
+        if char.isdigit():
+            filter_id+=char
+        else:
+            filter_name+=char
+    currentEvent = Eventdetails.objects.filter(id=int(filter_id),eventName=filter_name)
+    currentEventTicket =Ticket.objects.filter(event=currentEvent[0] )
+    currentEventSet={'currentEvent':currentEvent,'currentEventTicket':currentEventTicket}    
+    return render(request,"eventstatus.html",currentEventSet)
 
 def Update(request):
     if request.method == 'POST':

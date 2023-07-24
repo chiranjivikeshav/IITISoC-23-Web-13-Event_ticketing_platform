@@ -15,6 +15,8 @@ class Userprofile(models.Model):
     user_ldurl = models.CharField(max_length=100)
     def __str__(self):
         return self.user_name
+
+        
 class CartItem(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE,default=True)
     event = models.ForeignKey(Eventdetails, on_delete=models.CASCADE)
@@ -39,4 +41,6 @@ class Attendee(models.Model):
     attendeZIP = models.PositiveIntegerField()
     timeStamp=models.DateTimeField(blank=True,null=True,default=datetime.datetime.now())
     paymentStatus = models.BooleanField(default=False)
+    secreateCode = models.CharField(max_length=200,default=True)
+    attendenceStatus = models.BooleanField(default=False)
     

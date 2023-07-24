@@ -32,9 +32,7 @@
         height: 86px;
         margin: 0px;
     }
-    .nav-item :hover{
-      color:yellow;
-    }
+   
     .navbar-toggler-icon{
       background-color:white;
     }
@@ -77,15 +75,13 @@
     border:1px solid white;
     background: none;
     color: white;
-
 }
 
 #navbarbutton1:hover
 {
-   
     cursor: pointer;
-
 }
+
 .navbarbutton p
 {
     margin: 5px;
@@ -337,7 +333,8 @@ margin-left:20px;
   
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="/">ETPlatform</a>
+      <a class="navbar-brand"  onmouseover=" this.style.color='yellow';"
+      onmouseout="this.style.color='white';"href="/">EventWave</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -345,10 +342,16 @@ margin-left:20px;
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item ">
-            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-link"onmouseover=" this.style.color='yellow';"
+            onmouseout="this.style.color='white';" href="/">Home </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/user/events">Event</a>
+            <a class="nav-link"onmouseover=" this.style.color='yellow';"
+            onmouseout="this.style.color='white';" href="/user/events">Event</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link"onmouseover=" this.style.color='yellow';"
+            onmouseout="this.style.color='white';" href="/user/scanner">Scanner</a>
           </li>
         </ul>
         {% if user.is_authenticated %}

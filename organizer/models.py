@@ -33,6 +33,7 @@ class Eventdetails(models.Model):
     eventZip = models.IntegerField()
     eventDescription = models.CharField(max_length=3000)
     eventImage = models.ImageField(upload_to='images/')
+    eventsecreteCode = models.CharField(max_length=200,default=True)
     def __str__(self):
         return self.eventName
 
@@ -43,5 +44,6 @@ class Ticket(models.Model):
     ticketname = models.CharField(max_length=50)
     ticketprice = models.DecimalField(max_digits=8, decimal_places=2)
     ticketCount = models.PositiveIntegerField()
+    bookedTicket = models.PositiveIntegerField(default=0)
     def __str__(self):
         return self.event.eventName
