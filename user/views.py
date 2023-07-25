@@ -22,8 +22,11 @@ from django.core.mail import EmailMessage
 
 
 def profile(request):
-    user= request.user
-    profile = Userprofile.objects.get(user = user)
+    user = request.user
+    try:
+        profile = Userprofile.objects.get(user=user)
+    except Userprofile.DoesNotExist:
+        return render(request, 'pagenotfound.html')
     return render(request,"profile.html",{'profile':profile})
 
 
