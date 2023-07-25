@@ -1,0 +1,289 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock title %}
+{% block link %}
+    
+{% endblock link %}
+{%block css%}
+
+
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+.auth-box{
+    width:100%;
+    height:100%;
+    display:flex;
+    flex-flow:row;
+    flex-wrap:wrap;
+    justify-content:center;
+    padding:20px;
+}
+
+.wrapper{
+  color:black;
+  z-index:50;
+  overflow: hidden;
+  max-width: 360px;
+  background-color: lightgray;
+  padding: 20px;
+}
+.wrapper .title-text{
+  display: flex;
+  width: 200%;
+}
+.wrapper .title{
+  width: 50%;
+  font-size: 35px;
+  font-weight: 600;
+  text-align: center;
+  transition: all 0.6s cubic-bezier(0.68,-0.55,0.265,1.55);
+}
+.wrapper .slide-controls{
+  position: relative;
+  display: flex;
+  height: 50px;
+  width: 100%;
+  overflow: hidden;
+  margin: 30px 0 10px 0;
+  justify-content: space-between;
+  border: 1px solid grey;
+}
+.slide-controls .slide{
+  height: 100%;
+  width: 100%;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  text-align: center;
+  line-height: 48px;
+  cursor: pointer;
+  z-index: 1;
+  transition: all 0.6s ease;
+}
+.slide-controls label.signup{
+  color: #000;
+}
+.slide-controls .slider-tab{
+  position: absolute;
+  height: 100%;
+  width: 50%;
+  left: 0;
+  z-index: 0;
+  background-color:#292739;
+  transition: all 0.6s cubic-bezier(0.68,-0.55,0.265,1.55);
+}
+input[type="radio"]{
+  display: none;
+}
+#signup:checked ~ .slider-tab{
+  left: 50%;
+}
+#signup:checked ~ label.signup{
+  color: #fff;
+  cursor: default;
+  user-select: none;
+}
+#signup:checked ~ label.login{
+  color: #000;
+}
+#login:checked ~ label.signup{
+  color: #000;
+}
+#login:checked ~ label.login{
+  cursor: default;
+  user-select: none;
+}
+.wrapper .form-container{
+  width: 100%;
+  overflow: hidden;
+}
+.form-container .form-inner{
+  display: flex;
+  width: 200%;
+}
+.form-container .form-inner form{
+  width: 50%;
+  transition: all 0.6s cubic-bezier(0.68,-0.55,0.265,1.55);
+}
+.form-inner form .field{
+  height: 50px;
+  width: 100%;
+  margin-top: 20px;
+}
+.form-inner form .field input{
+  height: 100%;
+  width: 100%;
+  outline: none;
+  padding-left: 15px;
+  border: 1px solid lightgrey;
+  border-bottom-width: 2px;
+  font-size: 17px;
+  transition: all 0.3s ease;
+}
+.form-inner form .field input:focus{
+  border-color: #1a75ff;
+}
+.form-inner form .field input::placeholder{
+  color: #999;
+  transition: all 0.3s ease;
+}
+form .field input:focus::placeholder{
+  color: #1a75ff;
+}
+.form-inner form .pass-link{
+  margin-top: 5px;
+}
+.form-inner form .signup-link{
+  text-align: center;
+  margin-top: 20px;
+}
+.form-inner form .pass-link a,
+.form-inner form .signup-link a{
+  color: #1a75ff;
+  text-decoration: none;
+}
+.form-inner form .pass-link a:hover,
+.form-inner form .signup-link a:hover{
+  text-decoration: underline;
+}
+form .btn{
+  height: 50px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+form .btn .btn-layer{
+  height: 100%;
+  width: 300%;
+  position: absolute;
+  left: -100%;
+  margin-top: -6px;
+  background-color:#292739;
+  transition: all 0.4s ease;;
+}
+form .btn:hover .btn-layer{
+  left: 0;
+}
+form .btn input[type="submit"]{
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  position: relative;
+  background: none;
+  border: none;
+  color:white;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+
+.form-image-box{
+    max-width: 360px;
+    height:500px;
+}
+.form-image-box p{
+    color:black;
+    position:absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 360px;
+    height: 500px;
+    font-size: 32px;
+    font-weight:bold;
+    padding:70px;
+    z-index:90;
+}
+
+.navbarbutton{
+  display:none;
+}
+
+
+
+
+{%endblock%}
+
+{% block body %}
+<div class="auth-box">
+  <div class="form-image-box">
+    <p> create <br> memories,<br> friends<br> and fun<br> with us</p>
+    <img style="width: 360px;height:533px;filter: brightness(83%);" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjqLXUQdc4qkufNG4uEjlC4OHvVxTMeERTgA&usqp=CAU"></img>
+  </div>
+  <div class="wrapper">
+    <div class="title-text">
+      <div class="title login">Login</div>
+      <div class="title signup">Signup</div>
+    </div>
+    <div class="form-container">
+      <div class="slide-controls">
+        <input type="radio" name="slide" id="login" checked>
+        <input type="radio" name="slide" id="signup">
+        <label for="login" class="slide login">Login</label>
+        <label for="signup" class="slide signup">Signup</label>
+        <div class="slider-tab"></div>
+      </div>
+      <div class="form-inner">
+        <form action="login"  method="post" class="login">
+          {% csrf_token%}
+          <div class="field">
+            <input type="text" placeholder="Email Address" name="username" required>
+          </div>
+          <div class="field">
+            <input type="password" placeholder="Password" name="password" required>
+          </div>
+          <div class="field btn">
+            <div class="btn-layer"></div>
+            <input type="submit" value="Login">
+          </div>
+          <div class="signup-link">Not have a account? <a href="">Signup now</a></div>
+        </form>
+        <form action="register" method="post" class="signup">
+          {% csrf_token%}
+          <div class="field">
+            <input type="text" placeholder="Username" name="username" required>
+          </div>
+          <div class="field">
+            <input type="email" placeholder="Email Address" name="useremail" required>
+          </div>
+          <div class="field" style="font-size:12px;color:red">
+            must have 1 uppercase and a number
+            <input type="password" placeholder="Password" name="password" pattern="(?=.*\d)(?=.*[A-Z]).*" required>
+          </div>
+          <div class="field">
+            <input type="password" placeholder="Confirm password" name="conform_Password" pattern="(?=.*\d)(?=.*[A-Z]).*" required>
+          </div>
+          <div class="field btn">
+            <div class="btn-layer"></div>
+            <input type="submit" value="Signup">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+ {% endblock %}
+ {% block js %}
+ <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+ <script>
+    const loginText = document.querySelector(".title-text .login");
+    const loginForm = document.querySelector("form.login");
+    const loginBtn = document.querySelector("label.login");
+    const signupBtn = document.querySelector("label.signup");
+    const signupLink = document.querySelector("form .signup-link a");
+    signupBtn.onclick = (()=>{
+      loginForm.style.marginLeft = "-50%";
+      loginText.style.marginLeft = "-50%";
+    });
+    loginBtn.onclick = (()=>{
+      loginForm.style.marginLeft = "0%";
+      loginText.style.marginLeft = "0%";
+    });
+    signupLink.onclick = (()=>{
+      signupBtn.click();
+      return false;
+    });
+
+ </script>
+ 
+
+  {% endblock js %}

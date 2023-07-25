@@ -1,0 +1,495 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
+    <link rel="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" type="text/css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>{% block title %}Ticketing Plateform{% endblock title %}</title>
+    {% block link %}{% endblock%}
+    <style media="screen">
+
+      body {
+        margin: 0;
+        padding:0;
+        background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTt8R38aliCDYwYeAHhD3jL5t8PP_v8pRPejw&usqp=CAU');
+         background-repeat: no-repeat;
+         background-size: cover;
+        background-position: center;
+        font-family: "Montserrat";
+    }
+    hr{
+      position:relative;
+      height: 1.5px;
+      background:#292739;
+    }
+    .navbar {
+      background-color: #111e2d!important;
+        height: 86px;
+        margin: 0px;
+    }
+   
+    .navbar-toggler-icon{
+      background-color:white;
+    }
+    .navbar-light .navbar-brand {
+        color: white;
+        margin-left:20px;
+    }
+
+    .navbar-light .navbar-nav .nav-link {
+        color: white;
+        margin-left: 34px;
+    }
+
+    .navbar-toggler {
+        margin: 10px;
+    }
+
+    .navbar-collapse {
+        width: auto;
+        background-color: #111e2d!important;
+        z-index: 100;
+    }
+
+
+
+
+
+    .navbarbutton
+    {
+    display: flex;
+    flex-wrap: wrap-reverse;
+    margin: 10px;
+    align-self: flex-end;
+   }
+    #navbarbutton1
+    {
+    align-self: center;
+    margin: 5px 7px;
+    padding: 0px 10px;
+    border:1px solid white;
+    background: none;
+    color: white;
+}
+
+#navbarbutton1:hover
+{
+    cursor: pointer;
+}
+
+.navbarbutton p
+{
+    margin: 5px;
+    padding: 5px;
+}
+
+
+/* Popover styling */
+
+.profilebutton{
+  text-decoration: none;
+  color:yellow;
+  text-align: center;
+  margin:10px;
+  margin-bottom:20px;
+}
+.popover__wrapper {
+  position: relative;
+  margin-top: 1.5rem;
+  display: inline-block;
+}
+.popover__content {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  left: -150px;
+  transform: translate(0, 10px);
+  background-color: #598BE2;
+  padding:10px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+  width: auto;
+}
+@media (max-width:768px){
+  .popover__content {
+    left:10px;
+    width:200px;
+  }
+}
+.popover__content a{
+  color:white;
+  text-decoration:none;
+}
+.popover__content:before {
+  position: absolute;
+  z-index: -1;
+  content: "";
+  right: calc(50% - 10px);
+  top: -8px;
+  border-style: solid;
+  border-width: 0 10px 10px 10px;
+  border-color: transparent transparent #bfbfbf transparent;
+  transition-duration: 0.3s;
+  transition-property: transform;
+}
+.popover__wrapper:hover .popover__content {
+  z-index: 10;
+  opacity: 1;
+  visibility: visible;
+  transform: translate(0, -20px);
+  transition: all 0.5s cubic-bezier(0.75, -0.02, 0.2, 0.97);
+}
+.popover__message {
+  text-align: center;
+}
+
+
+/************MESSAGE CSS CODE **************/
+@keyframes fadeInOut {
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { opacity: 0; }
+}
+.message-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 5px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  display: none;
+  color:black;
+  z-index:10000;
+  animation: fadeInOut 3s ease-out forwards;
+  background-color:black;
+}
+.success{
+  background-color: #a8f0c6;
+}
+.danger{
+  background-color:red;
+}
+.warning{
+  background-color:yellow;
+}
+.message-content {
+  text-align: center;
+}
+
+.message-title {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.message-text {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.close-button {
+  background-color: transparent;
+  border: none;
+  color: #999999;
+  font-size: 20px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+
+
+/************ FOOTER CSS CODE START HERE *********/
+
+
+.footer-section {
+background: #111e2d!important;
+position: relative;
+margin-top:20px;
+
+}
+.footer-cta {
+border-bottom: 1px solid #373636;
+}
+.cta-text {
+padding-left: 15px;
+display: inline-block;
+}
+.cta-text h4 {
+color: #fff;
+font-size: 20px;
+font-weight: 600;
+margin-bottom: 2px;
+}
+.cta-text span {
+color: #757575;
+font-size: 15px;
+}
+.footer-content {
+position: relative;
+z-index: 2;
+}
+.footer-pattern img {
+position: absolute;
+top: 0;
+left: 0;
+height: 330px;
+background-size: cover;
+background-position: 100% 100%;
+}
+.footer-logo {
+margin-bottom: 30px;
+color:white:
+font-weight:bold;
+}
+
+.footer-text p {
+margin-bottom: 14px;
+font-size: 14px;
+    color: #7e7e7e;
+line-height: 28px;
+}
+
+.social-buttons {
+  text-align: end;
+  padding-right: 30px;
+}
+
+.social-buttons a {
+  margin: 5px;
+  padding: 7px;
+  border: 1px solid white;
+  border-radius: 18px;
+  transition: all 0.5s ease;
+
+}
+
+.social-buttons a .fa {
+  color: white;
+  font-size: 16px;
+  width: 18px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.social-buttons a:hover {
+  background-color: white;
+  color: #702963;
+}
+
+.social-buttons a:hover .fa {
+  color: #702963;
+}
+.footer-widget-heading h3 {
+color: #fff;
+font-size: 20px;
+font-weight: 600;
+margin-bottom: 40px;
+position: relative;
+}
+
+
+.footer-widget ul li {
+display: inline-block;
+float: left;
+width: 50%;
+margin-bottom: 12px;
+}
+.footer-widget ul li a:hover{
+color: #ff5e14;
+}
+.footer-widget ul li a {
+color: #878787;
+text-decoration:none;
+text-transform: capitalize;
+}
+
+
+
+
+.copyright-area{
+background: #202020;
+padding: 25px 0;
+}
+.copyright-text p {
+margin: 0;
+font-size: 14px;
+color: #878787;
+margin-left:20px;
+}
+
+
+
+    {% block css %}
+    {% endblock%}
+</style>
+  </head>
+  
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand"  onmouseover=" this.style.color='yellow';"
+      onmouseout="this.style.color='white';"href="/">EventWave</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item ">
+            <a class="nav-link"onmouseover=" this.style.color='yellow';"
+            onmouseout="this.style.color='white';" href="/">Home </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link"onmouseover=" this.style.color='yellow';"
+            onmouseout="this.style.color='white';" href="/user/events">Event</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link"onmouseover=" this.style.color='yellow';"
+            onmouseout="this.style.color='white';" href="/user/scanner">Scanner</a>
+          </li>
+        </ul>
+        {% if user.is_authenticated %}
+           <a class="my-3 mx-3" href="/user/cart">
+            <i style="font-size:30px;color:yellow" class="fa fa-shopping-cart"></i>
+            </a>
+            <div class="popover__wrapper my-3 ">
+              <a class="profilebutton" href="#">
+              <i style="font-size:30px;" class="fas fa-user"></i>
+              </a>
+              <div class="popover__content">
+                <a class="nav-link" href="/user/profile">Profile</a>
+                <hr>
+                <a class="nav-link" href="/organizerDashboard">Organizing Events</a>
+                <hr>
+                <a class="nav-link" href="/user/yourticket">Attending Events</a>
+                <hr>
+                <a class="nav-link" href="/logout"><i class="fa fa-sign-out"></i>Logout</a>
+              </div>
+            </div>
+
+          {% else %}
+          <div class="navbarbutton">
+            <a href="/loginpage"><button id="navbarbutton1"><p>Log In</p></button></a> 
+           </div>
+          {% endif %}
+      </div>
+    </nav>
+      {% block body %} 
+
+      {% endblock body %}
+      
+     
+
+      {% if messages %}
+      <div id="message-popup" style=" display:block;"class="message-popup">
+          <div class="message-content">
+              {% for message in messages %}
+                <div class="alert {{ message.tags }}">
+                  <h3 class="message-title">{{ message.tags }}</h3>
+                  <p class="message-text">{{ message }}</p>
+                  <button id="close-button" class="close-button">&times;</button>
+                </div>
+              {% endfor %}
+          </div>
+      </div>
+      {% endif %}
+
+
+
+      <!--=========FOOTER HTML START HERE ========-->
+      <footer class="footer-section">
+        <div class="container">
+            <div class="footer-cta pt-5 pb-5 my-3">
+                <div class="row">
+                    <div class="col-xl-4 col-md-4 mb-30 my-3">
+                        <div class="single-cta">
+                            <div class="cta-text">
+                                <h4><i style="color:orange"class="fas fa-map-marker-alt"></i> Find us</h4>
+                                <span>Indian Institute of Technology <br>Indore, Simrol, Indore, Madhya Pradhesh,<br> India - 453552</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-md-4 mb-30 my-3">
+                        <div class="single-cta">
+                            <div class="cta-text">
+                                <h4><i style="color:orange"class="fas fa-phone"></i> Cantact us </h4>
+                                <span>+91 7856810837</span><br>
+                                <span>etplatform@gmail.com</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-md-4 mb-30 my-3">
+                        <div class="single-cta">
+                            <div class="cta-text">
+                                <h4><i style="color:orange"class="far fa-envelope-open"></i> Follow us</h4>
+                                <div class="social-buttons mx-3" style="margin-top:30px">
+                                  <a href=""><i class="fa fa-facebook"></i></a>
+                                  <a href=""><i class="fa fa-instagram"></i></a>
+                                  <a href=""><i class="fa fa-youtube-play"></i></a>
+                                  <a href=""><i class="fa fa-linkedin"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright-area">
+            <div class="container">
+                <div class="row">
+                    <div class=" text-center text-lg-left">
+                        <div class="copyright-text">
+                            <p>Events management @2023 - All Rights Reserved</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+      
+
+
+
+
+
+  </body>
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+  <script>
+    // Open the message popup
+    function openMessagePopup() {
+  var popup = document.getElementById("message-popup");
+  popup.style.display = "block";
+  s}
+  
+  // Close the message popup
+  function closeMessagePopup() {
+    var popup = document.getElementById("message-popup");
+    popup.style.display = "none";
+  }
+  
+  // Close the message popup when the close button is clicked
+  document.getElementById("close-button").addEventListener("click", closeMessagePopup);
+  
+
+  setTimeout(function() {
+    var messagePopup = document.getElementById('message-popup');
+    if (messagePopup) {
+      messagePopup.style.display = 'none';
+    }
+  }, 6000);
+
+</script>
+{% block js %}  
+{% endblock js %}
+</html>

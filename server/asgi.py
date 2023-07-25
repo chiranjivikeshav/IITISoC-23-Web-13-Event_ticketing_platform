@@ -1,5 +1,9 @@
 """
+<<<<<<< HEAD
 ASGI config for server project.
+=======
+ASGI config for ETP project.
+>>>>>>> etplatform
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 

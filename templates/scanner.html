@@ -1,0 +1,118 @@
+
+
+
+{% extends 'base.html' %}
+{% block title %}Scanner{% endblock title %}
+{% block link %}
+    
+{% endblock link %}
+{%block css%}
+#preview{
+    width:300px;
+    height: 300px;
+    margin-left:auto;
+    margin-right:auto;
+
+ }
+ .scanner{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    flex-flow:column;
+ }
+ .btn-group{
+    width:300px;
+    margin-left:auto;
+    margin-right:auto;
+ }
+
+{%endblock%}
+
+{% block body %}
+<div class="modal fade" id="statusModal" tabindex="-1" role="dialog" aria-labelledby="statusModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="statusModalLabel">Status</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h2><p id="statusMessage"></p><h2>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+<div class="scanner">
+<video id="preview"></video>
+<div class="btn-group btn-group-toggle mb-5" data-toggle="buttons">
+    
+    <label class="btn btn-primary active" >
+        <input type="radio"  name="options" value="1" autocomplete="off" checked> Front Camera
+    </label>
+    <label class="btn btn-secondary" >
+        <input type="radio"  name="options" value="2" autocomplete="off"> Back Camera
+    </label>
+</div>
+</div>
+ {% endblock %}
+ {% block js %}
+
+ <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+ <script type="text/javascript">
+    const secret_code = "{{secretcode}}"
+     var scanner = new Instascan.Scanner({ video: document.getElementById('preview'), scanPeriod: 5, mirror: false });
+     scanner.addListener('scan',function(content){
+        const response_data = content.slice(-12).slice(0,10)
+
+        function showStatusModal(message) {
+            var modal = document.getElementById("statusModal");
+            var statusMessage = document.getElementById("statusMessage");
+            statusMessage.textContent = message;
+            var bootstrapModal = new bootstrap.Modal(modal);
+            bootstrapModal.show();
+          }
+        if(response_data===secret_code){
+            showStatusModal('SUCCESS');   
+        }
+        else{
+            showStatusModal("Ticket Not Found");
+        }
+       
+         
+     });
+     Instascan.Camera.getCameras().then(function (cameras){
+         if(cameras.length>0){
+             scanner.start(cameras[0]);
+             $('[name="options"]').on('change',function(){
+                 if($(this).val()==1){
+                     if(cameras[0]!=""){
+                         scanner.start(cameras[0]);
+                     }else{
+                         alert('No Front camera found!');
+                     }
+                 }else if($(this).val()==2){
+                     if(cameras[1]!=""){
+                         scanner.start(cameras[1]);
+                     }else{
+                         alert('No Back camera found!');
+                     }
+                 }
+             });
+         }else{
+             console.error('No cameras found.');
+             alert('No cameras found.');
+         }
+     }).catch(function(e){
+         console.error(e);
+         alert(e);
+     });
+ </script>
+ 
+  {% endblock js %} 

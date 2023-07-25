@@ -1,0 +1,598 @@
+{% extends 'base.html' %}
+
+{% block title %}OrganizerDashboard{% endblock title %}
+{% block link %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
+    <script src="https://cdn.tiny.cloud/1/YOUR_API_KEY/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+    <link rel="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" type="text/css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+{% endblock %}
+{%block css%}
+
+
+.create-event {
+    color: white;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 20px;
+    height: 170px;
+    background-color: #111e2d;
+    padding-top: 30px;
+    padding-left: 30px;
+}
+
+.btn1{
+    height: 35px;
+    width: auto;
+    background-color:blue;
+    color: #fff;
+    float: right;
+    margin-right:20px;
+    margin-top:10px;
+    border:none;
+}
+
+
+.btn2{
+    border:none;
+    height: 35px;
+    width: auto;
+    background-color:blue;
+    color: #fff;
+    margin-right: 20px;
+    float: right;
+    margin-top:10px;
+}
+.btn3{
+    height: 35px;
+    width: auto;
+    border:none;
+    background-color:blue;
+    color: #fff;
+    margin-right: 20px;
+    float: right;
+    margin-top:10px;
+    margin-bottom:20px;
+}
+
+
+.dont-have-event {
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 20px;
+    height: auto;
+    background-color: white;
+    box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.3);
+    
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.event-item {
+    color:white;
+    background-color: #111e2d;
+    padding: 20px;
+    margin-bottom: 20px;
+    list-style:none;
+    width:93%;
+    box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.3);
+    font-family: sans-serif;
+    font-weight:bold;
+    align-item:center;
+    height:auto;
+}
+.event-list{
+    width:90%;
+    
+}
+.event-item h3 {
+    margin-top: 0;
+}
+
+.event-item p {
+    margin: 5px 0;
+}
+
+
+
+.event-form-fillup {
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 20px;
+    height: auto;
+    background:white;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.3);
+}
+
+.event-detail-form-fillup {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+}
+.form-control{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.addanotherbutton {
+    height: 35px;
+    width: 180px;
+    
+    border: 1px solid white;
+    background-color: blue;
+    color:white;
+    float: right;
+    margin-top: 20px;
+}
+
+.textarea-for-description {
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    height: auto;
+}
+.modal-confirm {		
+    color: #636363;
+    width:360px;
+}
+.modal-confirm .modal-content {
+    padding: 20px;
+    border-radius: 5px;
+    border: none;
+    text-align: center;
+    font-size: 14px;
+}
+.modal-confirm .modal-header {
+    border-bottom: none;   
+    position: relative;
+}
+.modal-confirm h4 {
+    text-align: center;
+    font-size: 26px;
+    margin: 30px 0 -10px;
+}
+.modal-confirm .close {
+    position: absolute;
+    top: -5px;
+    right: -2px;
+}
+.modal-confirm .modal-body {
+    color: #999;
+}
+.modal-confirm .modal-footer {
+    border: none;
+    text-align: center;		
+    border-radius: 5px;
+    font-size: 13px;
+    padding: 10px 15px 25px;
+}
+.modal-confirm .modal-footer a {
+    color:black;
+}		
+.modal-confirm .icon-box {
+     width: 80px;
+     height: 80px;
+    margin: 0 auto;
+    border-radius: 50%;
+    z-index: 9;
+    text-align: center;
+    border: 3px solid #f15e5e;
+}
+.modal-confirm .icon-box i {
+    color: #f15e5e;
+    font-size: 46px;
+    display: inline-block;
+    margin-top: 13px;
+}
+.modal-confirm .btn, .modal-confirm .btn:active {
+    color:white;
+    border-radius: 4px;
+    background: #60c7c1;
+    text-decoration: none;
+    transition: all 0.4s;
+    line-height: normal;
+    min-width: 120px;
+    border: none;
+    min-height: 40px;
+    border-radius: 3px;
+    margin: 0 5px;
+}
+.modal-confirm .btn-secondary {
+    background: #c1c1c1;
+    color:black;
+}
+.modal-confirm .btn-danger {
+    background: #f15e5e;
+    padding-top:9px;
+}
+.trigger-btn {
+    display: inline-block;
+    margin: 100px auto;
+}
+{%endblock%}
+
+
+{% block body %}
+<div class="create-event">
+    <h3>CREATE A EVENT </h3>
+    {% if organizer %}
+    <button type="button" class="btn2" data-toggle="modal" data-target="#editorganizer"> View/edit organizer details</button>
+    {% endif %}
+    <button onclick="scrollToTop()" type="button" class="btn1">Add Event</button>
+</div>
+{% if not organizer %}
+<div class="dont-have-event" id="content">
+    <img class="my-3" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3rREqunymuc0MZDYADcpLKXFG13WevB9G-LA8VefYOkJX3uyTE8zgfTFOxWaxhA37ByM&usqp=CAU" width="300px">
+    <h5 class="my-4 mx-3" style="font-weight:bold;color:purple">Add organizer details for create events!</h5>
+    <button type="button" class="btn3" data-toggle="modal" data-target="#organizerModal">Add organizer details</button>
+</div>
+
+<!-- modal for completing organizer details-->
+<div class="modal fade" id="organizerModal" tabindex="-1" aria-labelledby="loginModal" aria-hidden="true">
+    <div class="modal-dialog" >
+      <div class="modal-content" >
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="loginModallabal">Organizer Details</h1>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+        <form action="/organizerDetails" method ="post">{% csrf_token %}
+
+        <input type="hidden" name="user_id" value="{{ user.id }}">
+        
+          <div class="form-group">
+            <label for="organizername">Name</label>
+            <input type="text" class="form-control" id="organizername" name="organizername" placeholder="Enter Organizer Name" required>
+          </div>
+          <div class="form-group">
+            <label for="organizercontact">Contact Number</label>
+            <input type="text" class="form-control" id="organizercontact" name="organizercontact" placeholder="Enter Contact No" required>
+          </div>
+          <div class="form-group">
+            <label for="organizeremail">Email Address</label>
+            <input type="email" class="form-control"  id="organizeremail" name="organizeremail" placeholder="Enter Email Address" required>
+          </div>
+          <div class="form-group">
+            <label for="organizeraddress">Address</label>
+            <input type="text" class="form-control"id="organizeraddress" name="organizeraddress" placeholder="Enter Address" required>
+          </div>
+          <div class="form-group">
+            <label for="organizerbankname">Bank Name</label>
+            <input type="text" class="form-control" id="organizerbankname" name="organizerbankname" placeholder="Enter Bank Name" required>
+          </div>
+          <div class="form-group">
+            <label for="organizerbankbranch">Bank Branch Name</label>
+            <input type="text" class="form-control"  id="organizerbankbranch" name="organizerbankbranch" placeholder="Enter Bank Branch" required>
+          </div>
+          <div class="form-group">
+            <label for="organizerbankIFSC">IFSC Code</label>
+            <input type="text" class="form-control" id="organizerbankIFSC" name="organizerbankIFSC" placeholder="Enter IFSC Code" required>
+          </div>
+          <div class="form-group">
+            <label for="organizerbankaccount">Account Number</label>
+            <input type="text" class="form-control" id="organizerbankaccount" name="organizerbankaccount" placeholder="Enter Account Number" required>
+          </div>
+          <div class="form-group">
+            <label for="organizerabout">About Organizer</label>
+            <input type="text" class="form-control" id="organizerabout" name="organizerabout" placeholder="write">
+          </div>
+          <button type="submit" class="btn1">SAVE</button>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% else %}
+
+  <!-- modal for editing organizer details-->
+<div class="modal fade" id="editorganizer" tabindex="-1" aria-labelledby="loginModal" aria-hidden="true">
+    <div class="modal-dialog" >
+      <div class="modal-content" >
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="loginModallabal">Organizer Details</h1>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+        <form action="/organizerDetails/update" method ="post">{% csrf_token %}
+
+        <input type="hidden" name="user_id" value="{{ user.id }}">
+        
+          <div class="form-group">
+            <label for="organizername">Name</label>
+            <input type="text" class="form-control" value="{{organizer.organizerName}}" id="organizername" name="organizername" placeholder="Enter Organizer Name" required>
+          </div>
+          <div class="form-group">
+            <label for="organizercontact">Contact Number</label>
+            <input type="text" class="form-control" value="{{organizer.organizerContact}}" id="organizercontact" name="organizercontact" placeholder="Enter Contact No" required>
+          </div>
+          <div class="form-group">
+            <label for="organizeremail">Email Address</label>
+            <input type="email" class="form-control" value="{{organizer.organizerEmail}}" id="organizeremail" name="organizeremail" placeholder="Enter Email Address"required>
+          </div>
+          <div class="form-group">
+            <label for="organizeraddress">Address</label>
+            <input type="text" class="form-control"value="{{organizer.organizerAddress}}" id="organizeraddress" name="organizeraddress" placeholder="Enter Address"required>
+          </div>
+          <div class="form-group">
+            <label for="organizerbankname">Bank Name</label>
+            <input type="text" class="form-control" value="{{organizer.organizerBankName}}" id="organizerbankname" name="organizerbankname" placeholder="Enter Bank Name" required>
+          </div>
+          <div class="form-group">
+            <label for="organizerbankbranch">Bank Branch Name</label>
+            <input type="text" class="form-control" value="{{organizer.organizerBankBranch}}" id="organizerbankbranch" name="organizerbankbranch" placeholder="Enter Bank Branch"required>
+          </div>
+          <div class="form-group">
+            <label for="organizerbankIFSC">IFSC Code</label>
+            <input type="text" class="form-control" value="{{organizer.organizerBankIFSC}}" id="organizerbankIFSC" name="organizerbankIFSC" placeholder="Enter IFSC Code" required>
+          </div>
+          <div class="form-group">
+            <label for="organizerbankaccount">Account Number</label>
+            <input type="text" class="form-control" value="{{organizer.organizerBankAccount}}" id="organizerbankaccount" name="organizerbankaccount" placeholder="Enter Account Number" required>
+          </div>
+          <div class="form-group">
+            <label for="organizerabout">About Organizer</label>
+            <input type="text" class="form-control" value="{{organizer.organizerAbout}}" id="organizerabout" name="organizerabout" placeholder="write">
+          </div>
+          <button type="submit" class="btn1">SAVE</button>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+{% if allEvents|length < 1 %}
+<div class="dont-have-event">
+    <img class="my-3" src="https://s3.ap-south-1.amazonaws.com/townscript-common-resources/images/Dashboard/emptystate-dashboard.png"
+        width="270px">
+    <h5 class="my-4" style="font-weight:bold;color:purple">You don't have any active events!</h5>
+</div>
+{% else %}
+<div class="event-list-page dont-have-event">
+<h4 class="my-3"style="color:purple;font-weight:bold;">YOUR EVENTs</h4>
+
+    <ul class="event-list">
+      {% for event in allEvents%}
+        <li class="event-item">
+            <h3>{{event.eventName}}</h3>
+            <hr>
+            <p>Start Date:&nbsp &nbsp&nbsp &nbsp&nbsp &nbsp{{event.eventStartDate|date:"Y-m-d H:i"}}</p>
+            <p>End Date:&nbsp &nbsp&nbsp &nbsp&nbsp &nbsp{{event.eventEndDate|date:"Y-m-d H:i"}}</p>
+            <p>Location:&nbsp &nbsp&nbsp&nbsp&nbsp &nbsp&nbsp &nbsp{{event.eventCity}},{{event.eventCountry}}</p>
+            <p>Description:&nbsp &nbsp&nbsp &nbsp&nbsp &nbsp&nbsp &nbsp{{event.eventDescription|slice:"0:50"|safe}}</p>
+            <hr>
+            <a href="/eventDashboard/{{event.eventName}}{{event.id}}" role="button" class="btn btn-warning mx-3 my-3" style="background-color:blue;color:white;border:none">Dashboard</a>
+            <button type="button" class="btn btn-danger mx-3 my-3" data-toggle="modal" data-target="#eventdeleteModalCenter">Delete </button>
+      <!-- Modal for delete event -->
+            <div class="modal fade" id="eventdeleteModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+               <div class="modal-dialog modal-dialog-centered modal-confirm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header flex-column">
+                        <div class="icon-box">
+                            <i class="material-icons">&#xE5CD;</i>
+                        </div>						
+                        <h4 class="modal-title w-100">Are you sure?</h4>	
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Do you really want to delete these records? This process cannot be undone.</p>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                     <a href="/deleteEvent/{{event.id}}" role="button" class="btn btn-danger">Yes I'm sure</a>
+                        </div>
+                </div> 
+              </div>
+            </div>
+        </li>
+        
+        {% endfor %}
+          
+    </ul>
+</div>
+
+{% endif %}
+
+<div class="event-form-fillup" id="content">
+    <h3 class="my-4" style="font-weight:bold;border-bottom:2px solid rgb(61, 21, 101);">ADD EVENT DETAILS</h3>
+    <form action="/organizerDashboard" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="event-detail-form-fillup">
+            <div class="mx-3 my-3" style="float: left;width: 320px;margin-right: 30px;">
+                <h4>BASIC DETAILS</h4>
+                <label for="event-name" class="form-label">EVENT NAME</label>
+                <input type="text" class="form-control" id="event-name" name="event_name" required>
+
+                <label for="event-display-name" class="form-label">EVENT DISPLAY NAME</label>
+                <input type="text" class="form-control" id="event-display-name" name="event_dispaly_name" required>
+
+                <label for="event-start-date" class="form-label">EVENT START FROM</label>
+                <input type="datetime-local" class="form-control" id="event-start-date" name="event_start_date"required>
+
+                <label for="event-end-date" class="form-label">EVENT ENDS AT</label>
+                <input type="datetime-local" class="form-control" id="event-end-date" name="event_end_date"required>
+                <h4 class="my-3">EVENT VENUE</h4>
+                <label for="event-address" class="form-label">ADDRESS</label>
+                <input type="text" class="form-control" id="event-address" name="event_address"required>
+
+                <label for="event-city" class="form-label">CITY</label>
+                <input type="text" class="form-control" id="event-city" name="event_city"required>
+
+                <label for="event-state" class="form-label">STATE</label>
+                <select name="event_state" id="event-state" class="form-control"required>
+                    <option value="None">---Select---</option>
+                    <option value="Andhra Pradesh">Andhra Pradesh</option>
+                    <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                    <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                    <option value="Assam">Assam</option>
+                    <option value="Bihar">Bihar</option>
+                    <option value="Chandigarh">Chandigarh</option>
+                    <option value="Chhattisgarh">Chhattisgarh</option>
+                    <option value="Dadar and Nagar Haveli">Dadar and Nagar Haveli</option>
+                    <option value="Daman and Diu">Daman and Diu</option>
+                    <option value="Delhi">Delhi</option>
+                    <option value="Lakshadweep">Lakshadweep</option>
+                    <option value="Puducherry">Puducherry</option>
+                    <option value="Goa">Goa</option>
+                    <option value="Gujarat">Gujarat</option>
+                    <option value="Haryana">Haryana</option>
+                    <option value="Himachal Pradesh">Himachal Pradesh</option>
+                    <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                    <option value="Jharkhand">Jharkhand</option>
+                    <option value="Karnataka">Karnataka</option>
+                    <option value="Kerala">Kerala</option>
+                    <option value="Madhya Pradesh">Madhya Pradesh</option>
+                    <option value="Maharashtra">Maharashtra</option>
+                    <option value="Manipur">Manipur</option>
+                    <option value="Meghalaya">Meghalaya</option>
+                    <option value="Mizoram">Mizoram</option>
+                    <option value="Nagaland">Nagaland</option>
+                    <option value="Odisha">Odisha</option>
+                    <option value="Punjab">Punjab</option>
+                    <option value="Rajasthan">Rajasthan</option>
+                    <option value="Sikkim">Sikkim</option>
+                    <option value="Tamil Nadu">Tamil Nadu</option>
+                    <option value="Telangana">Telangana</option>
+                    <option value="Tripura">Tripura</option>
+                    <option value="Uttar Pradesh">Uttar Pradesh</option>
+                    <option value="Uttarakhand">Uttarakhand</option>
+                    <option value="West Bengal">West Bengal</option>
+                </select>
+
+                <label for="event-country" class="form-label">COUNTRY</label>
+                <select name="event_country" id="event-country" class="form-control"required>
+                    <option value="None">---Select---</option>
+                    <option value="India">India</option>
+                </select>
+                <label for="event-zipcode" class="form-label">ZIP</label>
+                <input type="number" class="form-control" id="event-zipcode" name="event_zipcode"required>
+            </div>
+            <div class="mx-3 my-3" style="width: 320px;margin-left: 30px;">
+                <div id="tickets-container">
+                    <label for="image">UPLOAD IMAGE</label>
+                    <input type="file" id="image" name="event_image" required>
+                    <h5>UPLOAD GALLERY IMAGES</h5>
+                    <hr>
+                    <label for="image">UPLOAD IMAGE</label>
+                    <input type="file" id="image" name="event_image1" required>
+                    <label for="image">UPLOAD IMAGE</label>
+                    <input type="file" id="image" name="event_image2" required>
+                    <label for="image">UPLOAD IMAGE</label>
+                    <input type="file" id="image" name="event_image3" required>
+
+                    <div style="margin-top:7px;"class="ticket-form">
+                        <h4>Ticket 1</h4>
+                        <div class="form-group">
+                            <label for="name1">TICKET NAME</label>
+                            <input type="text" class="form-control" id="name1" name="name1"placeholder="Enter ticket name"required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="price1">TICKET PRICE(in Rs.)</label>
+                            <input type="number" class="form-control" id="price1" name="price1"placeholder="Enter ticket price"required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="quantity1">NUMBER OF TICKETS</label>
+                            <input type="number" class="form-control" id="quantity1" name="quantity1"placeholder="Enter quantity"required>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" class="addanotherbutton" onclick="addTicket()">Add Another Ticket</button>
+            </div>
+
+
+        </div>
+        <div class="textarea-for-description my-3">
+            <h4 class="my-3">WRITE DESCRIPTION</h4>
+            <textarea type ="text" id="myTextarea" name="event_description"></textarea>
+        </div>
+
+   
+        <button type="submit" style="margin:15px;" class="btn1" >Submit</button>
+    </form>
+</div>
+</div>
+{% endif %}
+ {% endblock %}
+ {% block js %}
+ 
+ <script>
+     tinymce.init({
+         selector: '#myTextarea',
+         plugins: [
+             'advlist autolink lists link image charmap print preview anchor',
+             'searchreplace visualblocks code fullscreen',
+             'insertdatetime media table paste code help wordcount'
+         ],
+         toolbar: 'undo redo | formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | code',
+         height: 400,
+         content_style: 'body { font-family: Arial, sans-serif; font-size: 14px; }'
+     });
+ 
+ 
+     function scrollToTop() {
+         var content = document.getElementById('content');
+         content.scrollIntoView({ behavior: 'smooth' });
+     }
+ 
+ 
+ 
+     let ticketCount = 1;
+ 
+     function addTicket() {
+         ticketCount++;
+ 
+         const container = document.getElementById('tickets-container');
+         const ticketForm = document.createElement('div');
+         ticketForm.classList.add('ticket-form');
+ 
+         const ticketTitle = document.createElement('h4');
+         ticketTitle.textContent = `Ticket ${ticketCount}`;
+         ticketForm.appendChild(ticketTitle);
+ 
+         const nameInput = document.createElement('input');
+         nameInput.type = 'text';
+         nameInput.classList.add('form-control');
+         nameInput.name = `name${ticketCount}`;
+         nameInput.placeholder = 'Enter ticket name';
+         ticketForm.appendChild(nameInput);
+ 
+         const priceInput = document.createElement('input');
+         priceInput.type = 'number';
+         priceInput.classList.add('form-control');
+         priceInput.name = `price${ticketCount}`;
+         priceInput.placeholder = 'Enter ticket price';
+         ticketForm.appendChild(priceInput);
+ 
+         const quantityInput = document.createElement('input');
+         quantityInput.type = 'number';
+         quantityInput.classList.add('form-control');
+         quantityInput.name = `quantity${ticketCount}`;
+         quantityInput.placeholder = 'Enter quantity';
+         ticketForm.appendChild(quantityInput);
+         container.appendChild(ticketForm);
+     }
+    
+ </script>
+ 
+
+  {% endblock js %}

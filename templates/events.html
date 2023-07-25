@@ -1,0 +1,301 @@
+{% extends 'base.html' %}
+
+{% block title %}event page{% endblock title %}
+{% block link %}
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+{% endblock link %}
+{%block css%}
+
+
+/* Tr Job Post */
+
+.event-item {
+	border:1px solid #c3bcbc;
+    border-radius:8px;
+    background:white;
+    box-shadow: 0px 0px 20px #00000020;
+	color:black;
+}
+
+.event-tab .nav-tabs {
+	margin-bottom: 25px;
+    margin-top:15px;
+}
+
+.event-tab .nav-tabs>li {
+	float: none;
+	display: inline;
+}
+
+.event-tab .nav-tabs li {
+	margin:-9px;
+    padding:13px;
+}
+
+.event-tab .nav-tabs li:last-child {
+	margin-right: 0;
+}
+
+.event-tab .nav-tabs {
+	position: relative;
+	z-index: 1;
+	display: inline-block;
+	border:none;
+}
+
+
+
+
+.event-tab .nav-tabs>li a {
+	display: inline-block;
+	font-size: 14px;
+	padding: 5px 8px;
+    border: 2px solid #0D335D;
+    background-color: transparent;
+    margin-top:10px;
+	text-decoration:none;
+	color:white;
+}
+
+.event-tab .nav-tabs>li>a.active, 
+.event-tab .nav-tabs>li a.active>:focus, 
+.event-tab .nav-tabs>li>a.active:hover,
+.event-tab .nav-tabs>li>a:hover {
+	background-color:#0D335D;
+    cursor: pointer;
+    text-decoration:none
+}
+
+.event-item {
+	border-radius: 3px;
+	position: relative;
+	margin-bottom: 30px;
+	z-index: 1;
+}
+
+.event-item .btn.btn-primary {
+	text-transform: capitalize;
+}
+
+.event-item .event-info {
+	font-size: 14px;
+	color:LightGray;
+	overflow: hidden;
+	padding:12px;
+}
+
+.event-info .company-logo {
+	margin-bottom: 30px;
+}
+
+.event-info .tr-title{
+	font-size: 15px;
+	display: block;
+    margin-bottom: 15px;
+}
+.event-info .tr-title h5{
+	font-size: 22px;
+	display:flex;
+    justify-content:center;
+    color:black;
+}
+.event-info .tr-title h6{
+	font-size: 16px;
+    margin-left:10px;
+    margin-bottom:9px;
+	color:grey;
+}
+
+.event-item .time {
+	position: relative;
+}
+
+
+
+.event-item:hover {
+	transform:scaleY(1.03);
+    transform:0.5s;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+
+@media screen and (min-width: 999px) {
+.img-fluid{
+    height:150px;
+}
+
+}
+.ADDtoCart-and-BuyNow {
+    grid-gap: 8px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 0 5px 5px;
+    padding: 4px;
+}
+.ADDtoCart-and-BuyNow button {
+    background-color: #e6d416;
+    border-style: none;
+    font-size: 13px;
+    height: 50px;
+    letter-spacing: 1px;
+    width: 100%;
+}
+
+
+.dont-have-event {
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 20px;
+    height: auto;
+    box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.3);
+    background:white;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+	width:90%
+}
+{%endblock%}
+
+{% block body %}
+    
+<div class="tr-event-posted section-padding">
+    <div class="container">
+		<div class="event-tab text-center">
+			<ul class="nav nav-tabs justify-content-center" role="tablist">
+				<li role="presentation" class="active">
+					<a class="active show" href="#upcoming_events" aria-controls="upcoming_events" role="tab" data-toggle="tab" aria-selected="true">Upcoming  Events</a>
+				</li>
+				<li role="presentation"><a href="#ongoing_events" aria-controls="ongoing_events" role="tab" data-toggle="tab" class="" aria-selected="false">Ongoing Events</a></li>
+				<li role="presentation"><a href="#past_events" aria-controls="past_events" role="tab" data-toggle="tab" class="" aria-selected="false">Past Events</a></li>
+			   <hr>
+            </ul>
+			<div class="tab-content text-left">
+				<div role="tabpanel" class="tab-pane fade active show" id="upcoming_events">
+					<div class="row">
+						{% if upcoming_events|length < 1 %}
+						<div class="dont-have-event">
+							<img class="my-3" src="https://www.supplychainbrief.com/thumbs/large/2/e/f/2efa6ea83d85015bf51bf4465b3811535e294917.jpg"width="270px">
+							<h4 class="my-4 mx-3" style="font-weight:bold;color:purple">There are no events to display</h4>
+						 </div>
+						{% else%}
+                        {%for event in upcoming_events %}
+                        
+						<div class="col-md-6 col-lg-3">
+							<div class="event-item">
+								<div class="event-info">
+									<div class="company-logo">
+										<img src="{{event.eventImage.url}}" alt="images" class="img-fluid">
+									</div>
+									<span class="tr-title">
+										<h5> {{event.eventDisplay}}</h5>
+										<h6><i class="fas fa-map-marker-alt"></i>  &nbsp &nbsp &nbsp{{event.eventCity}},{{event.eventCountry}}</h6>
+                                        <h6><i class="fas fa-calendar"></i> &nbsp &nbsp &nbsp{{event.eventStartDate|date:"Y-m-d"}}<br>&nbsp &nbsp &nbsp &nbsp - {{event.eventEndDate|date:"Y-m-d"}}<h6>
+									</span>
+							
+									<div style="display:flex;justify-content:center;margin-bottom:8px;"class="time">
+                                        <a href="/user/event/{{event.eventName}}{{event.id}}">view details <span style="font-size:16px;" class="fa fa-angle-double-right"></span></a>
+                                    </div>
+
+									
+								</div>
+								<div class="ADDtoCart-and-BuyNow">
+									{% if user.is_authenticated%}
+									<form method="post" action="{% url 'addtocart' event.id %}">
+										{% csrf_token%}
+									<button type="submit"><i class="fa fa-shopping-cart"></i>ADD TO CART</button>
+									</form>
+									<form method="post" action="{% url 'booknow' event.id %}">
+									<button  type="submit"><i class="fa fa-shopping-bag"></i>BUY NOW</button>
+									{% csrf_token%}
+								   </form>
+								   {% else %}
+								   <a href="/loginpage"><button type="button"><i class="fa fa-shopping-cart"></i>ADD TO CART</button></a>
+									<a href="/loginpage"><button  type="button"><i class="fa fa-shopping-bag"></i>BUY NOW</button></a>
+								   {% endif %}
+								</div>
+							</div>
+						</div>
+                        
+                        {% endfor%}
+						{% endif%}
+					</div><!-- /.row -->
+				</div><!-- /.tab-pane -->
+				<div role="tabpanel" class="tab-pane fade in" id="ongoing_events">
+					<div class="row">	
+						{% if ongoing_events|length < 1 %}
+						<div class="dont-have-event">
+							<img class="my-3" src="https://www.supplychainbrief.com/thumbs/large/2/e/f/2efa6ea83d85015bf51bf4465b3811535e294917.jpg"width="270px">
+							<h4 class="my-4 mx-3" style="font-weight:bold;color:purple">There are no events to display</h4>
+						 </div>
+						{% else%}
+                        {%for event in ongoing_events %}								
+						<div class="col-md-6 col-lg-3">
+							<div class="event-item">
+								<div class="event-info">
+									<div class="company-logo">
+										<img src="{{ event.eventImage.url }}" alt="images" class="img-fluid">
+									</div>
+									<span class="tr-title">
+										<h5> {{event.eventDisplay}}</h5>
+										<h6><i class="fas fa-map-marker-alt"></i>  &nbsp &nbsp &nbsp{{event.eventCity}},{{event.eventCountry}}</h6>
+                                        <h6><i class="fas fa-calendar"></i> &nbsp &nbsp &nbsp{{event.eventStartDate|date:"Y-m-d"}}<br>&nbsp &nbsp &nbsp &nbsp - {{event.eventEndDate|date:"Y-m-d"}}<h6>
+									</span>
+									<div style="display:flex;justify-content:center;margin-bottom:8px;"class="time">
+                                        <a href="/user/event/{{event.eventName}}{{event.id}}">view details <span style="font-size:16px;" class="fa fa-angle-double-right"></span></a>
+                                    </div>																				
+								</div>
+							</div>
+						</div>
+                        {% endfor%}	
+						{% endif %}					
+					</div><!-- /.row -->	
+				</div><!-- /.tab-pane -->
+				<div role="tabpanel" class="tab-pane fade in" id="past_events">
+					<div class="row">	
+						{% if past_events|length < 1 %}
+						<div class="dont-have-event">
+							<img class="my-3" src="https://www.supplychainbrief.com/thumbs/large/2/e/f/2efa6ea83d85015bf51bf4465b3811535e294917.jpg"width="270px">
+							<h4 class="my-4 mx-3" style="font-weight:bold;color:purple">There are no events to display</h4>
+						 </div>
+						{% else%}			
+						{%for event in past_events %}
+						<div class="col-md-6 col-lg-3">
+							<div class="event-item">
+								<div class="event-info">
+									<div class="company-logo">
+										<img src="{{ event.eventImage.url}}" alt="images" class="img-fluid">
+									</div>
+									<span class="tr-title">
+										<h5> {{event.eventDisplay}}</h5>
+										<h6><i class="fas fa-map-marker-alt"></i>  &nbsp &nbsp &nbsp{{event.eventCity}},{{event.eventCountry}}</h6>
+                                        <h6><i class="fas fa-calendar"></i> &nbsp &nbsp &nbsp{{event.eventStartDate|date:"Y-m-d"}}<br>&nbsp &nbsp &nbsp &nbsp - {{event.eventEndDate|date:"Y-m-d"}}<h6>
+									</span>
+									<div style="display:flex;justify-content:center;margin-bottom:8px;"class="time">
+                                        <a href="/user/event/{{event.eventName}}{{event.id}}">view details <span style="font-size:16px;" class="fa fa-angle-double-right"></span></a>
+                                    </div>																			
+								</div>
+							</div>
+						</div>
+                        {% endfor%}
+						{% endif %}
+					</div><!-- /.row -->	
+				</div><!-- /.tab-pane -->
+			</div>				
+		</div><!-- /.event-tab -->			
+	</div><!-- /.container -->
+</div>
+ {% endblock %}
+
+
+
+
+ {% block js %}
+ 
+ <script>
+  
+ 
+ </script>
+ 
+
+{% endblock js %}

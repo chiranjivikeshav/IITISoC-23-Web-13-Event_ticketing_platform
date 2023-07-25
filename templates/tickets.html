@@ -1,0 +1,325 @@
+{% extends 'base.html' %}
+{% block title %}Ticket Page{% endblock title %}
+{% block link %}
+    
+{% endblock link %}
+{%block css%}
+@import url('https://fonts.googleapis.com/css?family=Oswald');
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box
+}
+
+
+.fl-left {
+    float: left
+}
+
+.fl-right {
+    float: right
+}
+
+h3 {
+    text-transform: uppercase;
+    font-weight: 900;
+    margin: 30px
+}
+.row {
+    overflow: hidden
+}
+
+.card {
+    display: table-row;
+    width: 49%;
+    background-color:white;
+    color: #989898;
+    margin-bottom: 10px;
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    border-radius: 8px;
+    position: relative
+    box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.3);
+}
+
+
+
+.date {
+    display: table-cell;
+    width: 25%;
+    position: relative;
+    text-align: center;
+    border-right: 2px dashed #dadde6
+}
+
+.date:before,
+.date:after {
+    content: "";
+    display: block;
+    width: 30px;
+    height: 30px;
+    background-color: #DADDE6;
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    z-index: 1;
+    border-radius: 50%
+}
+
+.date:after {
+    top: auto;
+    bottom: -15px
+}
+
+.date time {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%)
+}
+
+.date time span {
+    display: block
+}
+
+
+
+.card-cont {
+    display: table-cell;
+    width: 75%;
+    font-size: 85%;
+    padding: 10px 10px 30px 50px
+}
+
+.card-cont h3 {
+    color: #3C3C3C;
+    font-size: 130%
+}
+
+.row:last-child .card:last-of-type .card-cont h3 {
+    text-decoration: line-through
+}
+
+.card-cont>div {
+    display: table-row
+}
+
+.card-cont .even-date i,
+.card-cont .even-info i,
+.card-cont .even-date time,
+.card-cont .even-info p {
+    display: table-cell
+}
+
+.card-cont .even-date i,
+.card-cont .even-info i {
+    padding: 5% 5% 0 0
+}
+
+.card-cont .even-date time span {
+    display: block
+}
+
+.card-cont p,.btn-s{
+    display: block;
+    text-decoration: none;
+    width: 80px;
+    height: 30px;
+    background-color:blue;
+    color: #fff;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 2px;
+    position: absolute;
+    right: 10px;
+    bottom: 10px
+}
+.btn-s{
+    display: block;
+    text-decoration: none;
+    width: auto;
+    background-color:blue;
+    color: #fff;
+    padding-left:10px;
+    padding-right:10px;
+}
+.row:last-child .card:first-child .card-cont a {
+    background-color: #037FDD
+}
+
+.row:last-child .card:last-child .card-cont a {
+    background-color: #F8504C
+}
+
+@media screen and (max-width: 860px) {
+    .card {
+        display: block;
+        float: none;
+        width: 90%;
+        left: 15px
+    }
+    .card-cont .even-date,
+    .card-cont .even-info {
+        font-size: 75%
+    }
+}
+.card{
+    margin:3px;
+}
+.modal-content{
+    background:transparent;
+    border:none;
+}
+
+.dont-have-ticket {
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 20px;
+    height: auto;
+    box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.3);
+    background:white;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+}
+
+{%endblock%}
+
+{% block body %}
+  
+<section class="container">
+    <h3>YOUR TICKETS</h3>
+    <h5>UPCOMING EVENT</h5>
+    {% if attenddees1|length < 1 %}
+    <div class="dont-have-ticket">
+       <img class="my-3" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVxPbTRlzBdKKKFyUniE5sGwjYhWBRQ4XKgA&usqp=CAU"width="270px">
+       <h5 class="my-4 mx-4" style="font-weight:bold;color:purple">You Don't have any event to Attend!</h5>
+    </div>
+    {% else %}
+     <div class="row">
+       {% for person in attenddees1%}
+        <article class="card fl-left">
+          <section class="date">
+            <time datetime="23th feb">
+              <h5>{{person.timeStamp}}</h5>
+            </time>
+          </section>
+          <section class="card-cont">
+            <small>{{person.cartitem.ticket_type.ticketname}}</small>
+            <h3>{{person.event.eventName}}</h3>
+            <div class="even-date">
+             <i class="fa fa-calendar"></i>
+             <time>
+               <span>{{person.event.eventStartDate}}</span>
+               <span>to</span>
+               <span>{{person.event.eventEndDate}}</span>
+             </time>
+            </div>
+            <div class="even-date">
+              <i class="fa fa-map-marker"></i>
+              <span>
+                {{person.event.eventAddress}}, {{person.event.eventCity}}, {{person.event.eventState}}, {{person.event.eventCountry}} - {{person.event.eventZip}}
+              </span>
+            </div>
+            <button type="button"  data-toggle="modal" data-target="#exampleModalCenter{{forloop.counter}}"><p>Attendee</P></button>
+              <!-- Modal -->
+        
+          </section>
+        </article>
+        <div class="modal fade" id="exampleModalCenter{{forloop.counter}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    
+                    <div class="modal-body">
+                        <ul class="list-group">
+                            <li class="list-group-item active">ATTENDEE DETAILS </li>
+                            <li class="list-group-item ">NAME : {{person.attendeName}}</li>  
+                            <li class="list-group-item">GENDER : {{person.attendeGender}}</li>
+                            <li class="list-group-item">EMAIL : {{person.attendeEmail}}</li>
+                            <li class="list-group-item">CONTACT : {{person.attendeContact}}</li>
+                            <li class="list-group-item">ADDRESS : {{person.attendeAddress}}</li>
+                          </ul>
+                    
+                        <button type="button" class=" mx-3 btn-s" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif%}
+
+    <h5 style="margin:10px;">YOUR HISTORY</h5>
+    {% if attenddees2|length < 1 %}
+    <div class="dont-have-ticket">
+       <img class="my-3" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKJMwL3r7GlwKKFq9JHgtEXAbOY5NwPIJ_GQ&usqp=CAU"width="270px">
+       <h5 class="my-4 mx-3" style="font-weight:bold;color:purple">Your did't Attend Any Event Till!</h5>
+    </div>
+    {% else %}
+     <div class="row">
+        {% for person in attenddees2%}
+        <article class="card fl-left">
+          <section class="date">
+            <time datetime="23th feb">
+              <h5>{{person.timeStamp}}</h5>
+            </time>
+          </section>
+          <section class="card-cont">
+            <small>{{person.cartitem.ticket_type.ticketname}}</small>
+            <h3>{{person.event.eventName}}</h3>
+            <div class="even-date">
+             <i class="fa fa-calendar"></i>
+             <time>
+               <span>{{person.event.eventStartDate}}</span>
+               <span>to</span>
+               <span>{{person.event.eventEndDate}}</span>
+             </time>
+            </div>
+            <div class="even-inf">
+              <i class="fa fa-map-marker"></i>
+              <p>
+                {{person.event.eventAddress}}, {{person.event.eventCity}}, {{person.event.eventState}}, {{person.event.eventCountry}} - {{person.event.eventZip}}
+              </p>
+            </div>
+            <button type="button"  data-toggle="modal" data-target="#exampleModalCenter"><p>Attendee</P></button>
+              <!-- Modal -->
+        
+          </section>
+        </article>
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    
+                    <div class="modal-body">
+                        <ul class="list-group">
+                            <li class="list-group-item active">ATTENDEE DETAILS </li>
+                            <li class="list-group-item ">NAME : {{person.attendeName}}</li>  
+                            <li class="list-group-item">GENDER : {{person.attendeGender}}</li>
+                            <li class="list-group-item">EMAIL : {{person.attendeEmail}}</li>
+                            <li class="list-group-item">CONTACT : {{person.attendeContact}}</li>
+                            <li class="list-group-item">ADDRESS : {{person.attendeAddress}}</li>
+                          </ul>
+                    
+                        <button type="button" class=" mx-3 btn-s" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+    </section>
+    
+
+
+ {% endblock %}
+ {% block js %}
+
+ 
+
+  {% endblock js %} 

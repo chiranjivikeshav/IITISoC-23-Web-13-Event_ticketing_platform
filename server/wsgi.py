@@ -1,5 +1,9 @@
 """
+<<<<<<< HEAD
 WSGI config for server project.
+=======
+WSGI config for ETP project.
+>>>>>>> etplatform
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
