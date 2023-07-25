@@ -78,20 +78,20 @@ WSGI_APPLICATION = 'server.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 # DATABASES = {
 #     "default": dj_database_url.config(default='postgres://chiranjivikeshav:5UTPr5CaDxScsLQJg54SOy7boWQmq9Rw@dpg-ci7vhd18g3nfucaujnog-a.singapore-postgres.render.com/etplatform', ssl_require=True)
 # }
 
-# DATABASES = {
-#     "default": dj_database_url.config(default='postgres://chiranjivikeshav:y6UYxe8whcY7ByH6e5veQVLuvmRgXTOU@dpg-chtg0cd269vccp594icg-a.singapore-postgres.render.com/bloghere',ssl_require=True)
-# }
+DATABASES = {
+    "default": dj_database_url.config(default='postgres://chiranjivikeshav:y6UYxe8whcY7ByH6e5veQVLuvmRgXTOU@dpg-chtg0cd269vccp594icg-a.singapore-postgres.render.com/bloghere',ssl_require=True)
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -150,7 +150,7 @@ EMAIL_BACKEND="django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST="smtp.gmail.com"
 EMAIL_USE_TLS =True
 EMAIL_PORT=587
-EMAIL_HOST_USER="chiranjivikeshav1@gmail.com"
-EMAIL_HOST_PASSWORD="vtjhryupjxzwnpqh"
+EMAIL_HOST_USER="eventwave642@gmail.com"
+EMAIL_HOST_PASSWORD="iwsyxixfdsizcxoj"
 EMAIL_USE_SSL = False
 ALLOWED_HOSTS = []
