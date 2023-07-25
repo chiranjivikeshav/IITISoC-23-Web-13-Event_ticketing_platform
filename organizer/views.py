@@ -9,6 +9,7 @@ from django.contrib import messages
 from . import urls
 import secrets
 import base64
+from dateutil import parser
 from datetime import datetime
 # Create your views here.
 def home(request):
@@ -165,10 +166,22 @@ def dashboard(request):
         event_zipcode = int(request.POST['event_zipcode'])
         event_description = request.POST['event_description']
         event_image = request.FILES['event_image']
+        gallery_image1 = request.FILES['event_image1']
+        gallery_image2 = request.FILES['event_image2']
+        gallery_image3 = request.FILES['event_image3']
         secret_code = secrets.token_urlsafe(10)
         truncated_code = base64.urlsafe_b64encode(secret_code.encode()).decode()[:10]
 
+        start_date_obj = parser.parse(event_start_date)
+        end_date_obj = parser.parse(event_end_date)
 
+        if start_date_obj > end_date_obj:
+            messages.warning(request,'INVALID DATES')
+            return redirect("dashboard")
+        if start_date_obj < datetime.now() or end_date_obj < datetime.now():
+            messages.warning(request,'INVALID DATES')
+            return redirect("dashboard")
+            
         event = Eventdetails.objects.create(
             eventOrganizer=organizer,
             eventImage = event_image,
@@ -183,6 +196,9 @@ def dashboard(request):
             eventZip = event_zipcode,
             eventDescription = event_description,
             eventsecreteCode = truncated_code,
+            galleryImage1=gallery_image1,
+            galleryImage2=gallery_image2,
+            galleryImage3=gallery_image3,
         )
         messages.success(request, 'Event created  successfully!')
         # Process ticket sets

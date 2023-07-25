@@ -33,6 +33,9 @@ class Eventdetails(models.Model):
     eventZip = models.IntegerField()
     eventDescription = models.CharField(max_length=3000)
     eventImage = models.ImageField(upload_to='images/')
+    galleryImage1=models.ImageField(upload_to='images/',default='images/1.jpg')
+    galleryImage2=models.ImageField(upload_to='images/',default='images/1.jpg')
+    galleryImage3=models.ImageField(upload_to='images/',default='images/1.jpg')
     eventsecreteCode = models.CharField(max_length=200,default=True)
     def __str__(self):
         return self.eventName

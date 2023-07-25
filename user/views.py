@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
 from user.models import Userprofile,CartItem,Attendee
-from organizer.models import Eventdetails,Ticket
+from organizer.models import Eventdetails,Ticket,Organizer
 from django.utils import timezone
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
@@ -90,7 +90,8 @@ def eventdetailes(request,slug):
             filter_name+=char
     event =Eventdetails.objects.get(eventName=filter_name,id= int(filter_id))
     tickets =Ticket.objects.filter(event =event)
-    return render( request,'particularevent.html',{'event':event,'tickets':tickets})
+    organizer =event.eventOrganizer
+    return render( request,'particularevent.html',{'event':event,'tickets':tickets, 'organizer': organizer})
 
 @login_required
 def addtocart(request, event_id):
@@ -242,7 +243,6 @@ def payment( request):
    
         razorpay_order = razorpay_client.order.create(dict(amount=int(amount),currency=currency,payment_capture='0'))
         razorpay_order_id = razorpay_order['id']
-        # callback_url = "http://" + "127.0.0.1:8000" + "/user/paymenthandler/"
         callback_url = request.build_absolute_uri(reverse('paymenthandler', args=[userid]))
         context = {}
         context['razorpay_order_id'] = razorpay_order_id
@@ -317,11 +317,11 @@ def generate_qr_and_send_email(request, userid):
 
     for attendee in attendees:
         event_name = attendee.event.eventName
-        ticket_name = attendee.cartitem.ticket_type
+        ticket_name = attendee.cartitem.ticket_type.ticketname
         secret_code = attendee.secreateCode
         qr_data = {"Event": event_name,"Ticket":ticket_name,"Secret Code":secret_code}
         qr_code_img = generate_qr_code(qr_data)
-        message = f"<b>Hi</b>, Your Booking is confirmed. Here are your event details:\n\n<b>Event Name:</b> {event_name}\n<b>Ticket Name:</b>{ticket_name}\n<b>Attendee Name:</b>{attendee.attendeName}"
+        message = f"Hi, Your Booking is confirmed. Here are your event details:\n\nEvent Name: {event_name}\nTicket Name:{ticket_name}\nAttendee Name:{attendee.attendeName}"
         email = EmailMessage(
             subject=subject,
             body=message,
