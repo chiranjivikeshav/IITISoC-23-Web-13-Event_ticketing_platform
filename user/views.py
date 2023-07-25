@@ -12,7 +12,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponseBadRequest
 from django.urls import reverse
 import datetime
-
+from django.http import JsonResponse
+import json
 import qrcode
 from io import BytesIO
 from django.core.mail import EmailMessage
@@ -318,9 +319,9 @@ def generate_qr_and_send_email(request, userid):
         event_name = attendee.event.eventName
         ticket_name = attendee.cartitem.ticket_type
         secret_code = attendee.secreateCode
-        qr_data = f"Event: {event_name}\nTicket: {ticket_name}\nSecret Code: {secret_code}"
+        qr_data = {"Event": event_name,"Ticket":ticket_name,"Secret Code":secret_code}
         qr_code_img = generate_qr_code(qr_data)
-        message = f"<b>Hi</b>, Your Booking is confirmed. Here are your event details:\n\n<b>Event Name:</b> {event_name}\n<b>Ticket Name:</b>{ticket_type}\n<b>Attendee Name:</b>{attendee.attendeName}"
+        message = f"<b>Hi</b>, Your Booking is confirmed. Here are your event details:\n\n<b>Event Name:</b> {event_name}\n<b>Ticket Name:</b>{ticket_name}\n<b>Attendee Name:</b>{attendee.attendeName}"
         email = EmailMessage(
             subject=subject,
             body=message,
@@ -350,6 +351,16 @@ def generate_qr_code(data):
 
 def scanner(request):
     return render(request,'secretecode.html')
+
+def scannerdetails(request):
+    if request.method == 'POST':
+        secretecode = request.POST.get('code','')
+        if len(secretecode) != 10:
+            messages.warning(request,'Code is invalid')
+            return render(request,'secretecode.html')
+        return render(request,'scanner.html',{"secretcode":secretecode})
+
+
 
 
 

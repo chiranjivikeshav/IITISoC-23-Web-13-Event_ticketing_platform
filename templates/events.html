@@ -141,6 +141,20 @@
     width: 100%;
 }
 
+
+.dont-have-event {
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 20px;
+    height: auto;
+    box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.3);
+    background:white;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+	width:90%
+}
 {%endblock%}
 
 {% block body %}
@@ -160,7 +174,10 @@
 				<div role="tabpanel" class="tab-pane fade active show" id="upcoming_events">
 					<div class="row">
 						{% if upcoming_events|length < 1 %}
-						<h2> There are no events to display</h2>
+						<div class="dont-have-event">
+							<img class="my-3" src="https://www.supplychainbrief.com/thumbs/large/2/e/f/2efa6ea83d85015bf51bf4465b3811535e294917.jpg"width="270px">
+							<h4 class="my-4 mx-3" style="font-weight:bold;color:purple">There are no events to display</h4>
+						 </div>
 						{% else%}
                         {%for event in upcoming_events %}
                         
@@ -207,7 +224,10 @@
 				<div role="tabpanel" class="tab-pane fade in" id="ongoing_events">
 					<div class="row">	
 						{% if ongoing_events|length < 1 %}
-						<h2> There are no events to display</h2>
+						<div class="dont-have-event">
+							<img class="my-3" src="https://www.supplychainbrief.com/thumbs/large/2/e/f/2efa6ea83d85015bf51bf4465b3811535e294917.jpg"width="270px">
+							<h4 class="my-4 mx-3" style="font-weight:bold;color:purple">There are no events to display</h4>
+						 </div>
 						{% else%}
                         {%for event in ongoing_events %}								
 						<div class="col-md-6 col-lg-3">
@@ -234,7 +254,10 @@
 				<div role="tabpanel" class="tab-pane fade in" id="past_events">
 					<div class="row">	
 						{% if past_events|length < 1 %}
-						<h2> There are no events to display</h2>
+						<div class="dont-have-event">
+							<img class="my-3" src="https://www.supplychainbrief.com/thumbs/large/2/e/f/2efa6ea83d85015bf51bf4465b3811535e294917.jpg"width="270px">
+							<h4 class="my-4 mx-3" style="font-weight:bold;color:purple">There are no events to display</h4>
+						 </div>
 						{% else%}			
 						{%for event in past_events %}
 						<div class="col-md-6 col-lg-3">

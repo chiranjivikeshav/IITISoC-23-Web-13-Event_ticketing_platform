@@ -8,7 +8,8 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from . import urls
 import secrets
-
+import base64
+from datetime import datetime
 # Create your views here.
 def home(request):
     return render(request,"home.html")
@@ -165,6 +166,9 @@ def dashboard(request):
         event_description = request.POST['event_description']
         event_image = request.FILES['event_image']
         secret_code = secrets.token_urlsafe(10)
+        truncated_code = base64.urlsafe_b64encode(secret_code.encode()).decode()[:10]
+
+
         event = Eventdetails.objects.create(
             eventOrganizer=organizer,
             eventImage = event_image,
@@ -178,7 +182,7 @@ def dashboard(request):
             eventCountry = event_country,
             eventZip = event_zipcode,
             eventDescription = event_description,
-            eventsecreteCode = secret_code,
+            eventsecreteCode = truncated_code,
         )
         messages.success(request, 'Event created  successfully!')
         # Process ticket sets

@@ -38,7 +38,6 @@
  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
  <script>
    var options = {
-     // Enter the Key ID generated from the Dashboard
      "key": "{{ razorpay_merchant_key }}",
      "amount": "{{ razorpay_amount }}",
      "currency" : "{{ currency }}",
@@ -47,10 +46,7 @@
      "callback_url": "{{ callback_url }}",
     
      handler: function (response) {
-       // Perform necessary actions on payment success
        console.log(response);
-       // Redirect or show success message to the user
-       // For example, you can redirect to a success page
        window.location.href = "{% url 'home' %}";
      },
      
