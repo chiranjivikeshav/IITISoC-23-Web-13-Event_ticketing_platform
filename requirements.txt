@@ -31,4 +31,4 @@ typing_extensions==4.6.3
 tzdata==2023.3
 urllib3==2.0.3
 yarg==0.1.9
-gunicorn==21.2.0
+
