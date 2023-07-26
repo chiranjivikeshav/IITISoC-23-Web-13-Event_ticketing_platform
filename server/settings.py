@@ -1,4 +1,3 @@
-ALLOWED_HOSTS=["*"]
 """
 Django settings for ETP project.
 
@@ -11,11 +10,15 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
-from pathlib import Path
 import os
 import dj_database_url
 from pathlib import Path
 from django.contrib.messages import constants as messages
+# import environ
+
+# env=environ.Env()
+# environ.Env.read_env()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -29,7 +32,7 @@ SECRET_KEY = 'django-insecure-z6og42l7c@czb^ckdjkxq&gb#duhl63rcjw1%5gl-2*6a8kzaj
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-
+ALLOWED_HOSTS=["*"]
 
 # Application definition
 
