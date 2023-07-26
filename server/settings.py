@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-z6og42l7c@czb^ckdjkxq&gb#duhl63rcjw1%5gl-2*6a8kzaj'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['.vercel.app','eventwave-9bhy.onrender.com','eventwave.onrender.com', 'localhost','127.0.0.1']
 
@@ -78,12 +78,12 @@ WSGI_APPLICATION = 'server.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 
 # DATABASES = {
@@ -95,9 +95,9 @@ DATABASES = {
 #     "default": dj_database_url.config(default='postgres://chiranjivikeshav:y6UYxe8whcY7ByH6e5veQVLuvmRgXTOU@dpg-chtg0cd269vccp594icg-a.singapore-postgres.render.com/bloghere',ssl_require=True)
 # }
 
-# DATABASES = {
-#     "default": dj_database_url.config(default='postgres://chiranjivikeshav:y6UYxe8whcY7ByH6e5veQVLuvmRgXTOU@dpg-chtg0cd269vccp594icg-a.singapore-postgres.render.com/bloghere',ssl_require=True)
-# }
+DATABASES = {
+    "default": dj_database_url.config(default='postgres://chiranjivikeshav:y6UYxe8whcY7ByH6e5veQVLuvmRgXTOU@dpg-chtg0cd269vccp594icg-a.singapore-postgres.render.com/bloghere',ssl_require=True)
+}
 
 
 # Password validation
