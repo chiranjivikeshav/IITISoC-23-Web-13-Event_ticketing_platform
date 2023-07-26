@@ -1,1 +1,1 @@
-web: gumicorn 'server.wsgi'
+web: gunicorn 'server.wsgi'
