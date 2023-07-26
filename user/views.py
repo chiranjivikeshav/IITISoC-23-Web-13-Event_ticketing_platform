@@ -136,9 +136,18 @@ def cart(request):
 
 def updatequantity(request, cart_item_id):
     cart_item = CartItem.objects.get(pk=cart_item_id)
+    ticket  = cart_item.ticket_type
+    remaining_ticket = ticket.ticketCount - ticket.bookedTicket
+
     new_quantity = int(request.POST['quantity'])
     if new_quantity < 0:
         new_quantity = 0
+    if remaining_ticket == 0:
+        messages.warning(request,"Booking Close")
+        return redirect('cart')
+    if remaining_ticket < new_quantity:
+        messages.warning(request,'Only '+ str(remaining_ticket) + ' Tickets left')
+        return redirect('cart')
     cart_item.quantity = new_quantity
     cart_item.save()
     user = request.user

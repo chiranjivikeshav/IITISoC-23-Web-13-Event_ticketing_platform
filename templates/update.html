@@ -111,8 +111,6 @@
             
             <div class="mx-3 my-3" style="width: 320px;margin-left: 30px;">
                 <div id="tickets-container">
-                    <label for="image">UPLOAD IMAGE</label>
-                    <input type="file" id="image" name="event_image" value="{{event.enevtImage}}" required>
                     {% for ticket in currentEventTicket %}
                     <h4>Ticket{{forloop.counter}} </h4>
                     <div class="ticket-form">
