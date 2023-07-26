@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-z6og42l7c@czb^ckdjkxq&gb#duhl63rcjw1%5gl-2*6a8kzaj
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['eventwave.onrender.com', 'localhost','127.0.0.1']
+ALLOWED_HOSTS = ['eventwave-9bhy.onrender.com','eventwave.onrender.com', 'localhost','127.0.0.1']
 
 
 # Application definition
