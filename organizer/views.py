@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-from django.shortcuts import render
-
-# Create your views here.
-=======
 from django.shortcuts import render,redirect
 from organizer.models import Eventdetails, Ticket,Organizer
 from user.models import Userprofile
@@ -299,4 +294,3 @@ def deletevent(request,id):
 
 
 
->>>>>>> etplatform
