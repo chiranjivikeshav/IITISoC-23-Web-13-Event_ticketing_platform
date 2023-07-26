@@ -136,12 +136,12 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
+STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
 # STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Default primary key field type
@@ -163,4 +163,4 @@ EMAIL_PORT=587
 EMAIL_HOST_USER="eventwave642@gmail.com"
 EMAIL_HOST_PASSWORD="iwsyxixfdsizcxoj"
 EMAIL_USE_SSL = False
-ALLOWED_HOSTS = []
+
