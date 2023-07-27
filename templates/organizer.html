@@ -108,7 +108,6 @@
     height: auto;
     background:white;
     display: flex;
-    flex-wrap:wrap;
     flex-flow: column;
     align-items: center;
     box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.3);
@@ -116,7 +115,7 @@
 
 .event-detail-form-fillup {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: wrap!important;
     justify-content: center;
 
 }
@@ -412,125 +411,110 @@
 {% endif %}
 
 <div class="event-form-fillup" id="content">
-    <h3 class="my-4" style="font-weight:bold;border-bottom:2px solid rgb(61, 21, 101);">ADD EVENT DETAILS</h3>
-    <form action="/organizerDashboard" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div class="event-detail-form-fillup">
-            <div class="mx-3 my-3" style="float: left;width: 320px;margin-right: 30px;">
-                <h4>BASIC DETAILS</h4>
-                <label for="event-name" class="form-label">EVENT NAME</label>
-                <input type="text" class="form-control" id="event-name" name="event_name" required>
-
-                <label for="event-display-name" class="form-label">EVENT DISPLAY NAME</label>
-                <input type="text" class="form-control" id="event-display-name" name="event_dispaly_name" required>
-
-                <label for="event-start-date" class="form-label">EVENT START FROM</label>
-                <input type="datetime-local" class="form-control" id="event-start-date" name="event_start_date"required>
-
-                <label for="event-end-date" class="form-label">EVENT ENDS AT</label>
-                <input type="datetime-local" class="form-control" id="event-end-date" name="event_end_date"required>
-                <h4 class="my-3">EVENT VENUE</h4>
-                <label for="event-address" class="form-label">ADDRESS</label>
-                <input type="text" class="form-control" id="event-address" name="event_address"required>
-
-                <label for="event-city" class="form-label">CITY</label>
-                <input type="text" class="form-control" id="event-city" name="event_city"required>
-
-                <label for="event-state" class="form-label">STATE</label>
-                <select name="event_state" id="event-state" class="form-control"required>
-                    <option value="None">---Select---</option>
-                    <option value="Andhra Pradesh">Andhra Pradesh</option>
-                    <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
-                    <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-                    <option value="Assam">Assam</option>
-                    <option value="Bihar">Bihar</option>
-                    <option value="Chandigarh">Chandigarh</option>
-                    <option value="Chhattisgarh">Chhattisgarh</option>
-                    <option value="Dadar and Nagar Haveli">Dadar and Nagar Haveli</option>
-                    <option value="Daman and Diu">Daman and Diu</option>
-                    <option value="Delhi">Delhi</option>
-                    <option value="Lakshadweep">Lakshadweep</option>
-                    <option value="Puducherry">Puducherry</option>
-                    <option value="Goa">Goa</option>
-                    <option value="Gujarat">Gujarat</option>
-                    <option value="Haryana">Haryana</option>
-                    <option value="Himachal Pradesh">Himachal Pradesh</option>
-                    <option value="Jammu and Kashmir">Jammu and Kashmir</option>
-                    <option value="Jharkhand">Jharkhand</option>
-                    <option value="Karnataka">Karnataka</option>
-                    <option value="Kerala">Kerala</option>
-                    <option value="Madhya Pradesh">Madhya Pradesh</option>
-                    <option value="Maharashtra">Maharashtra</option>
-                    <option value="Manipur">Manipur</option>
-                    <option value="Meghalaya">Meghalaya</option>
-                    <option value="Mizoram">Mizoram</option>
-                    <option value="Nagaland">Nagaland</option>
-                    <option value="Odisha">Odisha</option>
-                    <option value="Punjab">Punjab</option>
-                    <option value="Rajasthan">Rajasthan</option>
-                    <option value="Sikkim">Sikkim</option>
-                    <option value="Tamil Nadu">Tamil Nadu</option>
-                    <option value="Telangana">Telangana</option>
-                    <option value="Tripura">Tripura</option>
-                    <option value="Uttar Pradesh">Uttar Pradesh</option>
-                    <option value="Uttarakhand">Uttarakhand</option>
-                    <option value="West Bengal">West Bengal</option>
-                </select>
-
-                <label for="event-country" class="form-label">COUNTRY</label>
-                <select name="event_country" id="event-country" class="form-control"required>
-                    <option value="None">---Select---</option>
-                    <option value="India">India</option>
-                </select>
-                <label for="event-zipcode" class="form-label">ZIP</label>
-                <input type="number" class="form-control" id="event-zipcode" name="event_zipcode"required>
-            </div>
-            <div class="mx-3 my-3" style="width: 320px;margin-left: 30px;">
-                <div id="tickets-container">
-                    <label for="image">UPLOAD IMAGE</label>
-                    <input type="file" id="image" name="event_image" required>
-                    <h5>UPLOAD GALLERY IMAGES</h5>
-                    <hr>
-                    <label for="image">UPLOAD IMAGE</label>
-                    <input type="file" id="image" name="event_image1" required>
-                    <label for="image">UPLOAD IMAGE</label>
-                    <input type="file" id="image" name="event_image2" required>
-                    <label for="image">UPLOAD IMAGE</label>
-                    <input type="file" id="image" name="event_image3" required>
-
-                    <div style="margin-top:7px;"class="ticket-form">
-                        <h4>Ticket 1</h4>
-                        <div class="form-group">
-                            <label for="name1">TICKET NAME</label>
-                            <input type="text" class="form-control" id="name1" name="name1"placeholder="Enter ticket name"required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="price1">TICKET PRICE(in Rs.)</label>
-                            <input type="number" class="form-control" id="price1" name="price1"placeholder="Enter ticket price"required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="quantity1">NUMBER OF TICKETS</label>
-                            <input type="number" class="form-control" id="quantity1" name="quantity1"placeholder="Enter quantity"required>
-                        </div>
-                    </div>
-                </div>
-
-                <button type="button" class="addanotherbutton" onclick="addTicket()">Add Another Ticket</button>
-            </div>
-
-
+  <h3 class="my-4" style="font-weight:bold;border-bottom:2px solid rgb(61, 21, 101);">ADD EVENT DETAILS</h3>
+  <form action="/organizerDashboard" method="post" enctype="multipart/form-data">
+     {% csrf_token %}
+     <div class="event-detail-form-fillup">
+        <div class="mx-3 my-3" style="float: left;width: 320px;margin-right: 30px;">
+           <h4>BASIC DETAILS</h4>
+           <label for="event-name" class="form-label">EVENT NAME</label>
+           <input type="text" class="form-control" id="event-name" name="event_name" required>
+           <label for="event-display-name" class="form-label">EVENT DISPLAY NAME</label>
+           <input type="text" class="form-control" id="event-display-name" name="event_dispaly_name" required>
+           <label for="event-start-date" class="form-label">EVENT START FROM</label>
+           <input type="datetime-local" class="form-control" id="event-start-date" name="event_start_date"required>
+           <label for="event-end-date" class="form-label">EVENT ENDS AT</label>
+           <input type="datetime-local" class="form-control" id="event-end-date" name="event_end_date"required>
+           <h4 class="my-3">EVENT VENUE</h4>
+           <label for="event-address" class="form-label">ADDRESS</label>
+           <input type="text" class="form-control" id="event-address" name="event_address"required>
+           <label for="event-city" class="form-label">CITY</label>
+           <input type="text" class="form-control" id="event-city" name="event_city"required>
+           <label for="event-state" class="form-label">STATE</label>
+           <select name="event_state" id="event-state" class="form-control"required>
+              <option value="None">---Select---</option>
+              <option value="Andhra Pradesh">Andhra Pradesh</option>
+              <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+              <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+              <option value="Assam">Assam</option>
+              <option value="Bihar">Bihar</option>
+              <option value="Chandigarh">Chandigarh</option>
+              <option value="Chhattisgarh">Chhattisgarh</option>
+              <option value="Dadar and Nagar Haveli">Dadar and Nagar Haveli</option>
+              <option value="Daman and Diu">Daman and Diu</option>
+              <option value="Delhi">Delhi</option>
+              <option value="Lakshadweep">Lakshadweep</option>
+              <option value="Puducherry">Puducherry</option>
+              <option value="Goa">Goa</option>
+              <option value="Gujarat">Gujarat</option>
+              <option value="Haryana">Haryana</option>
+              <option value="Himachal Pradesh">Himachal Pradesh</option>
+              <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+              <option value="Jharkhand">Jharkhand</option>
+              <option value="Karnataka">Karnataka</option>
+              <option value="Kerala">Kerala</option>
+              <option value="Madhya Pradesh">Madhya Pradesh</option>
+              <option value="Maharashtra">Maharashtra</option>
+              <option value="Manipur">Manipur</option>
+              <option value="Meghalaya">Meghalaya</option>
+              <option value="Mizoram">Mizoram</option>
+              <option value="Nagaland">Nagaland</option>
+              <option value="Odisha">Odisha</option>
+              <option value="Punjab">Punjab</option>
+              <option value="Rajasthan">Rajasthan</option>
+              <option value="Sikkim">Sikkim</option>
+              <option value="Tamil Nadu">Tamil Nadu</option>
+              <option value="Telangana">Telangana</option>
+              <option value="Tripura">Tripura</option>
+              <option value="Uttar Pradesh">Uttar Pradesh</option>
+              <option value="Uttarakhand">Uttarakhand</option>
+              <option value="West Bengal">West Bengal</option>
+           </select>
+           <label for="event-country" class="form-label">COUNTRY</label>
+           <select name="event_country" id="event-country" class="form-control"required>
+              <option value="None">---Select---</option>
+              <option value="India">India</option>
+           </select>
+           <label for="event-zipcode" class="form-label">ZIP</label>
+           <input type="number" class="form-control" id="event-zipcode" name="event_zipcode"required>
         </div>
-        <div class="textarea-for-description my-3">
-            <h4 class="my-3">WRITE DESCRIPTION</h4>
-            <textarea type ="text" id="myTextarea" name="event_description"></textarea>
+        <div class="mx-3 my-3" style="width: 320px;margin-left: 30px;">
+           <div id="tickets-container">
+              <label for="image">UPLOAD IMAGE</label>
+              <input type="file" id="image" name="event_image" required>
+              <h5>UPLOAD GALLERY IMAGES</h5>
+              <hr>
+              <label for="image">UPLOAD IMAGE</label>
+              <input type="file" id="image" name="event_image1" required>
+              <label for="image">UPLOAD IMAGE</label>
+              <input type="file" id="image" name="event_image2" required>
+              <label for="image">UPLOAD IMAGE</label>
+              <input type="file" id="image" name="event_image3" required>
+              <div style="margin-top:7px;"class="ticket-form">
+                 <h4>Ticket 1</h4>
+                 <div class="form-group">
+                    <label for="name1">TICKET NAME</label>
+                    <input type="text" class="form-control" id="name1" name="name1"placeholder="Enter ticket name"required>
+                 </div>
+                 <div class="form-group">
+                    <label for="price1">TICKET PRICE(in Rs.)</label>
+                    <input type="number" class="form-control" id="price1" name="price1"placeholder="Enter ticket price"required>
+                 </div>
+                 <div class="form-group">
+                    <label for="quantity1">NUMBER OF TICKETS</label>
+                    <input type="number" class="form-control" id="quantity1" name="quantity1"placeholder="Enter quantity"required>
+                 </div>
+              </div>
+           </div>
+           <button type="button" class="addanotherbutton" onclick="addTicket()">Add Another Ticket</button>
         </div>
-
-   
-        <button type="submit" style="margin:15px;" class="btn1" >Submit</button>
-    </form>
-</div>
+      </div>
+      <div class="textarea-for-description my-3">
+         <h4 class="my-3">WRITE DESCRIPTION</h4>
+         <textarea type ="text" id="myTextarea" name="event_description"></textarea>
+      </div>
+     <button type="submit" style="margin:15px;" class="btn1" >Submit</button>
+  </form>
 </div>
 {% endif %}
  {% endblock %}
