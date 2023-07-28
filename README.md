@@ -4,7 +4,7 @@
 ### Event_ticketing_platform
 
 # Website Name
-### Eventwave
+### Eventwave  https://eventwave-9bhy.onrender.com/
 
 # Description
 Eventwave is the Portal where Events can be posted by different organizations , and tickets can be bought by the

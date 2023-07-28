@@ -17,7 +17,8 @@ import json
 import qrcode
 from io import BytesIO
 from django.core.mail import EmailMessage
-
+from dateutil import parser
+from datetime import datetime
 
 
 
@@ -92,9 +93,15 @@ def eventdetailes(request,slug):
         else:
             filter_name+=char
     event =Eventdetails.objects.get(eventName=filter_name,id= int(filter_id))
+
+    a=0
+    start_date_obj =event.eventStartDate
+    event_start_date_naive = start_date_obj.replace(tzinfo=None)
+    if  event_start_date_naive < datetime.now():
+        a=1   
     tickets =Ticket.objects.filter(event =event)
     organizer =event.eventOrganizer
-    return render( request,'particularevent.html',{'event':event,'tickets':tickets, 'organizer': organizer})
+    return render( request,'particularevent.html',{'event':event,'tickets':tickets, 'organizer': organizer,'a': a})
 
 @login_required
 def addtocart(request, event_id):

@@ -154,8 +154,8 @@ margin-right:auto;
                <h6>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp- {{event.eventZip}}</h6>
                <h6><i class="fas fa-calendar"></i> &nbsp &nbsp &nbsp{{event.eventStartDate|date:"Y-m-d"}}<br>&nbsp &nbsp &nbsp &nbsp - {{event.eventEndDate|date:"Y-m-d"}}<h6>
 
-    
-    {% if user.is_authenticated %}
+    {% if a == 0%}
+    {% if user.is_authenticated  %}
     <form method="post" action="{% url 'booknow' event.id %}">
       <button  type="submit" id="buynow"class="btn btn">BUY NOW</button>
       {% csrf_token%}
@@ -164,7 +164,7 @@ margin-right:auto;
       <a href="/loginpage"><button type="button"id="buynow"class="btn btn"><span></span>Book Now</button></a>
         
       {% endif%}
-
+     {% endif %}
 
     
                   
