@@ -291,7 +291,6 @@ def paymenthandler(request, userid):
             result = razorpay_client.utility.verify_payment_signature(
                 params_dict)
             if result is not None:
-                
                 user = User.objects.get(id=userid)
                 cart_items = CartItem.objects.filter(user=user, quantity__gt=0, paymentStatus=False)
                 for items in cart_items:
@@ -300,13 +299,14 @@ def paymenthandler(request, userid):
                     ticket.bookedTicket = a + items.quantity
                     ticket.save()
                     attendee = Attendee.objects.filter(paymentStatus=False, cartitem=items)
-                    attendee.update(timeStamp=datetime.datetime.now())
+                    attendee.update(timeStamp=datetime.now())
                 cart_items.update(paymentStatus=True)
                 messages.success(request,'Your Booking are Done ')
                 userid = user.id
+                print(5)
                 return redirect ('generate_qr_and_send_email',userid)
             else:
-                messages.error(request,'Your Transaction Failed ')
+                messages.error(request,'Your Transaction Failed')
                 return redirect('cart')
         except:
               messages.error(request,'Your Transaction Failed ')

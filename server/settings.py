@@ -33,7 +33,6 @@ SECRET_KEY = 'django-insecure-z6og42l7c@czb^ckdjkxq&gb#duhl63rcjw1%5gl-2*6a8kzaj
 DEBUG = True
 
 ALLOWED_HOSTS=["*"]
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -163,4 +162,5 @@ EMAIL_PORT=587
 EMAIL_HOST_USER="eventwave642@gmail.com"
 EMAIL_HOST_PASSWORD="iwsyxixfdsizcxoj"
 EMAIL_USE_SSL = False
+
 
