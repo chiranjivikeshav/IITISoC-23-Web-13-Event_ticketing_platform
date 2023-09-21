@@ -394,5 +394,4 @@ def scannerdetails(request):
 #         recipient_list = [attende.attendeEmail]
 #         send_mail( 'welcome to Etplatform',message, email_from, recipient_list,fail_silently=False)
 #     attendees.update(paymentStatus=True)
-
 #     return redirect('yourticket')
