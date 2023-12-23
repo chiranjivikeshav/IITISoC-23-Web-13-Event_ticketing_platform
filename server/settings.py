@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'organizer.apps.OrganizerConfig',
     'user.apps.UserConfig',
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -150,17 +151,30 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MESSAGE_TAGS = {
     messages.ERROR:'danger'
 }
+from decouple import config
 
-RAZOR_KEY_ID =  'rzp_test_ygsSaKB5arhRUI'
-RAZOR_KEY_SECRET = 'OeOUBIRunoKlWHguytdHA0hN'
-
-
-EMAIL_BACKEND="django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST="smtp.gmail.com"
-EMAIL_USE_TLS =True
-EMAIL_PORT=587
-EMAIL_HOST_USER="eventwave642@gmail.com"
-EMAIL_HOST_PASSWORD="iwsyxixfdsizcxoj"
-EMAIL_USE_SSL = False
+RAZOR_KEY_ID = config('RAZOR_KEY_ID')
+RAZOR_KEY_SECRET = config('RAZOR_KEY_SECRET')
 
 
+EMAIL_BACKEND = config('EMAIL_BACKEND')
+EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
+EMAIL_PORT = config('EMAIL_PORT', default=587, cast=int)
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+EMAIL_USE_SSL = config('EMAIL_USE_SSL', default=False, cast=bool)
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config('your-google-client-id')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET =config('your-google-client-secret')
+# SOCIAL_AUTH_GOOGLE_OAUTH2_WHITELISTED_DOMAINS = ['127.0.0.1:8000']
+
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
