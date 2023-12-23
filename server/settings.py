@@ -176,5 +176,5 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET =config('your-google-client-secret')
 
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'register'
 LOGOUT_REDIRECT_URL = 'home'

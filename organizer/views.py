@@ -50,6 +50,24 @@ def user_registration(request):
             user_ldurl = "",
             )
         return redirect('login')
+    else:
+        user = request.user
+        userProfile = Userprofile.objects.filter(user=user)
+        if userProfile :
+            return render(request,'home.html')
+        Userprofile.objects.create(
+            user=user,
+            user_email= user.email,
+            user_name = "",
+            user_about = "",
+            contact_number = "",
+            user_weburl = "",
+            user_fburl = "",
+            user_twurl = "",
+            user_ldurl = "",
+            )
+        return render(request,'home.html')
+
     return render(request,'home.html')
 
 
