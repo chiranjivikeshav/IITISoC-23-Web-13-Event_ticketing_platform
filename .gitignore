@@ -1,2 +1,11 @@
-.env
-__pycache__
+# Django
+*.pyc
+__pycache__/
+db.sqlite3
+/mysite/migrations/
+
+# Static files
+staticfiles/
+
+# Media files
+media/
