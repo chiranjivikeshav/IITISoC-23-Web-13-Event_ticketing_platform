@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'organizer.apps.OrganizerConfig',
     'user.apps.UserConfig',
     'social_django',
+
 ]
 
 MIDDLEWARE = [

@@ -307,6 +307,3 @@ def deletevent(request,id):
 
 
 
-
-
-

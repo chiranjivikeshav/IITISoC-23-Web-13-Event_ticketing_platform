@@ -50,3 +50,5 @@ class Ticket(models.Model):
     bookedTicket = models.PositiveIntegerField(default=0)
     def __str__(self):
         return self.event.eventName
+    
+
