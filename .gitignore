@@ -4,6 +4,7 @@ __pycache__/
 /mysite/migrations/
 
 # Static files
-.env
+/.env
 venv
+.env
 # Media files
