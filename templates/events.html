@@ -206,7 +206,7 @@
 									<button type="submit"><i class="fa fa-shopping-cart"></i>ADD TO CART</button>
 									</form>
 									<form method="post" action="{% url 'booknow' event.id %}">
-									<button  type="submit"><i class="fa fa-shopping-bag"></i>BUY NOW</button>
+									<button  type="submit"><i class="fa fa-shopping-bag"></i>BOOK NOW</button>
 									{% csrf_token%}
 								   </form>
 								   {% else %}
